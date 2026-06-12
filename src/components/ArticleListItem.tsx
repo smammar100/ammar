@@ -1,0 +1,64 @@
+import Link from "next/link";
+
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  publishedDate: Date;
+  image?: string;
+  theme?: string;
+  headingLevel?: "h2" | "h3";
+}
+
+export function ArticleListItem({
+  id,
+  title,
+  description,
+  publishedDate,
+  image,
+  theme,
+  headingLevel = "h2",
+}: Props) {
+  const Heading = headingLevel;
+
+  return (
+    <Link
+      href={`/writing/${id}`}
+      className="group -mx-3 block rounded-lg p-3 transition-all duration-200 ease-out hover:scale-[1.01] hover:bg-muted/50"
+      data-article-item
+      data-theme={theme}
+    >
+      <article className="flex gap-5">
+        {image && (
+          <div className="hidden shrink-0 overflow-hidden rounded-lg border border-border sm:block sm:w-36 md:w-44">
+            <img
+              src={image}
+              alt=""
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              loading="lazy"
+            />
+          </div>
+        )}
+        <div className="flex min-w-0 flex-1 flex-col justify-center">
+          <time
+            dateTime={publishedDate.toISOString()}
+            className="mb-2 font-mono text-xs text-muted-foreground"
+          >
+            {publishedDate.toLocaleDateString("en-US", {
+              timeZone: "UTC",
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </time>
+          <Heading className="mb-1 text-base font-semibold tracking-tight">
+            {title}
+          </Heading>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {description}
+          </p>
+        </div>
+      </article>
+    </Link>
+  );
+}

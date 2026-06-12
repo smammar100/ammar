@@ -1,0 +1,306 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@font-face {
+  font-family: 'Geist Pixel Square';
+  src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+    /* Light mode — warm, minimal, cream-tinted (Unknown Arts aesthetic) */
+    --background: oklch(0.98 0.004 80);
+    --foreground: oklch(0.15 0.01 60);
+    --card: oklch(0.96 0.005 80);
+    --card-foreground: oklch(0.15 0.01 60);
+    --popover: oklch(0.98 0.004 80);
+    --popover-foreground: oklch(0.15 0.01 60);
+    --primary: oklch(0.15 0.01 60);
+    --primary-foreground: oklch(0.98 0.004 80);
+    --secondary: oklch(0.94 0.006 80);
+    --secondary-foreground: oklch(0.25 0.01 60);
+    --muted: oklch(0.94 0.006 80);
+    --muted-foreground: oklch(0.50 0.01 60);
+    --accent: oklch(0.72 0.10 75);
+    --accent-foreground: oklch(0.15 0.01 60);
+    --destructive: oklch(0.58 0.22 27);
+    --border: oklch(0.90 0.008 80);
+    --input: oklch(0.90 0.008 80);
+    --ring: oklch(0.72 0.10 75);
+    --radius: 0.5rem;
+}
+
+.dark {
+    /* Dark mode — rich warm black (matching the Framer site screenshots) */
+    --background: oklch(0.14 0.01 60);
+    --foreground: oklch(0.92 0.01 80);
+    --card: oklch(0.18 0.01 60);
+    --card-foreground: oklch(0.92 0.01 80);
+    --popover: oklch(0.18 0.01 60);
+    --popover-foreground: oklch(0.92 0.01 80);
+    --primary: oklch(0.92 0.01 80);
+    --primary-foreground: oklch(0.14 0.01 60);
+    --secondary: oklch(0.22 0.01 60);
+    --secondary-foreground: oklch(0.88 0.01 80);
+    --muted: oklch(0.22 0.01 60);
+    --muted-foreground: oklch(0.72 0.01 60);
+    --accent: oklch(0.75 0.10 75);
+    --accent-foreground: oklch(0.14 0.01 60);
+    --destructive: oklch(0.70 0.19 22);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.75 0.10 75);
+}
+
+@theme inline {
+    --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+    --font-pixel: 'Geist Pixel Square', ui-monospace, monospace;
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* Shimmer hover for non-interactive cards */
+.shimmer-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-on-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    oklch(1 0 0 / 0.07) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  pointer-events: none;
+  transition: background-position 0s;
+}
+.shimmer-on-hover:hover::after {
+  background-position: 200% 0;
+  transition: background-position 0.5s ease;
+}
+
+/* Color mode cross-fade via View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 250ms;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-old(root) {
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: fade-in;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Prose styles for markdown content */
+.prose {
+  @apply text-foreground leading-relaxed;
+  max-width: 65ch;
+}
+.prose h2 {
+  @apply mt-12 mb-4 text-xl font-semibold tracking-tight;
+}
+.prose h3 {
+  @apply mt-8 mb-3 text-lg font-semibold tracking-tight;
+}
+.prose p {
+  @apply mb-4 text-base text-muted-foreground;
+}
+.prose ul {
+  @apply mb-4 ml-6 list-disc space-y-1;
+}
+.prose ul li {
+  @apply text-base text-muted-foreground;
+}
+.prose ol {
+  @apply mb-4 ml-6 list-decimal space-y-1;
+}
+.prose ol li {
+  @apply text-base text-muted-foreground;
+}
+.prose strong {
+  @apply font-semibold text-foreground;
+}
+.prose em {
+  @apply italic;
+}
+.prose a {
+  @apply underline underline-offset-4 transition-colors hover:text-foreground;
+}
+.prose blockquote {
+  @apply my-6 border-l-2 border-accent pl-4 italic text-muted-foreground;
+}
+.prose img {
+  @apply my-8 w-full rounded-lg border border-border;
+}
+.prose figure {
+  @apply my-8;
+}
+.prose figure img {
+  @apply my-0;
+}
+.prose figcaption {
+  @apply mt-2 text-center text-sm text-muted-foreground;
+}
+.prose hr {
+  @apply my-10 border-border;
+}
+.prose code {
+  @apply rounded bg-secondary px-1.5 py-0.5 font-mono text-sm;
+}
+.prose pre {
+  @apply my-6 overflow-x-auto rounded-lg bg-secondary p-4;
+}
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+/* Embed styles within prose */
+.prose lite-youtube {
+  @apply my-8 mb-12 rounded-lg overflow-hidden;
+}
+.prose .figma-embed {
+  max-width: none;
+}
+.prose .figma-embed p {
+  @apply text-[0.7rem] leading-tight;
+}
+
+/* White SVG logos — invert in light mode so they're visible on light backgrounds */
+.logo-adaptive {
+  filter: invert(1);
+}
+.dark .logo-adaptive {
+  filter: none;
+}
+
+/* Textured background for card image areas */
+.texture-bg {
+  background-image:
+    linear-gradient(oklch(0.93 0.01 80 / 0.55), oklch(0.93 0.01 80 / 0.55)),
+    url('/images/textures/debut_light.png');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+.dark .texture-bg {
+  background-image:
+    linear-gradient(oklch(0.16 0.01 60 / 0.7), oklch(0.16 0.01 60 / 0.7)),
+    url('/images/textures/debut_dark.png');
+}
+
+/* Subtle writing-list signal, inspired by the editorial generator language */
+[data-article-item] {
+  position: relative;
+  overflow: hidden;
+}
+[data-article-item]::before {
+  content: '';
+  position: absolute;
+  inset-block: 0.75rem;
+  left: 0;
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    oklch(0.72 0.10 75 / 0.55),
+    transparent
+  );
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+[data-article-item]:hover::before,
+[data-article-item]:focus-visible::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Arc node animation (career arc, used on home + resume) ── */
+.arc-node {
+  color: var(--muted-foreground);
+  border-color: var(--border);
+  background: transparent;
+  animation: arcFlash 1.1s cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+.arc-node-final {
+  animation: arcActivate 1.1s cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+@keyframes arcFlash {
+  0%, 100% {
+    color: var(--muted-foreground);
+    border-color: var(--border);
+    background: transparent;
+  }
+  40%, 60% {
+    color: var(--foreground);
+    border-color: color-mix(in oklch, var(--foreground) 20%, transparent);
+    background: color-mix(in oklch, var(--foreground) 4%, transparent);
+  }
+}
+@keyframes arcActivate {
+  0% {
+    color: var(--muted-foreground);
+    border-color: var(--border);
+    background: transparent;
+  }
+  100% {
+    color: var(--foreground);
+    border-color: color-mix(in oklch, var(--foreground) 20%, transparent);
+    background: color-mix(in oklch, var(--foreground) 4%, transparent);
+  }
+}
