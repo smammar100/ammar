@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import LissajousAmmar from "@/components/LissajousAmmar";
 
 export const metadata: Metadata = {
   title: "About",
@@ -269,7 +270,12 @@ export default function Page() {
             </a>
             . Let the craft do the talking.
           </p>
-          <p className="pt-8">— Ammar</p>
+        </div>
+
+        <div className="mt-16 -mx-6">
+          <div className="aspect-[79/20] w-full">
+            <LissajousAmmar />
+          </div>
         </div>
       </section>
     </>
