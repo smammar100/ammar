@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 import { CommunityReveal } from "./CommunityReveal";
 
 export const metadata: Metadata = {
-  title: "Community — Patrick Morgan",
-  description: "Showing up for creative people in Los Angeles through writing, events, and community.",
+  title: "Community — Syed Mohammad Ammar",
+  description: "Building in public — shipping components, open-source tools, and experiments where everyone can see them.",
 };
 
 const communityPagePhotos = communityPhotos.map((photo, index) => ({
@@ -22,11 +22,12 @@ export default function Page() {
       <section className="mx-auto max-w-3xl px-6 pt-12 pb-16 sm:pt-24 sm:pb-12" data-community-hero style={{ opacity: 0 }}>
         <h1 className="mb-4 text-4xl font-medium tracking-tight sm:text-5xl">Community</h1>
         <p className="max-w-xl text-lg text-muted-foreground">
-          Showing up for creative people in Los Angeles through writing, events, and community.
+          Showing up in public by shipping — components, open-source tools, and experiments, posted where everyone can see them.
         </p>
       </section>
 
       <section className="mx-auto max-w-3xl px-6 pb-16" data-community-story style={{ opacity: 0 }}>
+        {/* TODO: the four photos below are placeholder slots — replace with real photos of Ammar in src/data/community.ts. */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
           {communityPagePhotos.map((photo) => (
             <figure
@@ -49,41 +50,49 @@ export default function Page() {
         </div>
 
         <p className="mt-12 text-xl font-semibold leading-snug tracking-tight">
-          Showing up for people.
+          {communityStory.heading}
         </p>
         <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground">
-          {communityStory.paragraphs.slice(0, 2).map((paragraph) => (
+          {communityStory.paragraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
       </section>
 
       <section className="mx-auto max-w-3xl px-6 pb-24" data-community-words style={{ opacity: 0 }}>
-        <div className="mb-10">
-          <h2 className="mb-3 text-xl font-semibold leading-snug tracking-tight">Kind words from the community.</h2>
-          <p className="text-base leading-relaxed text-muted-foreground">
-            A few notes from readers, event guests, and people in the design community.
+        <h2 className="mb-3 text-xl font-semibold leading-snug tracking-tight">Kind words.</h2>
+        {/* TODO: real kind words go in src/data/commendations.ts — the wall below returns once entries exist. Never fabricate quotes. */}
+        {commendations.length > 0 ? (
+          <div className="columns-1 gap-4 sm:columns-2">
+            {commendations.map((c) => (
+              <blockquote key={c.name} className="mb-4 break-inside-avoid rounded-lg p-5 texture-bg" data-kind-words-item style={{ opacity: 0 }}>
+                <p className="mb-4 font-mono text-[13px] leading-relaxed text-foreground">{c.quote}</p>
+                <footer className="flex items-center gap-3">
+                  <img
+                    src={c.image}
+                    alt={c.name}
+                    className="h-8 w-8 shrink-0 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-medium leading-tight">{c.name}</p>
+                    <p className="text-xs text-muted-foreground">{c.role}</p>
+                  </div>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        ) : (
+          <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
+            Being collected — the slow way, by shipping. If we&apos;ve built something together, send a line:{" "}
+            <a
+              href="mailto:mrammarbest110@gmail.com"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              mrammarbest110@gmail.com
+            </a>
+            .
           </p>
-        </div>
-
-        <div className="columns-1 gap-4 sm:columns-2">
-          {commendations.map((c) => (
-            <blockquote key={c.name} className="mb-4 break-inside-avoid rounded-lg p-5 texture-bg" data-kind-words-item style={{ opacity: 0 }}>
-              <p className="mb-4 font-mono text-[13px] leading-relaxed text-foreground">{c.quote}</p>
-              <footer className="flex items-center gap-3">
-                <img
-                  src={c.image}
-                  alt={c.name}
-                  className="h-8 w-8 shrink-0 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-sm font-medium leading-tight">{c.name}</p>
-                  <p className="text-xs text-muted-foreground">{c.role}</p>
-                </div>
-              </footer>
-            </blockquote>
-          ))}
-        </div>
+        )}
       </section>
     </>
   );

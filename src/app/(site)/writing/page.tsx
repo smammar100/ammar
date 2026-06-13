@@ -6,8 +6,9 @@ import {
 } from "@/components/writing/WritingIndexClient";
 
 export const metadata: Metadata = {
-  title: "Writing — Patrick Morgan",
-  description: "Articles on AI, design, and the creative frontier.",
+  title: "Writing — Syed Mohammad Ammar",
+  description:
+    "Notes from Ammar's design-engineering run — AI-assisted design workflows, written up on Medium and summarized here.",
 };
 
 const FILTER_THEMES = ["AI", "Design", "Systems Thinking", "Creative Practice", "Career"];

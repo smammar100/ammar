@@ -7,10 +7,79 @@
       .pixel { fill: #1f1c14; }
     }
   </style>
-  <!-- Braille P: equidistant grid, spacing=7, centered at (14,14) -->
+  <!-- Dither A: the site mark from src/lab/pixel-mark/DitherMark.tsx — a 12x12 bitmap "A"
+       shaded with a Bayer 4x4 ordered dither, solid at the apex and dissolving at the feet. -->
   <rect class="bg" width="28" height="28" rx="6.2"/>
-  <rect class="pixel" x="8"  y="4.5"  width="5" height="5" rx="0.6"/>
-  <rect class="pixel" x="15" y="4.5"  width="5" height="5" rx="0.6"/>
-  <rect class="pixel" x="8"  y="11.5" width="5" height="5" rx="0.6"/>
-  <rect class="pixel" x="8"  y="18.5" width="5" height="5" rx="0.6"/>
+  <rect class="pixel" x="12.5" y="4.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="14.167" y="4.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="10.833" y="5.833" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="12.5" y="5.833" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="14.167" y="5.833" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="15.833" y="5.833" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="10.833" y="7.5" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="12.5" y="7.5" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="14.167" y="7.5" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="15.833" y="7.5" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="9.167" y="9.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="11.042" y="9.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="12.5" y="9.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="14.375" y="9.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="15.833" y="9.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="17.708" y="9.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="9.375" y="11.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="10.833" y="10.833" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="16.042" y="11.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="17.5" y="10.833" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="7.708" y="12.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="9.375" y="12.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="11.042" y="12.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="16.042" y="12.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="17.708" y="12.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="19.167" y="12.5" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="7.5" y="14.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="9.375" y="14.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="10.833" y="14.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="16.042" y="14.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="17.5" y="14.167" width="1.333" height="1.333" rx="0.293"/>
+  <rect class="pixel" x="19.375" y="14.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="6.042" y="16.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="7.917" y="16.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="9.375" y="16.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="11.25" y="16.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="12.708" y="16.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="14.583" y="16.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="16.042" y="16.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="17.917" y="16.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="19.375" y="16.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="21.25" y="16.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="6.25" y="17.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="7.708" y="17.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="9.583" y="17.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="11.042" y="17.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="12.917" y="17.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="14.375" y="17.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="16.25" y="17.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="17.708" y="17.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="19.583" y="17.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="21.042" y="17.708" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="4.583" y="19.583" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="6.042" y="19.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="7.917" y="19.583" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="9.583" y="19.583" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="17.917" y="19.583" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="19.375" y="19.375" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="21.25" y="19.583" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="22.917" y="19.583" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="4.583" y="21.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="6.25" y="21.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="7.708" y="21.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="19.583" y="21.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="21.042" y="21.042" width="0.917" height="0.917" rx="0.202"/>
+  <rect class="pixel" x="22.917" y="21.25" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="4.583" y="22.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="6.25" y="22.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="7.917" y="22.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="19.583" y="22.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="21.25" y="22.917" width="0.5" height="0.5" rx="0.11"/>
+  <rect class="pixel" x="22.917" y="22.917" width="0.5" height="0.5" rx="0.11"/>
 </svg>

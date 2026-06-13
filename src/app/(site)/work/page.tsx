@@ -6,14 +6,14 @@ import { cn } from "@/lib/utils";
 import { WorkReveal } from "./WorkReveal";
 
 export const metadata: Metadata = {
-  title: "Work — Patrick Morgan",
-  description: "13+ years moving between strategy, design, and code.",
+  title: "Work — Syed Mohammad Ammar",
+  description: "Product designer since 2020. Now building what I design.",
 };
 
 const skillGroups = [
-  { label: "Design", skills: ["Product design", "Prototyping", "Interaction design", "Systems design", "Design systems", "User research", "Figma", "Framer", "Midjourney"] },
-  { label: "Dev", skills: ["HTML", "CSS", "Javascript", "React", "Tailwind", "ShadCN", "Git", "Github", "Claude Code", "Astro", "PNPM"] },
-  { label: "Domains", skills: ["B2B & Enterprise SaaS", "Cybersecurity", "FinTech"] },
+  { label: "Design", skills: ["Product design", "Design systems", "User research", "Usability testing", "Brand design", "Figma", "Webflow"] },
+  { label: "Dev", skills: ["HTML", "CSS", "JavaScript", "React"] },
+  { label: "Domains", skills: ["Fintech", "Early-stage startups", "Mobile apps"] },
 ];
 
 export default async function Page() {
@@ -32,7 +32,7 @@ export default async function Page() {
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-6 pt-12 pb-12 sm:pt-24" data-resume-hero style={{ opacity: 0 }}>
         <h1 className="mb-3 text-4xl font-medium tracking-tight sm:text-5xl">Work</h1>
-        <p className="max-w-xl text-lg text-muted-foreground">13+ years moving between strategy, design, and code.</p>
+        <p className="max-w-xl text-lg text-muted-foreground">Product designer since 2020. Now building what I design.</p>
       </section>
 
       {/* Timeline */}

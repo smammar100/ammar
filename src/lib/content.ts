@@ -12,10 +12,10 @@ const CONTENT_ROOT = path.join(process.cwd(), "src", "content");
 
 export interface ProjectData {
   title: string;
-  type: "professional" | "experiment";
+  type: "professional" | "personal" | "experiment";
   description: string;
   skills: string[];
-  thumbnail: string;
+  thumbnail?: string;
   thumbnailDark?: string;
   thumbnailWide?: string;
   thumbnailWideDark?: string;

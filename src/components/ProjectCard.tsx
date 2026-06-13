@@ -6,7 +6,7 @@ export interface ProjectCardProps {
   title: string;
   description: string;
   skills: string[];
-  thumbnail: string;
+  thumbnail?: string;
   thumbnailDark?: string;
   thumbnailWide?: string;
   thumbnailWideDark?: string;
@@ -19,6 +19,16 @@ export interface ProjectCardProps {
   square?: boolean;
   squareDesktop?: boolean;
   showDescription?: boolean;
+}
+
+function ThumbnailFallback({ title, className }: { title: string; className?: string }) {
+  return (
+    <div className={cn("flex items-center justify-center px-6 text-center", className)}>
+      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        {title}
+      </p>
+    </div>
+  );
 }
 
 export function ProjectCard({
@@ -53,6 +63,9 @@ export function ProjectCard({
         <article className="overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-black/5 dark:group-hover:shadow-black/20">
           <div className={`flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"}`}>
             <div className="texture-bg overflow-hidden md:w-[40%]">
+              {!thumbnail && (
+                <ThumbnailFallback title={title} className="aspect-video w-full md:aspect-auto md:h-full" />
+              )}
               {/* Mobile: wide image (16:9), hidden on md+ */}
               {thumbnailWide && (
                 <img
@@ -69,11 +82,13 @@ export function ProjectCard({
                 />
               )}
               {/* Desktop: square image, hidden below md */}
-              <img
-                src={thumbnail}
-                alt={title}
-                className={cn(thumbnailWide ? "hidden md:block" : "", "w-full object-cover transition-transform duration-300 group-hover:scale-[1.03] md:h-full", thumbnailDark && "dark:hidden")}
-              />
+              {thumbnail && (
+                <img
+                  src={thumbnail}
+                  alt={title}
+                  className={cn(thumbnailWide ? "hidden md:block" : "", "w-full object-cover transition-transform duration-300 group-hover:scale-[1.03] md:h-full", thumbnailDark && "dark:hidden")}
+                />
+              )}
               {thumbnailDark && (
                 <img
                   src={thumbnailDark}
@@ -137,7 +152,15 @@ export function ProjectCard({
     <Link href={href} className="group flex h-full flex-col" data-project-card>
       <article className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:shadow-black/5 dark:group-hover:shadow-black/20">
         <div className="texture-bg shrink-0 overflow-hidden">
-          {hasResponsiveCompactImage ? (
+          {!thumbnail && !thumbnailWide ? (
+            <ThumbnailFallback
+              title={title}
+              className={cn(
+                hasResponsiveCompactImage ? "aspect-video lg:aspect-square" : compactAspect,
+                "w-full",
+              )}
+            />
+          ) : hasResponsiveCompactImage ? (
             <>
               <img
                 src={compactWideThumbnail}

@@ -2,14 +2,17 @@
 
 ## Purpose
 
-This site is Patrick Morgan's personal portfolio and publishing home. It should
-help product, design, and technology leaders understand the shape of the work,
-the judgment behind it, and the systems that support it.
+This site is Syed Mohammad Ammar's personal portfolio and proof-of-work home.
+It should help design and technology leaders and startup founders understand
+the shape of the work, the judgment behind it, and the design-engineering
+practice — design to deploy — that produces it.
 
 ## Audience
 
-- Product, design, and technology leaders evaluating collaboration or hiring.
-- Peers interested in product strategy, AI, design systems, and creative tooling.
+- Design and technology leaders and startup founders evaluating collaboration
+  or hiring.
+- Peers interested in design engineering, product design, and building in
+  public.
 - Future maintainers and agents working on the site.
 
 ## Experience Principles
@@ -25,16 +28,18 @@ the judgment behind it, and the systems that support it.
 
 | Track | Focus |
 | --- | --- |
-| Work | Portfolio case studies, career narrative, and proof of strategic impact |
-| Writing | Curated website copies of selected Unknown Arts articles |
+| Work | Portfolio case studies, career narrative, and proof of shipped impact |
+| Writing | Site-native summaries of design experiments, canonical on Medium |
 | Lab | Hosted experiments, tools, and interactive proof-of-work |
-| Community | Community narrative, photos, and Kind Words |
-| System | Astro architecture, content collections, publishing scripts, deployment, and agent workflow |
+| Community | Build-in-public narrative; Kind Words stays empty until real quotes exist |
+| System | Next.js 15 App Router architecture, the `src/lib/content.ts` content layer, deployment, and agent workflow |
 | Brand | Voice, information architecture, visual restraint, and public positioning |
 
 ## Non-Goals
 
 - Do not turn the site into a marketing-heavy landing page.
+- Do not fabricate social proof, metrics, links, or photos. Every public claim
+  must trace to verified facts; honest placeholders beat invention.
 - Do not publish half-finished Lab experiments as public proof-of-work.
 - Do not add broad abstractions or libraries unless they clearly reduce future
   maintenance cost.

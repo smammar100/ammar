@@ -1,8 +1,8 @@
 # System Map
 
-This is the operating map for Patrick Morgan's personal website. It explains how
-the site fits together, which system owns which kind of content or behavior, and
-where to look before changing something.
+This is the operating map for Syed Mohammad Ammar's personal website. It
+explains how the site fits together, which system owns which kind of content or
+behavior, and where to look before changing something.
 
 Agent OS uses single-responsibility documentation: each file owns one kind of
 context, avoids repeating neighboring files, and links to the canonical source
@@ -12,29 +12,29 @@ for related details. This file owns system orientation, not editing rules.
 
 | Area | What it does | Source of truth |
 | --- | --- | --- |
-| Public site shell | Shared layout, navigation, footer, theme, metadata | `src/layouts/`, `src/components/layout/`, `src/data/site-config.ts` |
+| Public site shell | Shared layout, navigation, footer, theme, metadata | `src/app/layout.tsx`, `src/components/layout/`, `src/data/site-config.ts` |
 | Work | Public portfolio/case-study section at `/work` | `src/content/projects/`, rendered through `/work` routes |
-| Writing | Curated website copy of selected Unknown Arts articles | Obsidian for drafts/body, `src/content/writing/` for website output |
-| Editorial art | Deterministic feature images and visual metadata for writing | Website-owned frontmatter and `public/images/writing/` |
-| Lab | Hosted experiments, tools, and interaction demos | `src/content/lab/`, `src/pages/lab/`, `src/lab/` |
-| Community | Community narrative, photos, and Kind Words | `src/pages/community.astro`, `src/data/community.ts`, `src/data/commendations.ts` |
-| Deployment | Static build published to GitHub Pages | `.github/workflows/deploy.yml` |
-| Work orchestration | Strategy, plans, conventions, learnings, issues, project board, and cross-project tasks | `agent-os/`, GitHub Issues, Personal Website project, Notion Tasks |
+| Writing | Site-native summaries of Ammar's Medium articles, linking out via `canonicalUrl` | Authored directly in `src/content/writing/`; canonical originals live on Medium |
+| Lab | Hosted experiments, tools, and interaction demos | `src/content/lab/`, `src/app/(site)/lab/`, `src/app/(tool)/lab/`, `src/lab/` |
+| Community | Build-in-public narrative and photo slots | `src/app/(site)/community/page.tsx`, `src/data/community.ts`, `src/data/commendations.ts` |
+| Deployment | Not wired up yet. `.github/workflows/deploy.yml` is a legacy GitHub Pages workflow that fails against this Next.js repo. TODO(owner): fix or remove. | `.github/workflows/deploy.yml` |
+| Work orchestration | Strategy, plans, conventions, learnings, and skills | `agent-os/` (no issue tracker or project board is connected yet) |
 
 ## Public Routes
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Home page with featured Work, Lab, Writing, Community, and Kind Words |
+| `/` | Home page with hero, featured Work, Lab, and Writing |
 | `/about` | Personal narrative and context |
 | `/work` | Career timeline plus related portfolio work |
 | `/work/<slug>` | Project/case-study detail pages |
 | `/lab` | Lab index |
 | `/lab/<slug>` | Individual Lab tools or demos |
-| `/writing` | Curated writing index with theme filters |
-| `/writing/<slug>` | Article detail pages |
-| `/community` | Community story, photos, and Kind Words |
+| `/writing` | Writing index |
+| `/writing/<slug>` | Article summary pages linking to the Medium originals |
+| `/community` | Build-in-public story (route exists but is not in the nav) |
 | `/colophon` | Public explanation of stack and workflow |
+| `/style-guide` | Internal prose/typography reference |
 | `/resume` | Legacy resume-style route still present in the codebase |
 
 ## Commands
@@ -42,22 +42,24 @@ for related details. This file owns system orientation, not editing rules.
 ```bash
 pnpm dev
 pnpm build
-pnpm preview
-pnpm sync-writing
-pnpm generate:writing-art
+pnpm start
+pnpm lint
 ```
 
-- `pnpm dev`: starts Astro at `localhost:4321`.
-- `pnpm build`: production build to `dist/`.
-- `pnpm preview`: local preview of the production build.
-- `pnpm sync-writing`: syncs selected Obsidian newsletter articles into `src/content/writing/`.
-- `pnpm generate:writing-art`: generates deterministic writing feature images and website-owned visual metadata.
+- `pnpm dev`: starts Next.js at `localhost:4321`.
+- `pnpm build`: production build to `.next/`.
+- `pnpm start`: serves the production build locally.
+- `pnpm lint`: runs Next.js linting.
 
-There is also a maintenance script, `scripts/normalize-obsidian-newsletters.mjs`, for normalizing Obsidian newsletter frontmatter. It is not exposed as a package script.
+`pnpm sync-writing` and `pnpm generate:writing-art` are legacy scripts from the
+previous owner's Obsidian-to-newsletter pipeline (along with
+`scripts/normalize-obsidian-newsletters.mjs`). Do not run them; see
+`AGENTS.md`.
 
 ## Content Model
 
-Content collections are defined in `src/content.config.ts`. Drafts should be
+Content is loaded through the helpers in `src/lib/content.ts` (`getProjects`,
+`getWriting`, `getLab`) using gray-matter and next-mdx-remote. Drafts should be
 filtered before public rendering.
 
 | Collection | Public route | Source |
@@ -68,81 +70,46 @@ filtered before public rendering.
 
 ## Publishing Workflows
 
-### Writing Sync
+### Writing
 
-The normal publishing workflow is targeted: draft the article in Obsidian, mark
-it `website: true`, then bring over only that article, assign a website theme,
-and generate its deterministic visual.
-
-```bash
-pnpm sync-writing -- --title "Article Title" --theme AI --with-art
-pnpm build
-```
-
-Use `--slug article-slug` instead of `--title` when the slug is easier to work
-with. Targeted sync refuses to overwrite an existing website article unless
-`--overwrite` is passed.
-
-`pnpm sync-writing` with no target is a maintenance command. It scans the local
-Obsidian vault configured by `OBSIDIAN_VAULT`; set it in your shell or in an
-untracked `.env.local` file. The script reads notes from the vault's
-`Newsletters/` directory. Only notes with `website: true` are synced. The script
-strips Obsidian-only fields, slugifies from the title, cleans newsletter
-boilerplate from the body, and writes to `src/content/writing/<slug>.md`.
-
-For writing sync changes, verify with:
-
-```bash
-pnpm sync-writing -- --title "Article Title" --theme AI --with-art --dry-run
-pnpm build
-```
-
-Use `node scripts/sync-writing.mjs --dry-run` when you want to preview a full maintenance sync without writing files.
+Writing entries are authored directly in `src/content/writing/` as short
+site-native summaries with `canonicalUrl` frontmatter pointing at the Medium
+original. There is no sync pipeline; the legacy Obsidian newsletter scripts in
+`scripts/` must not be run.
 
 ### Editorial Art
 
-`pnpm generate:writing-art` generates 1200x630 feature images under:
-
-```text
-public/images/writing/<slug>/feature.jpg
-```
-
-It also writes `visual` metadata and the generated `image` path into article frontmatter. By default it avoids overwriting existing visual decisions. Use the script flags when intentionally regenerating:
-
-```bash
-node scripts/generate-writing-art.mjs --slug article-slug --dry-run
-node scripts/generate-writing-art.mjs --dry-run
-node scripts/generate-writing-art.mjs --overwrite-visual
-node scripts/generate-writing-art.mjs --overwrite-image
-```
-
-This system is strategic because it makes writing visuals repeatable and website-owned instead of depending on one-off external image generation.
+Writing feature images live under `public/images/writing/<slug>/feature.jpg`
+and are referenced from article frontmatter. The generator script
+(`scripts/generate-writing-art.mjs`) is part of the legacy pipeline — author or
+add images manually instead, or revive the script deliberately as its own piece
+of work.
 
 ## Related References
 
 Use these files for adjacent context:
 
-- `agent-os/conventions/architecture.md`: Astro, layout, content collection, and
+- `agent-os/conventions/architecture.md`: framework, layout, content, and
   React usage conventions
 - `agent-os/conventions/content.md`: public terminology and frontmatter
   conventions
 - `agent-os/conventions/styling.md`: visual design, Tailwind, prose, and
   interaction conventions
 - `agent-os/conventions/assets.md`: image and embed conventions
-- `agent-os/learnings/writing-sync.md`: reusable writing sync gotchas
-- `agent-os/learnings/editorial-art.md`: reusable editorial art gotchas
+- `agent-os/learnings/`: reusable lessons from completed work (some notes
+  describe the legacy sync/art pipeline and are historical context only)
 
-## Deployment
+## Verification
 
-Pushes to `main` trigger `.github/workflows/deploy.yml`. The workflow uses `withastro/action@v3` to build and `actions/deploy-pages@v4` to publish to GitHub Pages.
-
-Before merging changes that affect routes, content schema, layouts, scripts, or generated assets, run:
+Before merging changes that affect routes, content schema, layouts, scripts, or
+generated assets, run:
 
 ```bash
 pnpm build
 ```
 
-For visual or interactive changes, also run `pnpm dev` and check the affected route in a browser.
+For visual or interactive changes, also run `pnpm dev` and check the affected
+route in a browser.
 
 ## Maintenance
 

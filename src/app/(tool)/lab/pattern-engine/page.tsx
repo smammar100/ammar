@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: `${entry?.data.title ?? "Pattern Engine"} — Syed Mohammad Ammar`,
   description:
     entry?.data.description ??
-    "Generate deterministic visual patterns for Unknown Arts articles and publishing assets.",
+    "A deterministic pattern generator for writing, publishing, and site visuals.",
   robots: { index: false, follow: false },
 };
 

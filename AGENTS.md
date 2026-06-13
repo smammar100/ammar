@@ -4,8 +4,8 @@ Guidance for Codex, Claude, and other coding agents working in this repository.
 
 ## Project Overview
 
-This is Patrick Morgan's personal portfolio site for product, design, and
-technology leaders.
+This is Syed Mohammad Ammar's personal portfolio site for design and
+technology leaders and startup founders.
 
 The site should feel warm, minimal, editorial, and professional. Favor
 restrained, content-first design over decorative complexity.
@@ -21,37 +21,37 @@ restrained, content-first design over decorative complexity.
 
 ## Tech Stack
 
-- Framework: Astro v5, static output
-- Styling: Tailwind CSS v4 through `@tailwindcss/vite`
+- Framework: Next.js 15, App Router, React 19
+- Styling: Tailwind CSS v4 through `@tailwindcss/postcss`
 - Components: shadcn/ui, base-nova style, configured in `components.json`
-- React: use for stateful UI and isolated Lab experiences that need client interactivity
-- Content: Astro content collections with Zod schemas
+- Rendering: server components by default; client components (`"use client"`)
+  for stateful UI and isolated Lab experiences that need client interactivity
+- Content: Markdown/MDX files in `src/content/`, loaded by `src/lib/content.ts`
+  (gray-matter + next-mdx-remote); plain TypeScript interfaces, no runtime
+  schema validation
 - Fonts: Geist Sans for body text, Geist Mono for labels, metadata, and code
 - Package manager: pnpm 10+
 - Node: v20+
-- Deployment: GitHub Pages through GitHub Actions on pushes to `main`
+- Deployment: not wired up yet. `.github/workflows/deploy.yml` is a legacy
+  GitHub Pages workflow that builds with the Astro action and fails against
+  this Next.js repo. TODO(owner): fix or remove before relying on CI.
 
 ## Commands
 
 ```bash
 pnpm dev
 pnpm build
-pnpm preview
-pnpm sync-writing
-pnpm generate:writing-art
+pnpm start
+pnpm lint
 ```
 
-`pnpm dev` starts Astro at `localhost:4321`. `pnpm build` writes production
-output to `dist/`.
+`pnpm dev` starts Next.js at `localhost:4321`. `pnpm build` writes production
+output to `.next/`.
 
-For the common one-article publishing workflow, prefer targeted writing sync:
-
-```bash
-pnpm sync-writing -- --title "Article Title" --theme AI --with-art
-```
-
-Use untargeted `pnpm sync-writing` as a maintenance operation when intentionally
-re-syncing all website-ready Obsidian newsletters.
+`pnpm sync-writing` and `pnpm generate:writing-art` are legacy scripts from the
+previous owner's Obsidian-to-newsletter pipeline. Do not run them. Writing
+entries are authored directly in `src/content/writing/` with `canonicalUrl`
+pointing at the Medium original.
 
 ## Workflow
 
@@ -76,49 +76,40 @@ or update `agent-os/system-map.md` because the system changed.
 
 ## Tracking
 
-Work can be tracked through GitHub Issues, the Personal Website project board,
-and the connected Notion Tasks database.
+No issue tracker or project board is connected for this repository yet. Track
+non-trivial work through plans in `agent-os/plans/`.
 
-- Issues: `https://github.com/itspatmorgan/itspatmorgan.github.io/issues`
-- Project board: `https://github.com/users/itspatmorgan/projects/2`
-- Notion Tasks: available for cross-project orchestration and planning
-
-Use labels that reflect the current site and work type when creating issues:
-
-- Where: `home`, `about`, `work`, `writing`, `lab`, `community`, `colophon`, `system`
-- What: `design`, `content`, `infrastructure`, `documentation`, `publishing`, `accessibility`
-
-When completing issue work, use `Closes #N` in the implementation commit message
-when appropriate.
+TODO(owner): create GitHub Issues and a project board for this repo, then
+document the links and label conventions here.
 
 ## Repository Map
 
 | Path | Purpose |
 | --- | --- |
 | `agent-os/` | Shared strategy, system map, plans, conventions, learnings, and skills |
-| `.reference/` | User-provided briefs, screenshots, design tokens, outlines, and URLs |
-| `.github/workflows/deploy.yml` | GitHub Pages deployment |
+| `.reference/` | Legacy briefs and research from the previous site owner (Patrick Morgan). Do not treat as a source of facts for Ammar's site. TODO(owner): review and delete. |
+| `.github/workflows/deploy.yml` | Legacy GitHub Pages workflow (broken for this Next.js repo; see Tech Stack) |
 | `public/images/` | Static image assets |
-| `scripts/` | Publishing, sync, and generation scripts |
+| `scripts/` | Legacy publishing, sync, and generation scripts from the previous pipeline |
+| `src/app/` | Next.js App Router routes, layouts, and metadata |
 | `src/lab/` | Hosted Lab implementation code for tools, experiments, and interaction demos |
-| `src/components/` | Astro and React components |
+| `src/components/` | React components |
 | `src/components/ui/` | shadcn/ui primitives |
 | `src/content/` | Work, writing, and lab content collections |
-| `src/content.config.ts` | Content collection schemas |
-| `src/data/` | Site config, commendations, and resume data |
-| `src/layouts/` | Base, page, project, and writing layouts |
-| `src/pages/` | Astro routes |
+| `src/lib/content.ts` | Content loading helpers and frontmatter types |
+| `src/data/` | Site config, commendations, experience, and community data |
 | `src/styles/global.css` | Tailwind import, CSS tokens, global styles, prose styles |
 
-Do not edit `dist/` as source. It is generated by `pnpm build`.
+Do not edit `.next/` as source. It is generated by `pnpm build`.
 
 ## Core Conventions
 
 - Use `@/` imports for source files. The alias maps to `./src/*`.
-- Prefer `.astro` components by default.
-- Use React for stateful UI, client interactivity, and Lab experiences where an
-  isolated interactive surface benefits from React.
-- Query content with `getCollection()` from `astro:content`.
+- Prefer server components by default. Add `"use client"` only for stateful UI,
+  client interactivity, and Lab experiences where an isolated interactive
+  surface benefits from it.
+- Query content through the helpers in `src/lib/content.ts` (`getProjects`,
+  `getWriting`, `getLab`).
 - Filter drafts before rendering public listings.
 - Use the public terminology in `agent-os/conventions/content.md`.
 - Follow styling guidance in `agent-os/conventions/styling.md`.
@@ -129,7 +120,6 @@ Run the narrowest useful verification for the change:
 
 - `pnpm build` for most code, content schema, route, and layout changes
 - `pnpm dev` plus browser verification for visual or interactive changes
-- `pnpm sync-writing` followed by `pnpm build` for writing sync changes
 
 ## Multi-Agent Coordination
 

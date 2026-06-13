@@ -186,8 +186,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <div className="relative aspect-[1200/630] overflow-hidden rounded-lg border border-border bg-card">
             <img src={image} alt={title} className="h-full w-full object-cover" />
           </div>
+          {/* TODO: per-post image credits — add a frontmatter field if posts ever ship images */}
           <figcaption className="mt-2 font-mono text-xs text-muted-foreground">
-            Image by Patrick Morgan, created with Midjourney
+            Image from the article
           </figcaption>
         </figure>
       )}

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About — Patrick Morgan",
+  title: "About",
   description:
-    "A personal introduction to Patrick Morgan: where he comes from, how he thinks, and how he explores creativity, technology, and meaning.",
+    "How Syed Mohammad Ammar went from a computer-science degree in Karachi to leading design at Mahaana (YC W22) — and why he's publicly shipping 100 built projects to earn the title of design engineer.",
 };
 
 export default function Page() {
@@ -53,15 +53,16 @@ export default function Page() {
 
       <section className="about-load about-load-hero mx-auto max-w-3xl px-6 pt-12 pb-16 sm:pt-24">
         <h1 className="text-4xl font-medium tracking-tight sm:text-5xl">
-          <span className="block">I&apos;ve never been easy</span>
-          <span className="block">to put in a box.</span>
+          <span className="block">Nobody was going to give me the title.</span>
+          <span className="block">So I&apos;m earning it.</span>
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          I&apos;m a liberal arts kid who found his way through music, theater, advertising, code, design, writing, and a long-running fascination with how people make meaning through creative work.
+          I&apos;m Ammar — a product designer in Karachi with a computer-science degree and a public pledge: build and ship 100 real projects until &lsquo;design engineer&rsquo; isn&apos;t a claim, it&apos;s a record. This site is one of the receipts.
         </p>
       </section>
 
       <section className="about-load about-load-photos pb-16">
+        {/* TODO: replace placeholder images below with Ammar's photos (same slots and dimensions). */}
         <div
           className="about-photo-carousel flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-6 md:hidden"
           aria-label="Personal photos"
@@ -70,7 +71,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/profile-living-room.jpg"
-                alt="Patrick sitting in a living room."
+                alt="Photo of Ammar — TODO replace image."
                 width="2400"
                 height="2400"
                 className="h-full w-full object-cover"
@@ -82,7 +83,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-dinner.jpg"
-                alt="Patrick smiling at an outdoor dinner."
+                alt="Photo of Ammar — TODO replace image."
                 width="1800"
                 height="1201"
                 className="h-full w-full object-cover"
@@ -94,7 +95,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-hollywood.jpg"
-                alt="Patrick near the Hollywood sign."
+                alt="Photo of Ammar — TODO replace image."
                 width="1800"
                 height="1200"
                 className="h-full w-full object-cover"
@@ -106,7 +107,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-airport.jpg"
-                alt="Patrick in an airport while traveling."
+                alt="Photo of Ammar — TODO replace image."
                 width="1800"
                 height="1350"
                 className="h-full w-full object-cover"
@@ -116,12 +117,13 @@ export default function Page() {
           </figure>
         </div>
 
+        {/* TODO: replace placeholder images below with Ammar's photos (same slots and dimensions). */}
         <div className="mx-auto hidden max-w-5xl items-start gap-5 px-6 md:grid md:grid-cols-2 lg:grid-cols-4">
           <figure className="rotate-[-1.5deg] bg-white p-2 pb-7 shadow-xl shadow-black/15 transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] dark:bg-[#20201e] dark:shadow-black/40">
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/profile-living-room.jpg"
-                alt="Patrick sitting in a living room."
+                alt="Photo of Ammar — TODO replace image."
                 width="2400"
                 height="2400"
                 className="h-full w-full object-cover"
@@ -133,7 +135,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-dinner.jpg"
-                alt="Patrick smiling at an outdoor dinner."
+                alt="Photo of Ammar — TODO replace image."
                 width="1800"
                 height="1201"
                 className="h-full w-full object-cover"
@@ -145,7 +147,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-hollywood.jpg"
-                alt="Patrick near the Hollywood sign."
+                alt="Photo of Ammar — TODO replace image."
                 width="1800"
                 height="1200"
                 className="h-full w-full object-cover"
@@ -157,7 +159,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-airport.jpg"
-                alt="Patrick in an airport while traveling."
+                alt="Photo of Ammar — TODO replace image."
                 width="1800"
                 height="1350"
                 className="h-full w-full object-cover"
@@ -171,84 +173,103 @@ export default function Page() {
       <section className="about-load about-load-body mx-auto max-w-3xl px-6 pb-24">
         <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
           <p>
-            I grew up in a small town in central Pennsylvania called Hollidaysburg. Yes, it&apos;s real.
+            I live in Karachi, and I&apos;ve spent my whole career circling one gap: the wall between the people who design software and the people who build it. I started on the engineering side, crossed over to design, and felt the seam every time work passed from one side to the other. This page is the story of closing that loop.
           </p>
           <p>
-            I wasn&apos;t one of those kids with a clear plan for what I wanted to be, but what I did have was a pretty strong instinct for what made me feel alive. In high school, that was choir, a cappella, and eventually musical theater. In college, it was philosophy, studying abroad in Spain and Chile, and performing music and theater whenever I could.
+            I trained as an engineer before I ever opened a design tool — a BS in Computer Science at FAST-NUCES, 2016 to 2020. In my final year I co-founded Gamolytics. We won FAST Ideacon, got incubated at Google&apos;s Nest I/O, and I handled the design, the marketing, the pitching, and the PR. The part I couldn&apos;t stop doing was the design.
           </p>
           <p>
-            Looking back, the arts were never really a side interest. They were the place I learned what it felt like to make something from nothing.
+            <Link
+              href="/work/peerdrop"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              PeerDrop
+            </Link>{" "}
+            made it a job. From 2020 to 2022 I designed the entire mobile experience for a London COVID-era grocery delivery startup, remote from Karachi: 1,000+ beta users, a £40,000 seed raise, a 34% lift in order acceptance after user interviews and usability tests with five users across two tasks, and a design system that cut build cycles 17%. The lesson that stuck: involve engineers in the design lifecycle as early as possible. Hold that thought.
           </p>
           <p>
-            Since then, my life has been less of a straight line and more of a series of intuitive turns. I went into advertising because I was curious about creativity and business. I left it because I wanted to be closer to building things. I learned to code because I wanted a practical craft that could open doors. I moved into design because I cared more about the experience than the implementation details.
+            Then I took the pivot seriously. I moved to Bangkok for an MA in Interaction Design at Harbour.Space, 2022 to 2023, on a 100% scholarship. The formal hinge: the CS grad was now a designer on paper, not just in practice.
           </p>
           <p>
-            From the outside, that might look like a bunch of pivots. From the inside, it felt more like following the energy from one room to the next. I&apos;ve moved cities, changed disciplines, been confused, been lucky, been humbled, and had to rebuild my confidence more than once. But the winding parts have usually been where the good material is.
+            Since December 2023 I&apos;ve been at{" "}
+            <Link
+              href="/work/mahaana-wealth"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              Mahaana (YC W22)
+            </Link>
+            , Pakistan&apos;s first SECP-licensed digital wealth manager, founded by the team behind Sweden&apos;s Tundra Fonder — Senior Product Designer since April 2025, leading design for the investment platform across mobile and web. The receipts: 10,000+ downloads, 4.8★+ on iOS, 4.0★+ on Android. Save+ pots, investment dashboards, ETF comparison tools. A Webflow investment calculator that lifted conversion 20%. Figma component libraries that cut design-to-dev turnaround 35%. All of it working directly with engineers and founders. On the side, I freelanced with NUMI (YC) — including a full{" "}
+            <Link
+              href="/work/truewind-rebrand"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              Truewind (YC W23) rebrand
+            </Link>
+            , logo to landing page, in under two weeks.
           </p>
           <p>
-            These days, I live in Los Angeles. I design software, write about creativity and technology, and keep trying to build a life where the different parts of me get to talk to each other. That might be the simplest way to understand me: I&apos;m always looking for the thread between the practical and the creative, the analytical and the emotional, the craft and the person doing the work.
+            And yet. Even at my most senior, the work still ended at a handover — a CS degree gathering dust while someone else shipped my designs. I never fully trusted the handoff. So I decided to stop standing on one side of the wall.
           </p>
           <p>
-            A lot of that thinking now lives in{" "}
+            About three months ago, I made{" "}
+            <Link
+              href="/work/design-engineering-100"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              a pledge in public
+            </Link>
+            : become a design engineer by building and shipping 100 real projects. &ldquo;Nobody was going to give me that title. I had to earn it.&rdquo; The proof so far:{" "}
             <a
-              href="https://www.unknownarts.co"
+              href="https://trackandtread.netlify.app"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
             >
-              Unknown Arts
+              Track &amp; Tread
             </a>
-            , my newsletter about the evolving creative process in the age of AI. I write about hard-won lessons from my own career, what great creatives can teach us, how technology is reshaping work, and how we keep creating meaningfully in uncertain times.
-          </p>
-          <p>
-            The name comes from the ancient story of Daedalus, who used his creativity to invent a way out of the labyrinth. I like that image because it feels close to the work I&apos;m trying to do: looking for paths through today&apos;s creative maze and paying attention to what those paths reveal about the future.
-          </p>
-          <p>
-            So, thanks for stopping by to my little corner of the Internet. I hope you find something here that sparks your curiosity.
-          </p>
-          <img
-            src="/images/brand/patrick-signature.png"
-            alt="Patrick"
-            width="764"
-            height="376"
-            className="h-auto w-32 dark:invert"
-          />
-          <p className="pt-8">
-            PS. If you want the longer version of my career story, I wrote about my{" "}
+            , a fitness apparel landing page designed and built from scratch. The #1 Top Author spot on 21st.dev — four components, 695 bookmarks, outranking authors with 20+ components. &ldquo;Built them because I wanted to see if I could.&rdquo; ThumbGen, a local-first crop-and-compress tool that runs 100% in the browser — no uploads, open source. A reimagining of Grok&apos;s landing page. A{" "}
             <a
-              href="https://www.unknownarts.co/p/my-pathless-path-into-technology"
+              href="https://medium.com/design-bootcamp/how-i-built-a-consistent-airbnb-style-3d-icon-system-with-json-part-2-7ad582c915fc"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
             >
-              pathless path into technology
-            </a>
-            .
+              Medium series
+            </a>{" "}
+            on building a consistent Airbnb-style 3D icon system with a JSON style engine. Most of the 100 are still ahead — that&apos;s the point. 1 down. 99 to go. And CodePen is starting to become the Dribbble for me.
           </p>
           <p>
-            PPS. If you want a better sense of the ideas I keep returning to, start with{" "}
-            <Link
-              href="/writing/50-principles-of-unknown-arts"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              50 Principles of Unknown Arts
-            </Link>
-            ,{" "}
-            <Link
-              href="/writing/the-rhythm-of-creative-progress"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              The Rhythm of Creative Progress
-            </Link>
-            , or{" "}
-            <Link
-              href="/writing/when-creation-becomes-compulsion"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              When Creation Becomes Compulsion
-            </Link>
-            .
+            What I want next is simple: high-impact, driven teams with great culture — places where the designer who writes the code is an asset, not a category error. CS fundamentals and UX instinct, in the same person, on the same problem.
           </p>
+          <p>
+            If you&apos;re building something worth shipping, email me at{" "}
+            <a
+              href="mailto:mrammarbest110@gmail.com"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              mrammarbest110@gmail.com
+            </a>
+            , or find me on{" "}
+            <a
+              href="https://www.linkedin.com/in/syedmammar/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              LinkedIn
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://github.com/SMAmmar14"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
+            >
+              GitHub
+            </a>
+            . Let the craft do the talking.
+          </p>
+          <p className="pt-8">— Ammar</p>
         </div>
       </section>
     </>

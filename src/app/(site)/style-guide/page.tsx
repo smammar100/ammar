@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Style Guide — Patrick Morgan",
+  title: "Style Guide — Syed Mohammad Ammar",
   description: "Markdown element reference for styling",
 };
 
@@ -31,22 +31,22 @@ export default function Page() {
         <h2>Blockquotes</h2>
         <p>Used for challenge statements, callouts, and highlighted quotes:</p>
         <blockquote>
-          <p>How might we help new users understand and leverage complex capabilities without compromising power and flexibility?</p>
+          <p>How might we help first-time users complete an order on their own, without rebuilding their cart from scratch?</p>
         </blockquote>
 
         <h2>Lists</h2>
         <h3>Unordered List</h3>
         <ul>
-          <li>Making the data model intuitively browsable through clear categories</li>
-          <li>Providing structured ways to build queries that taught the language</li>
-          <li>Creating a natural progression from guided to advanced usage</li>
+          <li>Save+ pots for goal-based saving</li>
+          <li>Investment dashboards across mobile and web</li>
+          <li>ETF comparison tools for first-time investors</li>
         </ul>
 
         <h3>Ordered List</h3>
         <ol>
-          <li>A pre-sales discovery experience</li>
-          <li>An enhanced setup process with our sales team</li>
-          <li>A post-onboarding feedback loop</li>
+          <li>Competitor analysis across the delivery landscape</li>
+          <li>Usability testing with 5 users across 2 core tasks</li>
+          <li>A design system to speed up build cycles</li>
         </ol>
 
         <h3>List with Bold Labels</h3>
@@ -58,7 +58,8 @@ export default function Page() {
 
         <h2>Images</h2>
         <p>Images should have rounded corners, a subtle border, and vertical spacing:</p>
-        <img src="/images/projects/query/feature-query.jpg" alt="Example project thumbnail" />
+        {/* TODO(ammar): swap in a real project image once project thumbnails exist (see TODOs in src/content/projects/*.mdx) */}
+        <img src="/images/textures/debut_light.png" alt="Placeholder texture demonstrating prose image styling" />
 
         <h2>Inline Code and Code Blocks</h2>
         <p>Use inline <code>code</code> for referencing variables, filenames like <code>CLAUDE.md</code>, or short technical terms.</p>
@@ -71,9 +72,9 @@ export default function Page() {
 
         <h2>Bold and Emphasis Combinations</h2>
         <ul>
-          <li><strong>Detection Templates:</strong> Pre-configured detections identified common bot patterns like web scrapers, vulnerability scanners, and aggressive crawlers.</li>
-          <li><strong>Automated Response System:</strong> Flexible rules &amp; alerts engine enabled teams to block suspicious traffic, rate limit aggressive bots, and trigger incident response workflows.</li>
-          <li><strong>Monitoring Dashboards:</strong> Ready-to-use views helped teams track bot activity patterns and measure <em>mitigation effectiveness</em> over time.</li>
+          <li><strong>Investment Calculator:</strong> A Webflow calculator that lifted conversion 20% by letting visitors model returns before signing up.</li>
+          <li><strong>Component Libraries:</strong> Figma libraries that cut design-to-dev turnaround 35% across the product team.</li>
+          <li><strong>App Store Receipts:</strong> 10,000+ downloads with a 4.8★+ iOS rating and <em>4.0★+ on Android</em>.</li>
         </ul>
 
         <h2>Links</h2>
@@ -82,7 +83,7 @@ export default function Page() {
         <h2>Nested Content</h2>
         <p>A paragraph before the blockquote.</p>
         <blockquote>
-          <p>Impact: Unified product teams around a shared vision driven by customer insights</p>
+          <p>Impact: +34% order acceptance rate after user interviews and usability testing</p>
         </blockquote>
         <p>A paragraph after the blockquote, continuing the narrative with additional context and detail about what happened next.</p>
       </div>

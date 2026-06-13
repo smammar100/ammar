@@ -3,7 +3,6 @@ import { ProjectCard } from "@/components/ProjectCard";
 import PixelWaveText from "@/components/PixelWaveText";
 import { LabCard } from "@/components/lab/LabCard";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
-import { UAMark } from "@/lab/editorial-art/UAMark";
 import { BuilderPhoto } from "@/components/home/BuilderPhoto";
 import { siteConfig } from "@/data/site-config";
 import { commendations } from "@/data/commendations";
@@ -13,24 +12,24 @@ import { getProjects, getLab, getWriting } from "@/lib/content";
 const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
 
 const featuredProjectDescriptions: Record<string, string> = {
-  "query-language": "Guided enterprise users through a powerful graph query language without flattening the product.",
-  expansion: "Extended a security platform into new use cases through a modular systems approach.",
-  vision: "Led strategic product vision work through facilitation, synthesis, and storytelling.",
+  "mahaana-wealth": "Led design for Pakistan's first SECP-licensed digital wealth manager — 10,000+ downloads, 4.8★ on iOS.",
+  "truewind-rebrand": "Full rebrand for Truewind (YC W23) — new logo, UI system, and landing page in under two weeks.",
+  peerdrop: "Designed the entire mobile experience for a grocery delivery startup — 1,000+ beta users, +34% order acceptance.",
 };
 
-const heroHeadline = "Patrick is a designer who builds.";
-const heroIntro = "I've been a strategist, developer, designer, and writer — sometimes all at once.";
-const heroIntroDetail = "The through line is my compulsion to turn ideas into useful, well-crafted things.";
-const heroCurrentWorkLead = "Right now, I'm designing AI tools at";
-const heroCurrentWorkTail = "and building my own software with agents.";
+const heroHeadline = "Ammar designs it, builds it, ships it.";
+const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) — 10,000+ downloads, 4.8★ on iOS — and I build what I design.";
+const heroIntroDetail = "Currently #1 Top Author on 21st.dev and shipping 100 built projects in public. Receipts, not adjectives.";
+const heroCurrentWorkLead = "Right now, I'm designing Pakistan's first SECP-licensed digital wealth manager at";
+const heroCurrentWorkTail = "and shipping my way through 100 design-engineering projects in public.";
 
-const newsletterPattern = {
+const nowShippingPattern = {
   type: "isoline", seed: 211, levels: 9, scale: 340, strokeWidth: 0.9, opacity: 66, color: "copper",
 } as const;
-const newsletterLightPattern = {
-  ...newsletterPattern, opacity: 76, strokeWidth: 1.05, color: "bronze",
+const nowShippingLightPattern = {
+  ...nowShippingPattern, opacity: 76, strokeWidth: 1.05, color: "bronze",
 } as const;
-const newsletterMotion = { mode: "ambient", speed: 20, intensity: 28 } as const;
+const nowShippingMotion = { mode: "ambient", speed: 20, intensity: 28 } as const;
 
 const homeShell = "mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-14";
 const homeSection = `${homeShell} py-12 sm:py-14 lg:py-16`;
@@ -59,6 +58,8 @@ export default function HomePage() {
     .map((name) => commendations.find((c) => c.name === name))
     .filter(Boolean);
 
+  // TODO: photos are placeholder slots until real photos of Ammar exist — see
+  // the TODOs in src/data/community.ts before swapping paths.
   const homeCommunityPhotos = [
     { ...communityPhotos[0], className: "rotate-[-2deg]", position: "object-[8%_50%]" },
     { ...communityPhotos[3], className: "rotate-[2deg]", position: "object-[42%_50%]" },
@@ -73,14 +74,15 @@ export default function HomePage() {
           <div className="hero-mobile-photo-field mb-8">
             <div className="hero-mobile-photo inline-block rotate-2 bg-white p-2 pb-5 shadow-xl shadow-black/15 transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] dark:bg-[#20201e] dark:shadow-black/40">
               <div className="h-36 w-36 overflow-hidden">
-                <img src="/images/brand/profile-living-room-avatar.jpg" alt="Patrick Morgan" className="block h-full w-full object-cover" />
+                {/* TODO: swap placeholder image for a real photo of Ammar (path kept on purpose). */}
+                <img src="/images/brand/profile-living-room-avatar.jpg" alt="Syed Mohammad Ammar" className="block h-full w-full object-cover" />
               </div>
             </div>
           </div>
           <PixelWaveText text={heroHeadline} as="h1" wave="hero" className="mb-7 max-w-[20rem] text-[2.05rem] font-medium leading-[1.08] tracking-tight" />
           <div className="mb-4 space-y-3 text-[15px] leading-relaxed">
             <p className="text-foreground/80">{heroIntro}</p>
-            <p className="text-muted-foreground">{heroCurrentWorkLead} <a href="https://sublime.security" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:text-accent">Sublime Security</a>, writing my newsletter <a href={siteConfig.social.newsletter} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:text-accent">Unknown Arts</a>, {heroCurrentWorkTail}</p>
+            <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:text-accent">Mahaana (YC W22)</a> {heroCurrentWorkTail}</p>
           </div>
         </div>
 
@@ -90,7 +92,7 @@ export default function HomePage() {
             <PixelWaveText text={heroHeadline} as="h1" wave="headline" className="mb-8 text-4xl font-medium leading-[1.2] tracking-tight lg:text-[2.6rem] xl:text-5xl" />
             <div className="max-w-xl space-y-4 text-base leading-relaxed xl:max-w-2xl">
               <p className="text-foreground/80">{heroIntro} {heroIntroDetail}</p>
-              <p className="text-muted-foreground">{heroCurrentWorkLead} <a href="https://sublime.security" target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 transition-colors hover:text-accent">Sublime Security</a>, writing my newsletter <a href={siteConfig.social.newsletter} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 transition-colors hover:text-accent">Unknown Arts</a>, {heroCurrentWorkTail}</p>
+              <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 transition-colors hover:text-accent">Mahaana (YC W22)</a> {heroCurrentWorkTail}</p>
             </div>
           </div>
           <BuilderPhoto />
@@ -148,29 +150,27 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-6">
           <div>
-            <a href={siteConfig.social.newsletter} target="_blank" rel="noopener noreferrer" className="group block h-full" aria-label="Unknown Arts newsletter">
+            <Link href="/work/design-engineering-100" className="group block h-full" aria-label="The 100 — design-engineering projects shipped in public">
               <article className="h-full overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:shadow-black/5 dark:group-hover:shadow-black/20">
                 <div className="relative h-full min-h-[260px] w-full overflow-hidden bg-card">
                   <PatternSurfaceClient
-                    name="unknown-arts-newsletter"
-                    config={newsletterPattern}
-                    lightConfig={newsletterLightPattern}
-                    motion={newsletterMotion}
+                    name="design-engineering-100"
+                    config={nowShippingPattern}
+                    lightConfig={nowShippingLightPattern}
+                    motion={nowShippingMotion}
                     duration={2800}
                     className="absolute inset-0 opacity-95 transition-all duration-300 group-hover:scale-[1.03] group-hover:opacity-100"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#171716]/92 via-[#171716]/12 to-transparent opacity-0 dark:opacity-100" />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/68 via-background/0 to-transparent dark:hidden" />
                   <div className="pointer-events-none absolute bottom-6 left-6 right-6">
-                    <div className="mb-3 text-[#b38b6d] dark:text-[#f7ccab]">
-                      <UAMark color="currentColor" height={24} />
-                    </div>
-                    <p className="text-2xl font-medium leading-none tracking-tight text-foreground dark:text-[#ede9e3]">Unknown Arts</p>
-                    <p className="mt-2 text-sm leading-snug text-muted-foreground dark:text-[#ede9e3]/70">The newsletter for creative builders in the age of AI. 7,500+ subscribers.</p>
+                    <p className="mb-3 font-mono text-xs uppercase tracking-widest text-[#b38b6d] dark:text-[#f7ccab]">Now shipping</p>
+                    <p className="text-2xl font-medium leading-none tracking-tight text-foreground dark:text-[#ede9e3]">The 100</p>
+                    <p className="mt-2 text-sm leading-snug text-muted-foreground dark:text-[#ede9e3]/70">100 design-engineering projects, built and shipped in public — a run to #1 Top Author on 21st.dev, ThumbGen, and counting.</p>
                   </div>
                 </div>
               </article>
-            </a>
+            </Link>
           </div>
           <div>
             <div className="flex flex-col divide-y divide-border">
@@ -196,7 +196,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-6">
           <div className="flex flex-col justify-center">
             <p className="max-w-md text-xl font-semibold leading-snug tracking-tight">{communityStory.heading}</p>
-            <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">I stay active in creative communities through Unknown Arts, local gatherings, and showing up for the people building thoughtful work.</p>
+            <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">No meetups or photo walls yet — I show up by shipping: 100 design-engineering projects in public, a #1 Top Author run on 21st.dev, and open-source tools like ThumbGen.</p>
           </div>
           <div>
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -230,7 +230,11 @@ export default function HomePage() {
 
       {/* ── Closing ── */}
       <section className={`${homeShell} pb-20 pt-2 text-center sm:pb-24 lg:pb-28`}>
-        <PixelWaveText text="Let's craft a better future, together." as="p" wave="cta" className="text-3xl font-medium tracking-tight sm:text-4xl" />
+        <PixelWaveText text="Let's build something worth shipping." as="p" wave="cta" className="text-3xl font-medium tracking-tight sm:text-4xl" />
+        <p className="mt-6 text-sm text-muted-foreground">
+          <a href={`mailto:${siteConfig.social.email}`} className="underline underline-offset-4 transition-colors hover:text-foreground">{siteConfig.social.email}</a> — or find me on{" "}
+          <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-foreground">LinkedIn</a>.
+        </p>
       </section>
 
       <style>{`

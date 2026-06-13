@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef } from 'react';
-import { UAMark } from './UAMark';
+import { DitherAMark } from '@/lab/pixel-mark/DitherMark';
 import { GenerativeCanvas } from './GenerativeCanvas';
 import {
   brand,
@@ -193,7 +193,7 @@ export const ArtCanvas = forwardRef<HTMLDivElement, CanvasProps>(function ArtCan
         </div>
       )}
 
-      {/* Caption — UA mark + generator info in one opaque badge, bottom right */}
+      {/* Caption — site mark + generator info in one opaque badge, bottom right */}
       {showCaption && (
         <div style={{
           position: 'absolute', bottom: 48, right: 48,
@@ -202,7 +202,7 @@ export const ArtCanvas = forwardRef<HTMLDivElement, CanvasProps>(function ArtCan
           padding: '12px 16px',
           display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 14,
         }}>
-          <UAMark color={markColor} height={30} />
+          <DitherAMark size={30} bgColor={bgColor} pixelColor={markColor} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <div style={{
               fontFamily: monoStack,
@@ -224,7 +224,8 @@ export const ArtCanvas = forwardRef<HTMLDivElement, CanvasProps>(function ArtCan
               opacity: 0.5,
               lineHeight: 1,
             }}>
-              {caption.params} · @itspatmorgan
+              {/* TODO: confirm smammar.com is the final domain (matches siteConfig.url) */}
+              {caption.params} · smammar.com
             </div>
           </div>
         </div>

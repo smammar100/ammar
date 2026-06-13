@@ -25,6 +25,7 @@ export function BuilderPhoto() {
         className="group/builder block cursor-cell bg-white p-2 pb-8 text-left shadow-2xl shadow-black/20 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background dark:bg-[#20201e] dark:shadow-black/50 lg:p-3 lg:pb-10"
       >
         <div className="relative h-52 w-52 overflow-hidden lg:h-64 lg:w-64 xl:h-72 xl:w-72">
+          {/* TODO: swap placeholder image for a real photo of Ammar (path kept on purpose). */}
           <img
             src="/images/brand/profile-living-room.jpg"
             alt="Syed Mohammad Ammar"

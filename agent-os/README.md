@@ -18,11 +18,11 @@ calling it done, and capture reusable learnings after completion.
 
 ## Tracking
 
-Work can be tracked through:
+No issue tracker or project board is connected for this repository yet. Track
+non-trivial work through plans in `plans/`.
 
-- [Personal Website project board](https://github.com/users/itspatmorgan/projects/2)
-- [GitHub Issues](https://github.com/itspatmorgan/itspatmorgan.github.io/issues)
-- Notion Tasks for cross-project orchestration
+TODO(owner): create GitHub Issues and a project board for this repo, then
+document the links here (see `AGENTS.md`).
 
 ## Workflow
 

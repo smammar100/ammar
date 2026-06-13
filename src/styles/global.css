@@ -11,7 +11,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-    /* Light mode — warm, minimal, cream-tinted (Unknown Arts aesthetic) */
+    /* Light mode — warm, minimal, cream-tinted editorial palette */
     --background: oklch(0.98 0.004 80);
     --foreground: oklch(0.15 0.01 60);
     --card: oklch(0.96 0.005 80);

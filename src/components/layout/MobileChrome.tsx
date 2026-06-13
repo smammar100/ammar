@@ -7,11 +7,11 @@ import { Logo } from "./Logo";
 import { ThemeToggleButton } from "./ThemeToggleButton";
 
 const elsewhere = [
-  { label: "Substack", href: siteConfig.social.newsletter },
   { label: "LinkedIn", href: siteConfig.social.linkedin },
-  { label: "X", href: siteConfig.social.x },
   { label: "GitHub", href: siteConfig.social.github },
-];
+  { label: "X", href: siteConfig.social.x },
+  { label: "CodePen", href: siteConfig.social.codepen },
+].filter((item) => item.href);
 
 /** Mobile top bar + full-screen nav overlay (replaces Header.astro + MobileNav.astro). */
 export function MobileChrome() {

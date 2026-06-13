@@ -16,9 +16,9 @@ export function ResumeReveal() {
     if (intro) animate(intro, { opacity: [0, 1] }, { duration: 0.4, ease: "easeOut", delay: 0.2 });
 
     const skills = document.querySelector<HTMLElement>("[data-resume-skills]");
-    const ua = document.querySelector<HTMLElement>("[data-resume-ua]");
-    if (skills) animate(skills, { opacity: [0, 1] }, { duration: 0.4, ease: "easeOut", delay: 0.3 });
-    if (ua) animate(ua, { opacity: [0, 1] }, { duration: 0.4, ease: "easeOut", delay: 0.35 });
+    const education = document.querySelector<HTMLElement>("[data-resume-education]");
+    if (education) animate(education, { opacity: [0, 1] }, { duration: 0.4, ease: "easeOut", delay: 0.3 });
+    if (skills) animate(skills, { opacity: [0, 1] }, { duration: 0.4, ease: "easeOut", delay: 0.35 });
 
     const entries = document.querySelectorAll<HTMLElement>("[data-timeline-entry]");
     const observer = new IntersectionObserver(

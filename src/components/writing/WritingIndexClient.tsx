@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { animate } from "motion";
 import { ArticleListItem } from "@/components/ArticleListItem";
-import { siteConfig } from "@/data/site-config";
 import { cn } from "@/lib/utils";
 
 export interface WritingIndexPost {
@@ -42,16 +41,17 @@ export function WritingIndexClient({ posts, filterThemes, themeCounts }: Props) 
       >
         <h1 className="mb-4 text-4xl font-medium tracking-tight sm:text-5xl">Writing</h1>
         <p className="max-w-xl text-lg text-muted-foreground">
-          A sample of articles focused on AI, design, and systems thinking. Subscribe to{" "}
+          Notes from the design-engineering run. Short summaries live here; the full pieces are
+          on{" "}
           <a
-            href={siteConfig.social.newsletter}
+            href="https://medium.com/@mrammarbest110"
             target="_blank"
             rel="noopener noreferrer"
             className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
           >
-            Unknown Arts
-          </a>{" "}
-          for my entire catalog of 200+ articles.
+            Medium
+          </a>
+          .
         </p>
         {filterThemes.length > 0 && (
           <div className="mt-8 flex flex-wrap gap-2" aria-label="Filter articles by theme">

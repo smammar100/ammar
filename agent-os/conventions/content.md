@@ -48,13 +48,14 @@ categories: ["Category"]
 theme: "AI"
 tags: ["tag1", "tag2"]
 image: "/images/writing/article-slug/feature.jpg"
-canonicalUrl: "https://www.unknownarts.co/p/article-slug"
+canonicalUrl: "https://medium.com/design-bootcamp/article-slug"
 draft: false
 ```
 
-Writing can be synced from the local Obsidian vault with `pnpm sync-writing`.
-The website owns `theme`, `visual`, and generated `image` frontmatter for
-writing. Obsidian sync preserves those fields.
+Writing entries are authored directly in `src/content/writing/` as short
+site-native summaries, with `canonicalUrl` pointing at the Medium original. Do
+not run the legacy `pnpm sync-writing` Obsidian pipeline (see `AGENTS.md`).
+The website owns `theme`, `visual`, and `image` frontmatter for writing.
 
 Use `theme` for broad reader-facing grouping, such as `AI`, `Design`, `Systems
 Thinking`, or `Creative Practice`. Use `tags` for lower-level metadata.

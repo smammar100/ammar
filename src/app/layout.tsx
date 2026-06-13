@@ -9,6 +9,8 @@ export const metadata: Metadata = {
     template: "%s — Syed Mohammad Ammar",
   },
   description: siteConfig.description,
+  // favicon.svg now carries the DitherAMark "A".
+  // TODO: the PNG fallbacks (favicon-16x16/32x32, apple-touch-icon) still carry the scaffold's "P" — regenerate them from favicon.svg.
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -22,6 +24,7 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     title: siteConfig.title,
     description: siteConfig.description,
+    // TODO: replace with a photo of Ammar — current file is the scaffold's placeholder (also used by the twitter card below).
     images: ["/images/brand/profile-picture.jpg"],
   },
   twitter: {
