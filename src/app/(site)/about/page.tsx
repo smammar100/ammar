@@ -53,8 +53,8 @@ export default function Page() {
       `}</style>
 
       <section className="about-load about-load-hero mx-auto max-w-3xl px-6 pt-12 pb-16 sm:pt-24">
-        <h1 className="text-4xl font-medium tracking-tight sm:text-5xl">
-          <span className="block">Nobody was going to give me the title.</span>
+        <h1 className="text-balance text-4xl font-medium tracking-tight sm:text-5xl">
+          <span className="block text-balance">Nobody was going to give me the title.</span>
           <span className="block">So I&apos;m earning it.</span>
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
