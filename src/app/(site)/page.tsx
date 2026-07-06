@@ -10,7 +10,7 @@ import { getProjects, getLab, getWriting } from "@/lib/content";
 const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
 
 const featuredProjectDescriptions: Record<string, string> = {
-  "mahaana-wealth": "Led design for Pakistan's first SECP-licensed digital wealth manager — 10,000+ downloads, 4.8★ on iOS.",
+  "mahaana-wealth": "Rebuilt Mahaana's site from Webflow into a Next.js + Sanity platform — Lighthouse performance 57 → 100.",
   "truewind-rebrand": "Full rebrand for Truewind (YC W23) — new logo, UI system, and landing page in under two weeks.",
   peerdrop: "Designed the entire mobile experience for a grocery delivery startup — 1,000+ beta users, +34% order acceptance.",
 };

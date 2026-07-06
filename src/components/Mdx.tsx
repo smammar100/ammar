@@ -4,13 +4,20 @@ import rehypeSlug from "rehype-slug";
 import { rehypeFigure } from "@/lib/mdx-plugins";
 import { FigmaEmbed } from "@/components/FigmaEmbed";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
+import { ArchitectureBefore, ArchitectureAfter } from "@/components/case-study/FlowDiagram";
+import { LighthouseCompare } from "@/components/case-study/LighthouseCompare";
 
 // Components available to MDX content. `YouTube` matches the old astro-embed
 // component name used in the project files (<YouTube id="..." />).
+// The case-study graphics are zero-prop presets — next-mdx-remote doesn't
+// reliably pass array/object expression props through MDX.
 const components = {
   FigmaEmbed,
   YouTubeEmbed,
   YouTube: YouTubeEmbed,
+  ArchitectureBefore,
+  ArchitectureAfter,
+  LighthouseCompare,
 };
 
 export function Mdx({ source, format = "mdx" }: { source: string; format?: "md" | "mdx" }) {

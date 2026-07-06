@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Mdx } from "@/components/Mdx";
+import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc";
 import { getProject, getProjects } from "@/lib/content";
 
 export async function generateStaticParams() {
@@ -70,6 +71,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           <Mdx source={project.body} format={project.format} />
         </div>
       </article>
+
+      <DynamicIslandTOC selector=".prose h2, .prose h3, .prose h4" />
 
       <style>{`
         .project-load {

@@ -1,8 +1,8 @@
 ---
-title: "Designing Pakistan's First SECP-Licensed Digital Wealth Manager"
+title: "From Webflow to a Product Platform"
 type: "professional"
-description: "At Mahaana (YC W22), I lead design for Pakistan's first SECP-licensed digital wealth manager — an investment platform across mobile and web with 10,000+ downloads and a 4.8★ iOS rating."
-skills: ["Product Design", "Design Systems", "Fintech"]
+description: "How rebuilding Mahaana's website eliminated operational bottlenecks, lifted Lighthouse performance from 57 to 100, and let Marketing and Operations own content — designed and built end to end in Next.js, React, and Sanity."
+skills: ["Product Design", "Front-end Development", "Design Systems"]
 thumbnail: "/images/projects/mahaana-wealth/thumbnail-mahaana-light.png"
 thumbnailWide: "/images/projects/mahaana-wealth/thumbnail-mahaana-light-wide.png"
 heroImage: "/images/projects/mahaana-wealth/thumbnail-mahaana-light-wide.png"
@@ -10,31 +10,63 @@ sortOrder: 1
 draft: false
 ---
 
-> How do you get a first-time investor to trust an app with their savings?
+> What do you do when the tool that got you here becomes the thing holding you back?
+
+Transforming a marketing website into a scalable product platform — designed and built end to end.
+
+**Role** Product Designer & Front-end Developer · **Duration** 2025–Present (in staging)
 
 ## Context
 
-Mahaana (YC W22) is Pakistan's first SECP-licensed digital wealth manager, founded by the team behind Sweden's Tundra Fonder. The product had to feel trustworthy enough for a first-time investor and capable enough for someone comparing funds line by line.
+As Mahaana grew from a single investment product into a wealth-management platform, the website struggled to keep pace. It was originally built in Webflow, which had carried the company's early growth well. But as new products, campaigns, and content needs piled up, the platform got harder and harder to maintain.
 
-## My Role
+Rather than ship yet another visual refresh, I proposed rebuilding the site from the ground up — a faster, more scalable platform that served both our customers and our internal teams.
 
-I joined as Product Designer in December 2023 and became Senior Product Designer in April 2025. I lead design for the investment platform across mobile and web, working directly with engineers and the founders — no layers in between.
+## The Problem
 
-## What Shipped
+The website wasn't failing because of its design. It was failing because of its workflow and technical limits.
 
-- **Save+ pots** — goal-based saving inside the app.
-- **Investment dashboards** — portfolio views built for people checking real money, not vanity charts.
-- **ETF comparison tools** — side-by-side fund comparison for the decision that matters most.
-- **An investment calculator in Webflow** — designed and built it; it lifted conversion 20%.
-- **Figma component libraries** — shared across design and engineering, cutting design-to-dev turnaround 35%.
+Marketing and Operations leaned on me for even the smallest content updates — Webflow's interface felt too complex to touch, so routine changes that should have taken minutes became design requests that slowed the whole team down.
 
-## Outcomes
+Meanwhile, our fund pages already showed live NAVs and real-time performance, but doing that in Webflow meant piling on custom code and JavaScript workarounds. As features grew, those scripts got brittle and started dragging down performance.
 
-- 10,000+ app downloads
-- 4.8★+ rating on iOS, 4.0★+ on Android
-- +20% conversion from the investment calculator
-- 35% faster design-to-dev turnaround
+- Marketing and Operations couldn't confidently manage content on their own.
+- Live fund data depended on custom scripts and code embeds inside Webflow.
+- Growing customization hurt both maintainability and performance.
+- The architecture wasn't flexible enough for Mahaana's expanding product line.
+
+<ArchitectureBefore />
+
+{/* TODO(ammar): drop in the old homepage + Lighthouse 57 screenshot here. */}
+
+## What I Built
+
+Instead of extending Webflow further, I redesigned and rebuilt the entire site on a modern, component-based architecture. This wasn't just a redesign — it changed how the website was built, managed, and maintained.
+
+- **Next.js and React** — a scalable front-end foundation.
+- **Tailwind CSS and reusable components** — faster development, consistent UI.
+- **Sanity CMS** — full content ownership for Marketing and Operations.
+- **Framer Motion** — smoother, more engaging interactions.
+- **Direct API integrations** — live fund data without the Webflow workarounds.
+- **Cursor** — an AI-assisted workflow to move faster while keeping production-quality code.
+
+<ArchitectureAfter />
+
+{/* TODO(ammar): drop in the before/after homepage comparison screenshot here. */}
+
+## Impact
+
+The rebuild improved both the customer experience and internal operations.
+
+- **Customers** — a modern, product-first experience with faster loads, smoother interactions, better accessibility, and real-time fund information through a cleaner architecture.
+- **Internal teams** — Marketing and Operations now manage content independently in Sanity, no longer waiting on Design or Engineering for routine updates. Reusable components make launching new pages and campaigns far quicker.
+
+<LighthouseCompare />
 
 ## Lessons
 
-The 35% number is the one I care about most. The fastest way to ship better product wasn't another design review — it was building the component library so engineers and I were working from the same parts. Sitting directly with engineers and founders, the gap between "designed" and "shipped" is where all the leverage is.
+This project taught me that great product design reaches well beyond beautiful interfaces. The biggest problem here wasn't visual — it was operational.
+
+By rebuilding from the ground up, I wasn't just improving the customer experience; I was removing friction for the people maintaining the site every day. Owning both the design and the implementation showed me how architecture, performance, accessibility, and internal workflows all feed into a successful product.
+
+The most valuable outcome wasn't a perfect Lighthouse score. It was a platform that lets teams move faster — and a solid foundation for Mahaana's next stage of growth.

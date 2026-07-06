@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getWriting, getWritingEntry, type WritingVisual } from "@/lib/content";
 import { Mdx } from "@/components/Mdx";
 import { Badge } from "@/components/ui/badge";
+import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc";
 import { EditorialVisual } from "@/components/writing/EditorialVisual";
 
 export function generateStaticParams() {
@@ -117,6 +118,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { title, description, publishedDate, theme, visual, image } = entry.data;
 
   return (
+    <>
     <article className="mx-auto max-w-3xl px-6 py-16">
       {/* Back link */}
       <Link
@@ -198,5 +200,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <Mdx source={entry.body} format={entry.format} />
       </div>
     </article>
+
+    <DynamicIslandTOC selector=".prose h2, .prose h3, .prose h4" />
+    </>
   );
 }

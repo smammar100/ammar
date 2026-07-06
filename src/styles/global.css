@@ -219,6 +219,22 @@
 .prose .figma-embed p {
   @apply text-[0.7rem] leading-tight;
 }
+/* Case-study graphics (FlowDiagram, LighthouseCompare) break out of the 65ch
+   prose column to the article's full width. */
+.prose .case-figure {
+  max-width: none;
+}
+
+/* Hide the scrollbar while keeping the element scrollable (used by the
+   Dynamic Island TOC panel, which auto-fits its height and only scrolls when a
+   very long TOC exceeds the viewport). */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
 /* White SVG logos — invert in light mode so they're visible on light backgrounds */
 .logo-adaptive {
