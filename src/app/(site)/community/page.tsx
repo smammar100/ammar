@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { commendations } from "@/data/commendations";
 import { communityPhotos, communityStory } from "@/data/community";
 import { cn } from "@/lib/utils";
@@ -9,12 +10,15 @@ export const metadata: Metadata = {
   description: "Building in public — shipping components, open-source tools, and experiments where everyone can see them.",
 };
 
-const communityPagePhotos = communityPhotos.map((photo, index) => ({
+const communityPagePhotos = communityPhotos.slice(1).map((photo, index) => ({
   ...photo,
-  className: ["rotate-[-2deg]", "rotate-[2deg]", "rotate-[-1deg]", "rotate-[1deg]"][index],
+  className: ["rotate-[2deg]", "rotate-[-1deg]", "rotate-[1deg]"][index],
 }));
 
 export default function Page() {
+  // TODO(ammar): re-enable once Kind Words and community content are real.
+  notFound();
+
   return (
     <>
       <CommunityReveal />
@@ -28,7 +32,7 @@ export default function Page() {
 
       <section className="mx-auto max-w-3xl px-6 pb-16" data-community-story style={{ opacity: 0 }}>
         {/* TODO: the four photos below are placeholder slots — replace with real photos of Ammar in src/data/community.ts. */}
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4">
           {communityPagePhotos.map((photo) => (
             <figure
               key={photo.src}

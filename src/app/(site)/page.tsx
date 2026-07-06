@@ -5,8 +5,6 @@ import { LabCard } from "@/components/lab/LabCard";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
 import { BuilderPhoto } from "@/components/home/BuilderPhoto";
 import { siteConfig } from "@/data/site-config";
-import { commendations } from "@/data/commendations";
-import { communityPhotos, communityStory, featuredCommunityCommendations } from "@/data/community";
 import { getProjects, getLab, getWriting } from "@/lib/content";
 
 const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
@@ -35,7 +33,7 @@ const homeShell = "mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-14";
 const homeSection = `${homeShell} py-12 sm:py-14 lg:py-16`;
 const homeFirstSection = `${homeShell} pt-5 pb-12 sm:pt-10 sm:pb-14 lg:pt-10 lg:pb-16`;
 const homeSectionHeader = "mb-7 flex items-center justify-between";
-const homeCardGrid = "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6";
+const homeCardGrid = "grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 lg:gap-6";
 
 export default function HomePage() {
   const allProjects = getProjects();
@@ -53,17 +51,6 @@ export default function HomePage() {
   });
 
   const writingPosts = getWriting();
-
-  const communityCommendations = featuredCommunityCommendations
-    .map((name) => commendations.find((c) => c.name === name))
-    .filter(Boolean);
-
-  // TODO: photos are placeholder slots until real photos of Ammar exist — see
-  // the TODOs in src/data/community.ts before swapping paths.
-  const homeCommunityPhotos = [
-    { ...communityPhotos[0], className: "rotate-[-2deg]", position: "object-[8%_50%]" },
-    { ...communityPhotos[3], className: "rotate-[2deg]", position: "object-[42%_50%]" },
-  ];
 
   return (
     <>
@@ -119,7 +106,6 @@ export default function HomePage() {
                 slug={project.slug}
                 index={i}
                 variant="compact"
-                squareDesktop
                 showDescription
               />
             </div>
@@ -184,47 +170,6 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ── Community ── */}
-      <section className={`${homeSection} pb-20 sm:pb-24 lg:pb-28`}>
-        <div className={homeSectionHeader}>
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Community</p>
-          <Link href="/community" className="text-xs text-muted-foreground transition-colors hover:text-foreground">View all →</Link>
-        </div>
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-6">
-          <div className="flex flex-col justify-center">
-            <p className="max-w-md text-xl font-semibold leading-snug tracking-tight">{communityStory.heading}</p>
-            <p className="mt-5 max-w-md text-sm leading-relaxed text-muted-foreground">No meetups or photo walls yet — I show up by shipping: 100 design-engineering projects in public, a #1 Top Author run on 21st.dev, and open-source tools like ThumbGen.</p>
-          </div>
-          <div>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {homeCommunityPhotos.map((photo, i) => (
-                <figure key={i} className={`bg-white p-2 pb-7 shadow-xl shadow-black/15 transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] dark:bg-[#20201e] dark:shadow-black/40 ${photo.className}`}>
-                  <div className="aspect-square overflow-hidden bg-muted">
-                    <img src={photo.src} alt={photo.alt} loading="lazy" className={`block h-full w-full object-cover ${photo.position}`} />
-                  </div>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
-          {communityCommendations.map((c) =>
-            c ? (
-              <blockquote key={c.name} className="mb-4 break-inside-avoid rounded-lg p-5 texture-bg">
-                <p className="mb-4 font-mono text-[13px] leading-relaxed text-foreground">{c.quote}</p>
-                <footer className="flex items-center gap-3">
-                  <img src={c.image} alt={c.name} className="h-8 w-8 shrink-0 rounded-full object-cover" loading="lazy" />
-                  <div>
-                    <p className="text-sm font-medium leading-tight">{c.name}</p>
-                    <p className="text-xs text-muted-foreground">{c.role}</p>
-                  </div>
-                </footer>
-              </blockquote>
-            ) : null,
-          )}
         </div>
       </section>
 

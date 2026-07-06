@@ -29,7 +29,7 @@ export function BuilderPhoto() {
           <img
             src="/images/brand/profile-living-room.jpg"
             alt="Syed Mohammad Ammar"
-            className="block h-full w-full scale-[1.55] object-cover object-[43%_54%] transition duration-500 group-aria-pressed/builder:scale-[1.62] group-aria-pressed/builder:grayscale group-aria-pressed/builder:contrast-125 group-aria-pressed/builder:brightness-75 group-aria-pressed/builder:saturate-0 group-aria-pressed/builder:[image-rendering:pixelated]"
+            className="block h-full w-full scale-[1.55] object-cover object-[43%_55%] transition duration-500 group-aria-pressed/builder:scale-[1.62] group-aria-pressed/builder:grayscale group-aria-pressed/builder:contrast-125 group-aria-pressed/builder:brightness-75 group-aria-pressed/builder:saturate-0 group-aria-pressed/builder:[image-rendering:pixelated]"
           />
           <div className="builder-grid pointer-events-none absolute inset-0 opacity-0 mix-blend-screen transition-opacity duration-500 group-aria-pressed/builder:opacity-80" aria-hidden="true" />
           <div className="builder-scanlines pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-aria-pressed/builder:opacity-100" aria-hidden="true" />
