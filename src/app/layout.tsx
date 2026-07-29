@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.title,
-    template: "%s — Syed Mohammad Ammar",
+    template: "%s | Syed Mohammad Ammar",
   },
   description: siteConfig.description,
   // favicon.svg now carries the DitherAMark "A".

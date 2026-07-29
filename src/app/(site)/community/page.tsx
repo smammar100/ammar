@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 import { CommunityReveal } from "./CommunityReveal";
 
 export const metadata: Metadata = {
-  title: "Community — Syed Mohammad Ammar",
-  description: "Building in public — shipping components, open-source tools, and experiments where everyone can see them.",
+  title: "Community | Syed Mohammad Ammar",
+  description: "Building in public by shipping components, open-source tools, and experiments where everyone can see them.",
 };
 
 const communityPagePhotos = communityPhotos.slice(1).map((photo, index) => ({
@@ -26,7 +26,7 @@ export default function Page() {
       <section className="mx-auto max-w-3xl px-6 pt-12 pb-16 sm:pt-24 sm:pb-12" data-community-hero style={{ opacity: 0 }}>
         <h1 className="mb-4 text-4xl font-medium tracking-tight sm:text-5xl">Community</h1>
         <p className="max-w-xl text-lg text-muted-foreground">
-          Showing up in public by shipping — components, open-source tools, and experiments, posted where everyone can see them.
+          Showing up in public by shipping: components, open-source tools, and experiments, posted where everyone can see them.
         </p>
       </section>
 
@@ -87,7 +87,7 @@ export default function Page() {
           </div>
         ) : (
           <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
-            Being collected — the slow way, by shipping. If we&apos;ve built something together, send a line:{" "}
+            Being collected the slow way, by shipping. If we&apos;ve built something together, send a line:{" "}
             <a
               href="mailto:mrammarbest110@gmail.com"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"

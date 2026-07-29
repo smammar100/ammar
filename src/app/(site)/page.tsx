@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ProjectCard } from "@/components/ProjectCard";
+import { FeaturedWorkRow } from "@/components/home/FeaturedWorkRow";
 import PixelWaveText from "@/components/PixelWaveText";
 import { LabCard } from "@/components/lab/LabCard";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
@@ -9,14 +9,8 @@ import { getProjects, getLab, getWriting } from "@/lib/content";
 
 const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
 
-const featuredProjectDescriptions: Record<string, string> = {
-  "mahaana-wealth": "Rebuilt Mahaana's site from Webflow into a Next.js + Sanity platform — Lighthouse performance 57 → 100.",
-  "truewind-rebrand": "Full rebrand for Truewind (YC W23) — new logo, UI system, and landing page in under two weeks.",
-  peerdrop: "Designed the entire mobile experience for a grocery delivery startup — 1,000+ beta users, +34% order acceptance.",
-};
-
 const heroHeadline = "Ammar designs it, builds it, ships it.";
-const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) — 10,000+ downloads, 4.8★ on iOS — and I build what I design.";
+const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) with 10,000+ downloads and 4.8★ on iOS, and I build what I design.";
 const heroIntroDetail = "Currently #1 Top Author on 21st.dev and shipping 100 built projects in public. Receipts, not adjectives.";
 const heroCurrentWorkLead = "Right now, I'm designing Pakistan's first SECP-licensed digital wealth manager at";
 const heroCurrentWorkTail = "and shipping my way through 100 design-engineering projects in public.";
@@ -37,8 +31,13 @@ const homeCardGrid = "grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 lg:ga
 
 export default function HomePage() {
   const allProjects = getProjects();
-  const professionalProjects = allProjects
-    .filter((p) => p.data.type === "professional")
+  // Featured work on the home page. Everything still lives on /work and at its
+  // own URL; this list is just what gets a card here.
+  //   design-engineering-100 — has its own dedicated card further down
+  //   truewind-rebrand, peerdrop — deliberately not featured on the home page
+  const homeExcludedProjects = ["design-engineering-100", "truewind-rebrand", "peerdrop"];
+  const featuredProjects = allProjects
+    .filter((p) => !homeExcludedProjects.includes(p.slug))
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
   const labEntries = getLab().sort((a, b) => {
@@ -61,8 +60,8 @@ export default function HomePage() {
           <div className="hero-mobile-photo-field mb-8">
             <div className="hero-mobile-photo inline-block rotate-2 bg-white p-2 pb-5 shadow-xl shadow-black/15 transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] dark:bg-[#20201e] dark:shadow-black/40">
               <div className="h-36 w-36 overflow-hidden">
-                {/* TODO: swap placeholder image for a real photo of Ammar (path kept on purpose). */}
-                <img src="/images/brand/profile-living-room-avatar.jpg" alt="Syed Mohammad Ammar" className="block h-full w-full object-cover" />
+                {/* Same photo the desktop hero (BuilderPhoto) uses, so the two match. */}
+                <img src="/images/brand/profile-living-room.jpg" alt="Syed Mohammad Ammar" className="block h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -92,23 +91,19 @@ export default function HomePage() {
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Work</p>
           <Link href="/work" className="text-xs text-muted-foreground transition-colors hover:text-foreground">View all →</Link>
         </div>
-        <div className={homeCardGrid}>
-          {professionalProjects.slice(0, 3).map((project, i) => (
-            <div key={project.slug}>
-              <ProjectCard
-                title={project.data.title}
-                description={featuredProjectDescriptions[project.slug] ?? project.data.description}
-                skills={project.data.skills}
-                thumbnail={project.data.thumbnail}
-                thumbnailDark={project.data.thumbnailDark}
-                thumbnailWide={project.data.thumbnailWide}
-                thumbnailWideDark={project.data.thumbnailWideDark}
-                slug={project.slug}
-                index={i}
-                variant="compact"
-                showDescription
-              />
-            </div>
+        <div>
+          {featuredProjects.slice(0, 4).map((project, i) => (
+            <FeaturedWorkRow
+              key={project.slug}
+              slug={project.slug}
+              client={project.data.client}
+              title={project.data.statement ?? project.data.title}
+              subtext={project.data.subtext}
+              kpis={project.data.kpis}
+              thumbnail={project.data.thumbnailWide ?? project.data.thumbnail}
+              thumbnailDark={project.data.thumbnailWideDark ?? project.data.thumbnailDark}
+              index={i}
+            />
           ))}
         </div>
       </section>
@@ -136,7 +131,7 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-6">
           <div>
-            <Link href="/work/design-engineering-100" className="group block h-full" aria-label="The 100 — design-engineering projects shipped in public">
+            <Link href="/work/design-engineering-100" className="group block h-full" aria-label="The 100: design-engineering projects shipped in public">
               <article className="h-full overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:shadow-black/5 dark:group-hover:shadow-black/20">
                 <div className="relative h-full min-h-[260px] w-full overflow-hidden bg-card">
                   <PatternSurfaceClient
@@ -152,7 +147,7 @@ export default function HomePage() {
                   <div className="pointer-events-none absolute bottom-6 left-6 right-6">
                     <p className="mb-3 font-mono text-xs uppercase tracking-widest text-[#b38b6d] dark:text-[#f7ccab]">Now shipping</p>
                     <p className="text-2xl font-medium leading-none tracking-tight text-foreground dark:text-[#ede9e3]">The 100</p>
-                    <p className="mt-2 text-sm leading-snug text-muted-foreground dark:text-[#ede9e3]/70">100 design-engineering projects, built and shipped in public — a run to #1 Top Author on 21st.dev, ThumbGen, and counting.</p>
+                    <p className="mt-2 text-sm leading-snug text-muted-foreground dark:text-[#ede9e3]/70">100 design-engineering projects, built and shipped in public: a run to #1 Top Author on 21st.dev, ThumbGen, and counting.</p>
                   </div>
                 </div>
               </article>
@@ -177,7 +172,7 @@ export default function HomePage() {
       <section className={`${homeShell} pb-20 pt-2 text-center sm:pb-24 lg:pb-28`}>
         <PixelWaveText text="Let's build something worth shipping." as="p" wave="cta" className="text-3xl font-medium tracking-tight sm:text-4xl" />
         <p className="mt-6 text-sm text-muted-foreground">
-          <a href={`mailto:${siteConfig.social.email}`} className="underline underline-offset-4 transition-colors hover:text-foreground">{siteConfig.social.email}</a> — or find me on{" "}
+          <a href={`mailto:${siteConfig.social.email}`} className="underline underline-offset-4 transition-colors hover:text-foreground">{siteConfig.social.email}</a>, or find me on{" "}
           <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-foreground">LinkedIn</a>.
         </p>
       </section>

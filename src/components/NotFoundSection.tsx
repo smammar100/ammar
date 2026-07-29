@@ -36,7 +36,7 @@ export function NotFoundSection() {
         This page hasn&apos;t shipped yet.
       </h2>
       <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
-        Broken link, wrong turn, or one of the 99 projects still to come — either way, there&apos;s nothing here.
+        Broken link, wrong turn, or one of the 99 projects still to come. Either way, there&apos;s nothing here.
       </p>
 
       <div className="mt-9 flex flex-wrap items-center justify-center gap-3">

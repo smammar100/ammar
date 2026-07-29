@@ -1,14 +1,15 @@
 export const siteConfig = {
   name: "Syed Mohammad Ammar",
-  title: "Syed Mohammad Ammar — Design Engineer",
+  title: "Syed Mohammad Ammar | Design Engineer",
   description:
-    "Design engineer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, publicly shipping 100 built projects — design to deploy.",
+    "Design engineer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, publicly shipping 100 built projects, design to deploy.",
   // TODO: confirm domain before launch.
   url: "https://www.smammar.com",
   nav: [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Work", href: "/work" },
+    // Work hidden from the nav. The /work route and every case study still
+    // resolve, and the home page's "View all" still links there.
     { label: "Lab", href: "/lab" },
     { label: "Writing", href: "/writing" },
     // Community removed from nav: no real testimonials or community photos exist

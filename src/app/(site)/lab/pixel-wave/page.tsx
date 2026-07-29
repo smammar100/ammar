@@ -8,7 +8,7 @@ import { PixelWaveDemo } from "@/components/lab/PixelWaveDemo";
 const entry = getLabEntry("pixel-wave");
 
 export const metadata: Metadata = {
-  title: `${entry?.data.title ?? "Pixel Wave"} — Syed Mohammad Ammar`,
+  title: `${entry?.data.title ?? "Pixel Wave"} | Syed Mohammad Ammar`,
   description: entry?.data.description,
   robots: { index: false, follow: false },
 };

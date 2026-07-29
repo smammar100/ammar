@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { WorkReveal } from "./WorkReveal";
 
 export const metadata: Metadata = {
-  title: "Work — Syed Mohammad Ammar",
+  title: "Work | Syed Mohammad Ammar",
   description: "Product designer since 2020. Now building what I design.",
 };
 

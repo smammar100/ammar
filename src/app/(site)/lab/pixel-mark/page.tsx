@@ -14,7 +14,7 @@ import {
 const entry = getLabEntry("pixel-mark");
 
 export const metadata: Metadata = {
-  title: `${entry?.data.title ?? "Pixel Mark"} — Syed Mohammad Ammar`,
+  title: `${entry?.data.title ?? "Pixel Mark"} | Syed Mohammad Ammar`,
   description: entry?.data.description,
   robots: { index: false, follow: false },
 };
@@ -100,7 +100,7 @@ export default function Page() {
             </h2>
             <p className="text-sm leading-relaxed text-muted-foreground">
               As a compact sidebar control, hover previews the rail&rsquo;s next
-              state — the mark de-resolves to dots before a collapse and sharpens
+              state: the mark de-resolves to dots before a collapse and sharpens
               to full pixels before an expand.
             </p>
           </div>

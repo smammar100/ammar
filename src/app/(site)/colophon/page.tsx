@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Colophon — Syed Mohammad Ammar",
+  title: "Colophon | Syed Mohammad Ammar",
   description: "The tools, stack, and workflow behind this site.",
 };
 
@@ -11,7 +11,7 @@ export default function Page() {
       <h1 className="mb-3 text-4xl font-medium tracking-tight sm:text-5xl">Colophon</h1>
       <p className="mb-16 text-base leading-relaxed text-muted-foreground">
         What this site is made of and how it gets built. A design engineer&apos;s portfolio should
-        hold up to a view-source — this page is the spec sheet.
+        hold up to a view-source, so this page is the spec sheet.
       </p>
 
       <div className="space-y-12">
@@ -22,13 +22,13 @@ export default function Page() {
               <dt className="font-mono text-xs text-muted-foreground pt-0.5">
                 <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-accent">Next.js 15</a>
               </dt>
-              <dd className="leading-relaxed">Framework. App Router with React Server Components — pages render on the server, and client JavaScript ships only where interaction demands it.</dd>
+              <dd className="leading-relaxed">Framework. App Router with React Server Components: pages render on the server, and client JavaScript ships only where interaction demands it.</dd>
             </div>
             <div className="grid grid-cols-[10rem_1fr] gap-4 text-sm sm:grid-cols-[12rem_1fr]">
               <dt className="font-mono text-xs text-muted-foreground pt-0.5">
                 <a href="https://react.dev/" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-accent">React 19</a>
               </dt>
-              <dd className="leading-relaxed">Client components power the interactive parts — the theme toggle, the generative art surfaces, and the local time in the chrome.</dd>
+              <dd className="leading-relaxed">Client components power the interactive parts: the theme toggle, the generative art surfaces, and the local time in the chrome.</dd>
             </div>
             <div className="grid grid-cols-[10rem_1fr] gap-4 text-sm sm:grid-cols-[12rem_1fr]">
               <dt className="font-mono text-xs text-muted-foreground pt-0.5">
@@ -68,7 +68,7 @@ export default function Page() {
               <dt className="font-mono text-xs text-muted-foreground pt-0.5">
                 <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-accent">Claude Code</a>
               </dt>
-              <dd className="leading-relaxed">AI coding agent. The site is designed and built in collaborative terminal sessions — the same design-to-code loop the rest of this portfolio is about.</dd>
+              <dd className="leading-relaxed">AI coding agent. The site is designed and built in collaborative terminal sessions, the same design-to-code loop the rest of this portfolio is about.</dd>
             </div>
             <div className="grid grid-cols-[10rem_1fr] gap-4 text-sm sm:grid-cols-[12rem_1fr]">
               <dt className="font-mono text-xs text-muted-foreground pt-0.5">agent-os</dt>
@@ -85,7 +85,7 @@ export default function Page() {
               credit (and any link to its author) is wanted here — adjust or remove accordingly. */}
           <p className="text-sm leading-relaxed">
             The architecture of this site began as Patrick Morgan&apos;s portfolio scaffold. Credit
-            where it&apos;s due — the bones were his. Everything built on them since is mine.
+            where it&apos;s due: the bones were his. Everything built on them since is mine.
           </p>
         </div>
       </div>

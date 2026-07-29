@@ -208,6 +208,39 @@
 .prose pre code {
   @apply bg-transparent p-0;
 }
+/* Tables scroll inside their own container so a wide table never forces the
+   article body to scroll horizontally. */
+.prose table {
+  @apply my-6 w-full border-collapse text-left text-sm;
+  display: block;
+  overflow-x: auto;
+}
+.prose thead th {
+  @apply border-b border-border pb-2 pr-6 font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground;
+  white-space: nowrap;
+}
+.prose tbody td {
+  @apply border-b border-border/50 py-2.5 pr-6 align-top text-base text-muted-foreground;
+}
+.prose tbody tr:last-child td {
+  @apply border-b-0;
+}
+
+/* Goal and Feature headings supply their own spacing, so drop the generic
+   `.prose h3` top margin that would otherwise push them out of alignment with
+   the numeral beside them. */
+.prose .case-goal-title,
+.prose .case-feature > h3 {
+  @apply mt-0 mb-0;
+}
+
+/* Structured case-study body: one 70ch measure that text, demos and tables all
+   fill, centred in the article. The lead thumbnail sits outside .prose, so it
+   alone bleeds past the measure — evenly on both sides. */
+.prose.case-body {
+  max-width: 70ch;
+  margin-inline: auto;
+}
 
 /* Embed styles within prose */
 .prose lite-youtube {

@@ -79,7 +79,7 @@ export function ArchitectureBefore() {
   return (
     <FlowDiagram
       tone="muted"
-      caption="Before — live fund data leaned on fragile custom scripts wired into Webflow."
+      caption="Before: live fund data leaned on fragile custom scripts wired into Webflow."
       nodes={[
         { label: "Webflow", sub: "Site" },
         { label: "Custom Scripts", sub: "JS Workarounds" },
@@ -93,7 +93,7 @@ export function ArchitectureAfter() {
   return (
     <FlowDiagram
       tone="accent"
-      caption="After — content and fund data flow cleanly through the Next.js app to the customer."
+      caption="After: content and fund data flow cleanly through the Next.js app to the customer."
       nodes={[
         { label: "Sanity CMS + Fund APIs", sub: "Content & Data" },
         { label: "Next.js Application", sub: "Front-end" },

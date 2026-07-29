@@ -22,6 +22,44 @@ export interface ProjectData {
   heroImage?: string;
   sortOrder: number;
   draft: boolean;
+
+  // ── Case-study header (optional) ────────────────────────────────────────────
+  // When `tagline` is present the project renders the structured case-study
+  // header: compact hero, then a two-column block pairing the labelled facts
+  // (role / problem / team / platforms) against the overview. Projects without
+  // it keep the original title-and-skills header, so nothing has to migrate at
+  // once.
+  /**
+   * Short product or client name ("Mahaana", "Iconimate"), distinct from the
+   * case-study `title`. The featured rows on the home page read it as the muted
+   * opening of the sentence the title finishes.
+   */
+  client?: string;
+  /**
+   * The sentence the featured row's product name finishes. Needed when `title`
+   * is itself the product name ("Iconimate") and would otherwise repeat it.
+   * Falls back to `title`.
+   */
+  statement?: string;
+  /** Supporting line under the featured row's statement. */
+  subtext?: string;
+  /** Short KPI chips for the featured row. Real, sourced figures only. */
+  kpis?: string[];
+  /** One-line subtitle under the title. Presence switches on the structured header. */
+  tagline?: string;
+  /** Small chips beside the title, e.g. ["Design", "Dev"]. */
+  tags?: string[];
+  /** Primary call to action in the hero. */
+  demoUrl?: string;
+  demoLabel?: string;
+  /** Flat pills next to the CTA, e.g. ["186 icons", "MIT"]. */
+  pills?: string[];
+  /** Left-hand labelled facts. `problem` and `overview` accept multiple paragraphs. */
+  role?: string;
+  team?: string;
+  platforms?: string;
+  problem?: string | string[];
+  overview?: string | string[];
 }
 
 export interface WritingVisual {

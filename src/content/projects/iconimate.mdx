@@ -1,0 +1,74 @@
+---
+title: "Iconimate"
+client: "Iconimate"
+statement: "186 animated React icons that earn their motion."
+subtext: "Drawn on the Phosphor 256 grid and tuned to read at 24px, with one shared dialect of springs and curves so the whole set moves like family. Designed, built, and published solo."
+kpis: ["186 icons", "MIT licensed", "Install one, not the set"]
+type: "personal"
+description: "A hand-built set of 186 animated React icons where every glyph carries its own small performance, and none of them are allowed to move for the sake of moving."
+skills: ["Design Engineering", "Motion Design", "Open Source"]
+thumbnail: "/images/projects/iconimate/thumbnail-iconimate-light.png"
+thumbnailWide: "/images/projects/iconimate/thumbnail-iconimate-light-wide.png"
+heroImage: "/images/projects/iconimate/hero-iconimate-landing.png"
+# TODO(ammar): add dark-mode thumbnails, then add these frontmatter keys back:
+#   thumbnailDark: "/images/projects/iconimate/thumbnail-iconimate-dark.png" (2400x2400)
+#   thumbnailWideDark: "/images/projects/iconimate/thumbnail-iconimate-dark-wide.png" (1920x1080)
+sortOrder: 5
+draft: false
+---
+
+> How do you make 186 icons move like they came from the same hand?
+
+An open-source animated React icon set, designed, built, and published end to end.
+
+**Role** Designer & Front-end Developer · **Duration** 2026–Present (ongoing) · **Links** [iconimate.app](https://iconimate.app) · [GitHub](https://github.com/smammar100/Iconimate)
+
+## Context
+
+Icon sets ship static SVGs. The moment a team wants motion, every icon turns into a small bespoke project: easing copied from whichever snippet was closest, timing invented per component, animation tuned at 64px in a design file and then shipped at 24px in a toolbar where the movement is a smear.
+
+I wanted the opposite. A set where the motion is drawn at the same time as the shape, and where you install one icon rather than a library.
+
+<IconimateHoverGrid />
+
+## The Problem
+
+Motion in icon libraries fails for structural reasons, not aesthetic ones.
+
+- Motion lives in the consuming app rather than the icon, so nobody can reuse it and the next team starts over.
+- Every icon invents its own easing, so the set never reads as a family.
+- Animations get judged at display size and fall apart at the 24px they actually ship at.
+- Taking one icon usually means taking a package, a version, and a breaking change someday.
+
+## What I Built
+
+186 icons drawn on the Phosphor 256 grid, animated with one shared vocabulary, and published so you take a component instead of a dependency.
+
+- **A motion dialect**: named springs (`springPop`, `springSwing`, `springSettle`) and curves (`SWEEP`, `ARRIVE`, `RETURN`), plus one shared glide home. A bell swinging and an anchor swaying decelerate the same way, so they read as siblings.
+- **Two states per icon**: `normal` and `animate`. There is no third state to reason about across 186 files.
+- **A rest-state rule**: a resting icon stays pixel-identical to the original Phosphor glyph. Splitting a path to animate one part requires a pixel diff against the original, or the animation doesn't ship.
+- **24px calibration**: every motion tuned at ship size and rejected if it only works big.
+- **A lab**: 59 pages of side-by-side candidates, kept permanently as the argument for each pick.
+
+<IconimateRestStateGrid />
+
+The beer stein's winning candidate moves the whole mark rigidly, so the shipped icon carries the original path untouched. The lid-flip version stayed in the lab.
+
+<IconimateSizeScale />
+
+<IconimateLabCandidates />
+
+## Impact
+
+- 186 animated icons, free and open source under MIT.
+- Each icon installs on its own through a shadcn-style registry, as raw `.tsx` source, or as an AI prompt that regenerates it from the glyph paths and motion spec.
+- Every icon exposes `startAnimation` / `stopAnimation`, so taps, parent cards, and keyboard focus can drive motion where `:hover` never fires.
+- A generator, a closed import allow-list, and one `verify` command keep the set consistent as it grows.
+
+<IconimateCardDemo />
+
+## Lessons
+
+Motion is a design decision, not a finishing effect. The icons that work are the ones where the movement says something about the object, and the only way to get there is to draw the shape and the behaviour together.
+
+The parts I'm most pleased with aren't the animations that shipped. They're the constraints that stopped the wrong ones: the rest-state rule, the 24px test, and the discipline of building seven candidates when one would have been faster.

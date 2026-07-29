@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Style Guide — Syed Mohammad Ammar",
+  title: "Style Guide | Syed Mohammad Ammar",
   description: "Markdown element reference for styling",
 };
 
@@ -22,10 +22,10 @@ export default function Page() {
       </p>
 
       <div className="prose">
-        <h2>Heading 2 — Section Title</h2>
+        <h2>Heading 2: Section Title</h2>
         <p>This is a standard paragraph. Body text should be comfortable to read at length, with good line-height and a muted color that provides contrast without harshness. Here&apos;s some <strong>bold text</strong> and some <em>italic text</em> and a <a href="#">link to somewhere</a>.</p>
 
-        <h3>Heading 3 — Subsection Title</h3>
+        <h3>Heading 3: Subsection Title</h3>
         <p>Subsection headings should be clearly smaller than H2s but still stand out from body text. They create hierarchy within a section.</p>
 
         <h2>Blockquotes</h2>

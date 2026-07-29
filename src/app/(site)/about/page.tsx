@@ -5,7 +5,7 @@ import LissajousAmmar from "@/components/LissajousAmmar";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "How Syed Mohammad Ammar went from a computer-science degree in Karachi to leading design at Mahaana (YC W22) — and why he's publicly shipping 100 built projects to earn the title of design engineer.",
+    "How Syed Mohammad Ammar went from a computer-science degree in Karachi to leading design at Mahaana (YC W22), and why he's publicly shipping 100 built projects to earn the title of design engineer.",
 };
 
 export default function Page() {
@@ -58,7 +58,7 @@ export default function Page() {
           <span className="block">So I&apos;m earning it.</span>
         </h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          I&apos;m Ammar — a product designer in Karachi with a computer-science degree and a public pledge: build and ship 100 real projects until &lsquo;design engineer&rsquo; isn&apos;t a claim, it&apos;s a record. This site is one of the receipts.
+          I&apos;m Ammar, a product designer in Karachi with a computer-science degree and a public pledge: build and ship 100 real projects until &lsquo;design engineer&rsquo; isn&apos;t a claim, it&apos;s a record. This site is one of the receipts.
         </p>
       </section>
 
@@ -72,7 +72,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/profile-living-room.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="2400"
                 height="2400"
                 className="h-full w-full object-cover"
@@ -84,7 +84,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-dinner.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="1800"
                 height="1201"
                 className="h-full w-full object-cover"
@@ -96,7 +96,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-hollywood.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="1800"
                 height="1200"
                 className="h-full w-full object-cover"
@@ -108,7 +108,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-airport.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="1800"
                 height="1350"
                 className="h-full w-full object-cover"
@@ -124,7 +124,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/profile-living-room.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="2400"
                 height="2400"
                 className="h-full w-full object-cover"
@@ -136,7 +136,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-dinner.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="1800"
                 height="1201"
                 className="h-full w-full object-cover"
@@ -148,7 +148,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-hollywood.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="1800"
                 height="1200"
                 className="h-full w-full object-cover"
@@ -160,7 +160,7 @@ export default function Page() {
             <div className="aspect-square overflow-hidden bg-muted">
               <img
                 src="/images/brand/personal-airport.jpg"
-                alt="Photo of Ammar — TODO replace image."
+                alt="Photo of Ammar. TODO replace image."
                 width="1800"
                 height="1350"
                 className="h-full w-full object-cover"
@@ -174,7 +174,7 @@ export default function Page() {
       <section className="about-load about-load-body mx-auto max-w-3xl px-6 pb-24">
         <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
           <p>
-            I live in Karachi. I trained as an engineer — a BS in Computer Science at FAST-NUCES — before I ever opened a design tool, then crossed into design and felt the seam every time work passed from one side of that wall to the other.
+            I live in Karachi. I trained as an engineer, a BS in Computer Science at FAST-NUCES, before I ever opened a design tool, then crossed into design and felt the seam every time work passed from one side of that wall to the other.
           </p>
           <p>
             <Link
@@ -183,7 +183,7 @@ export default function Page() {
             >
               PeerDrop
             </Link>{" "}
-            made it a job: from 2020 to 2022 I designed the mobile experience for a London grocery delivery startup, remote from Karachi — 1,000+ beta users, a £40,000 seed raise, a 34% lift in order acceptance. Then an MA in Interaction Design at Harbour.Space in Bangkok, on a 100% scholarship, made it official.
+            made it a job: from 2020 to 2022 I designed the mobile experience for a London grocery delivery startup, remote from Karachi: 1,000+ beta users, a £40,000 seed raise, a 34% lift in order acceptance. Then an MA in Interaction Design at Harbour.Space in Bangkok, on a 100% scholarship, made it official.
           </p>
           <p>
             Since December 2023 I&apos;ve been at{" "}
@@ -193,7 +193,7 @@ export default function Page() {
             >
               Mahaana (YC W22)
             </Link>
-            , Pakistan&apos;s first SECP-licensed digital wealth manager — Senior Product Designer since April 2025, leading design across mobile and web: 10,000+ downloads, 4.8★+ on iOS. On the side, a full{" "}
+            , Pakistan&apos;s first SECP-licensed digital wealth manager, as Senior Product Designer since April 2025, leading design across mobile and web: 10,000+ downloads, 4.8★+ on iOS. On the side, a full{" "}
             <Link
               href="/work/truewind-rebrand"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"

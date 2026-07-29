@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Mdx } from "@/components/Mdx";
+import { CaseStudyHeader } from "@/components/case-study/CaseStudyHeader";
 import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc";
 import { getProject, getProjects } from "@/lib/content";
 
@@ -27,10 +28,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   if (!project) notFound();
 
   const { title, skills, heroImage } = project.data;
+  // `tagline` is the switch: projects that define it get the structured
+  // case-study header, the rest keep the original title-and-skills one.
+  const isStructured = Boolean(project.data.tagline);
 
   return (
     <>
-      <article className="mx-auto max-w-3xl px-6 py-16">
+      <article className={`mx-auto px-6 py-16 ${isStructured ? "max-w-4xl" : "max-w-3xl"}`}>
         {/* Back link */}
         <Link
           href="/work"
@@ -43,31 +47,35 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         </Link>
 
         {/* Hero */}
-        <header className="project-load project-load-header mb-12">
-          <h1 className="mb-6 text-4xl font-medium tracking-tight sm:text-5xl">
-            {title}
-          </h1>
-          <div className="mb-8 flex flex-wrap gap-2">
-            {skills.map((skill) => (
-              <Badge key={skill} variant="secondary" className="font-mono text-xs">
-                {skill}
-              </Badge>
-            ))}
-          </div>
-
-          {heroImage && (
-            <div className="project-load project-load-media mb-8 overflow-hidden rounded-lg border border-border bg-card">
-              <img
-                src={heroImage}
-                alt={title}
-                className="w-full object-cover"
-              />
+        {isStructured ? (
+          <CaseStudyHeader data={project.data} />
+        ) : (
+          <header className="project-load project-load-header mb-12">
+            <h1 className="mb-6 text-4xl font-medium tracking-tight sm:text-5xl">
+              {title}
+            </h1>
+            <div className="mb-8 flex flex-wrap gap-2">
+              {skills.map((skill) => (
+                <Badge key={skill} variant="secondary" className="font-mono text-xs">
+                  {skill}
+                </Badge>
+              ))}
             </div>
-          )}
-        </header>
+          </header>
+        )}
+
+        {heroImage && (
+          <div className="project-load project-load-media mb-8 overflow-hidden rounded-lg border border-border bg-card">
+            <img
+              src={heroImage}
+              alt={title}
+              className="w-full object-cover"
+            />
+          </div>
+        )}
 
         {/* Markdown body */}
-        <div className="project-load project-load-body prose">
+        <div className={`project-load project-load-body prose ${isStructured ? "case-body" : ""}`}>
           <Mdx source={project.body} format={project.format} />
         </div>
       </article>

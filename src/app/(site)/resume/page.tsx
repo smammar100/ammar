@@ -41,7 +41,7 @@ export default function Page() {
       {/* TODO: add a downloadable resume PDF for Ammar once one exists — no link until then. */}
       <section className="mx-auto max-w-3xl px-6 pt-12 pb-12 sm:pt-24" data-resume-hero style={{ opacity: 0 }}>
         <h1 className="mb-3 text-4xl font-medium tracking-tight sm:text-5xl">Resumé</h1>
-        <p className="mb-8 text-lg text-muted-foreground">Product design across fintech and early-stage startups since 2020 — now shipping the code too.</p>
+        <p className="mb-8 text-lg text-muted-foreground">Product design across fintech and early-stage startups since 2020, now shipping the code too.</p>
         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           {arcNodes.map((label, i, arr) => (
             <span key={label} className="contents">
@@ -65,7 +65,7 @@ export default function Page() {
       {/* Experience — intro + timeline */}
       <section className="mx-auto max-w-3xl border-t border-border px-6 pt-12" data-resume-intro style={{ opacity: 0 }}>
         <p className="mb-16 text-base leading-relaxed text-foreground/70">
-          I trained as an engineer, then spent my career designing software that other people built. Now I&apos;m closing that loop. By day I lead design at Mahaana (YC W22), Pakistan&apos;s first SECP-licensed digital wealth manager — 10,000+ downloads, 4.8★+ on iOS. The rest of the time I&apos;m shipping my way through 100 built projects in public, currently #1 Top Author on 21st.dev.
+          I trained as an engineer, then spent my career designing software that other people built. Now I&apos;m closing that loop. By day I lead design at Mahaana (YC W22), Pakistan&apos;s first SECP-licensed digital wealth manager, with 10,000+ downloads and 4.8★+ on iOS. The rest of the time I&apos;m shipping my way through 100 built projects in public, currently #1 Top Author on 21st.dev.
         </p>
 
         {/* Career label */}

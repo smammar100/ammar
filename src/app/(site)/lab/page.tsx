@@ -3,7 +3,7 @@ import { getLab } from "@/lib/content";
 import { LabCard } from "@/components/lab/LabCard";
 
 export const metadata: Metadata = {
-  title: "Lab — Syed Mohammad Ammar",
+  title: "Lab | Syed Mohammad Ammar",
   description: "Tools, experiments, and interaction showcases.",
   robots: { index: false, follow: false },
 };

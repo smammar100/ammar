@@ -5,7 +5,7 @@ import { PatternEngineClient } from "@/components/lab/PatternEngineClient";
 const entry = getLabEntry("pattern-engine");
 
 export const metadata: Metadata = {
-  title: `${entry?.data.title ?? "Pattern Engine"} — Syed Mohammad Ammar`,
+  title: `${entry?.data.title ?? "Pattern Engine"} | Syed Mohammad Ammar`,
   description:
     entry?.data.description ??
     "A deterministic pattern generator for writing, publishing, and site visuals.",
