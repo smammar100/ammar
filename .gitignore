@@ -29,3 +29,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# impeccable per-session hook cache (machine-local paths, churns every edit)
+.impeccable/hook.cache.json

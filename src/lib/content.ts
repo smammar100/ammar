@@ -45,6 +45,8 @@ export interface ProjectData {
   subtext?: string;
   /** Short KPI chips for the featured row. Real, sourced figures only. */
   kpis?: string[];
+  /** Public URL of the shipped work. Omit when there is nothing live to link. */
+  liveUrl?: string;
   /** One-line subtitle under the title. Presence switches on the structured header. */
   tagline?: string;
   /** Small chips beside the title, e.g. ["Design", "Dev"]. */

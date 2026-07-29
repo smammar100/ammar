@@ -11,12 +11,14 @@ interface FeaturedWorkRowProps {
   title: string;
   subtext?: string;
   kpis?: string[];
+  /** Public URL of the shipped work. Omitted when there is nothing live to link. */
+  liveUrl?: string;
   thumbnail?: string;
   thumbnailDark?: string;
   index: number;
 }
 
-export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail, thumbnailDark, index }: FeaturedWorkRowProps) {
+export function FeaturedWorkRow({ slug, client, title, subtext, kpis, liveUrl, thumbnail, thumbnailDark, index }: FeaturedWorkRowProps) {
   const href = `/work/${slug}`;
 
   return (
@@ -47,17 +49,31 @@ export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail,
             </ul>
           )}
 
-          <div className="mt-6">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* Primary: the case study is what this row is selling. */}
             <Link
               href={href}
-              className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border px-4 text-sm font-medium text-foreground transition-colors hover:border-foreground/40 focus-visible:border-foreground/40 focus-visible:outline-none"
-              aria-label={`View project: ${client ? `${client}, ` : ""}${title}`}
+              className="inline-flex h-10 items-center gap-1.5 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-90 focus-visible:opacity-90 focus-visible:outline-none"
+              aria-label={`Read case study: ${client ? `${client}, ` : ""}${title}`}
             >
-              View project
+              Read case study
               <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">
                 →
               </span>
             </Link>
+
+            {liveUrl && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border px-4 text-sm font-medium text-foreground transition-colors hover:border-foreground/40 focus-visible:border-foreground/40 focus-visible:outline-none"
+                aria-label={`View live site${client ? `: ${client}` : ""} (opens in a new tab)`}
+              >
+                View live site
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
           </div>
         </div>
 
