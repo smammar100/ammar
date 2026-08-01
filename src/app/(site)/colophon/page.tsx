@@ -10,7 +10,7 @@ export default function Page() {
     <section className="mx-auto max-w-3xl px-6 pt-12 pb-16 sm:pt-24">
       <h1 className="mb-3 text-4xl font-medium tracking-tight sm:text-5xl">Colophon</h1>
       <p className="mb-16 text-base leading-relaxed text-muted-foreground">
-        What this site is made of and how it gets built. A design engineer&apos;s portfolio should
+        What this site is made of and how it gets built. A product designer&apos;s portfolio should
         hold up to a view-source, so this page is the spec sheet.
       </p>
 

@@ -54,7 +54,7 @@ export function TopNav() {
             </span>
             <span className="flex min-w-0 flex-col leading-none">
               <span className="text-sm font-medium whitespace-nowrap">Syed Mohammad Ammar</span>
-              <span className="mt-0.5 hidden text-xs text-muted-foreground whitespace-nowrap lg:block">Design Engineer</span>
+              <span className="mt-0.5 hidden text-xs text-muted-foreground whitespace-nowrap lg:block">Product Designer</span>
             </span>
           </Link>
         </div>

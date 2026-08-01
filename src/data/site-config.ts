@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Syed Mohammad Ammar",
-  title: "Syed Mohammad Ammar | Design Engineer",
+  title: "Syed Mohammad Ammar | Product Designer",
   description:
-    "Design engineer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, publicly shipping 100 built projects, design to deploy.",
+    "Product designer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, publicly shipping 100 built projects, design to deploy.",
   // TODO: confirm domain before launch.
   url: "https://www.smammar.com",
   nav: [

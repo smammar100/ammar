@@ -86,19 +86,19 @@ export function FeaturedWorkRow({ slug, client, title, subtext, kpis, liveUrl, t
                   src={thumbnail}
                   alt=""
                   loading={index === 0 ? "eager" : "lazy"}
-                  className={`aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] ${thumbnailDark ? "dark:hidden" : ""}`}
+                  className={`block h-auto w-full transition-transform duration-500 group-hover:scale-[1.02] ${thumbnailDark ? "dark:hidden" : ""}`}
                 />
                 {thumbnailDark && (
                   <img
                     src={thumbnailDark}
                     alt=""
                     loading={index === 0 ? "eager" : "lazy"}
-                    className="hidden aspect-video w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] dark:block"
+                    className="hidden block h-auto w-full transition-transform duration-500 group-hover:scale-[1.02] dark:block"
                   />
                 )}
               </>
             ) : (
-              <div className="aspect-video w-full" />
+              <div className="aspect-[3/2] w-full" />
             )}
           </div>
         </Link>

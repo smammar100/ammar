@@ -6,10 +6,10 @@ import { ResumeReveal } from "./ResumeReveal";
 export const metadata: Metadata = {
   title: "Resumé",
   description:
-    "Design engineer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, shipping 100 built projects in public.",
+    "Product designer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, shipping 100 built projects in public.",
 };
 
-const arcNodes = ["Engineer", "Co-Founder", "Designer", "Design Engineer"];
+const arcNodes = ["Engineer", "Co-Founder", "Designer", "Product Designer"];
 
 const skillGroups = [
   { label: "Design", skills: ["Product design", "Design systems", "Figma component libraries", "User research", "Webflow"] },

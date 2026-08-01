@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     template: "%s | Syed Mohammad Ammar",
   },
   description: siteConfig.description,
-  // favicon.svg now carries the DitherAMark "A".
-  // TODO: the PNG fallbacks (favicon-16x16/32x32, apple-touch-icon) still carry the scaffold's "P" — regenerate them from favicon.svg.
+  // All icons carry the DitherAMark "A". The PNG fallbacks are rasterized from
+  // favicon.svg; apple-touch-icon is flattened opaque because iOS applies its own mask.
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
