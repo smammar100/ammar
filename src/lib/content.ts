@@ -32,7 +32,7 @@ export interface ProjectData {
   // ── Case-study header (optional) ────────────────────────────────────────────
   // When `tagline` is present the project renders the structured case-study
   // header: compact hero, then a two-column block pairing the labelled facts
-  // (role / problem / team / platforms) against the overview. Projects without
+  // (problem / overview / team) alongside the delivery pills. Projects without
   // it keep the original title-and-skills header, so nothing has to migrate at
   // once.
   /**
@@ -57,9 +57,6 @@ export interface ProjectData {
   tagline?: string;
   /** Small chips beside the title, e.g. ["Design", "Dev"]. */
   tags?: string[];
-  /** Primary call to action in the hero. */
-  demoUrl?: string;
-  demoLabel?: string;
   /** Flat pills next to the CTA, e.g. ["186 icons", "MIT"]. */
   pills?: string[];
   /** Left-hand labelled facts. `problem` and `overview` accept multiple paragraphs. */
@@ -70,7 +67,6 @@ export interface ProjectData {
    * without one fall back to initials.
    */
   team?: string | Array<string | TeamMember>;
-  platforms?: string;
   problem?: string | string[];
   overview?: string | string[];
   /** Right-hand pill groups in the structured header. */

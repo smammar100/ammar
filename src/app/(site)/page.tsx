@@ -100,7 +100,6 @@ export default function HomePage() {
               title={project.data.statement ?? project.data.title}
               subtext={project.data.subtext}
               kpis={project.data.kpis}
-              liveUrl={project.data.liveUrl}
               thumbnail={project.data.thumbnailWide ?? project.data.thumbnail}
               thumbnailDark={project.data.thumbnailWideDark ?? project.data.thumbnailDark}
               index={i}

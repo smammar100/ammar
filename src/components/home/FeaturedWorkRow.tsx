@@ -12,13 +12,12 @@ interface FeaturedWorkRowProps {
   subtext?: string;
   kpis?: string[];
   /** Public URL of the shipped work. Omitted when there is nothing live to link. */
-  liveUrl?: string;
   thumbnail?: string;
   thumbnailDark?: string;
   index: number;
 }
 
-export function FeaturedWorkRow({ slug, client, title, subtext, kpis, liveUrl, thumbnail, thumbnailDark, index }: FeaturedWorkRowProps) {
+export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail, thumbnailDark, index }: FeaturedWorkRowProps) {
   const href = `/work/${slug}`;
 
   return (
@@ -28,7 +27,8 @@ export function FeaturedWorkRow({ slug, client, title, subtext, kpis, liveUrl, t
         {/* Sentence, support, KPIs, call to action */}
         <div className="flex flex-col lg:w-2/5">
           <h3 className="text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
-            {client && <span className="text-muted-foreground">{client}. </span>}
+            {/* block, so the statement starts on its own line under the name */}
+            {client && <span className="block text-muted-foreground">{client}.</span>}
             <span className="text-foreground">{title}</span>
           </h3>
 
@@ -62,18 +62,6 @@ export function FeaturedWorkRow({ slug, client, title, subtext, kpis, liveUrl, t
               </span>
             </Link>
 
-            {liveUrl && (
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border px-4 text-sm font-medium text-foreground transition-colors hover:border-foreground/40 focus-visible:border-foreground/40 focus-visible:outline-none"
-                aria-label={`View live site${client ? `: ${client}` : ""} (opens in a new tab)`}
-              >
-                View live site
-                <span aria-hidden="true">↗</span>
-              </a>
-            )}
           </div>
         </div>
 

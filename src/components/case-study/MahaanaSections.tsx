@@ -51,11 +51,11 @@ export function MahaanaFoundations() {
  * public App Store listing. No modelled or projected numbers.
  */
 const STATS = [
-  { value: "35K+", label: "Registered users" },
+  { value: "50K+", label: "Registered users" },
   { value: "20K+", label: "Active clients" },
   { value: "10K+", label: "App downloads" },
   { value: "4.8★", label: "iOS App Store rating" },
-  { value: "<5 min", label: "Account onboarding" },
+  { value: "<10 min", label: "Account onboarding" },
   { value: "+20%", label: "Conversion on the investment calculator" },
 ];
 
