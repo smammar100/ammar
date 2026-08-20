@@ -29,8 +29,14 @@ export function Intersection({
         "relative grid w-full",
         // Narrow gutters on phones — at 375px a 2rem pair would take 64px off
         // the text column for pure decoration.
-        "grid-cols-[1fr_0.75rem_auto_0.75rem_1fr] grid-rows-[1fr_1px_auto_1px_1fr]",
-        "sm:grid-cols-[1fr_2rem_auto_2rem_1fr]",
+        // The content column is sized explicitly rather than `auto`. The
+        // article inside is a size container, and containment takes it out of
+        // intrinsic sizing, so `auto` collapses to zero. minmax(0,56rem) fails
+        // too: the 1fr side tracks absorb all free space and it never grows
+        // past its zero minimum. min() against the grid width works because
+        // percentages here resolve against the grid, not the content.
+        "grid-cols-[1fr_0.75rem_min(56rem,100%-1.5rem)_0.75rem_1fr] grid-rows-[1fr_1px_auto_1px_1fr]",
+        "sm:grid-cols-[1fr_2rem_min(56rem,100%-4rem)_2rem_1fr]",
         className,
       )}
     >

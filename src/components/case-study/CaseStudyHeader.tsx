@@ -80,7 +80,7 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
   return (
     <header className="project-load project-load-header mb-14">
       {/* Name + framing paragraph */}
-      <div className="border-b border-border pb-10">
+      <div className="pb-8">
         <h1 className="mb-5 text-5xl font-medium tracking-tight sm:text-6xl">{display}</h1>
         {tagline && (
           <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">{tagline}</p>
@@ -89,13 +89,13 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
 
       {/* Lead image sits between the framing and the write-up */}
       {heroImage && (
-        <div className="my-10 overflow-hidden rounded-xl border border-border bg-card">
+        <div className="overflow-hidden rounded-xl border border-border bg-card">
           <img src={heroImage} alt={title} className="block w-full" />
         </div>
       )}
 
       {/* Write-up against the delivery pills */}
-      <div className="grid gap-10 border-t border-border pt-10 md:grid-cols-3 md:gap-12">
+      <div className="grid gap-10 pt-10 md:grid-cols-3 md:gap-12">
         <div className="md:col-span-2">
           <h2 className="mb-4 text-xl font-medium tracking-tight text-foreground">Long story short</h2>
           {story.map((paragraph, i) => (

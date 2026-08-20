@@ -231,8 +231,15 @@
 }
 
 /* Goal and Feature headings supply their own spacing, so drop the generic
-   `.prose h3` top margin that would otherwise push them out of alignment with
-   the numeral beside them. */
+   `.prose h3` top margin, which would otherwise drop the heading out of line
+   with the ghosted numeral it sits against. */
+.prose .case-goals {
+  max-width: none;
+}
+.prose .case-goals .case-goal-body p {
+  @apply text-sm leading-relaxed;
+}
+
 .prose .case-goal-title,
 .prose .case-feature > h3 {
   @apply mt-0 mb-0;
@@ -242,8 +249,7 @@
    fill, centred in the article. The lead thumbnail sits outside .prose, so it
    alone bleeds past the measure — evenly on both sides. */
 .prose.case-body {
-  max-width: 70ch;
-  margin-inline: auto;
+  max-width: none;
 }
 
 /* Embed styles within prose */

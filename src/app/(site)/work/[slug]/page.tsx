@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const isStructured = Boolean(project.data.tagline);
 
   const article = (
-    <article className={`mx-auto px-6 py-16 ${isStructured ? "max-w-4xl" : "max-w-3xl"}`}>
+    <article className={`mx-auto w-full px-6 py-16 ${isStructured ? "max-w-4xl" : "max-w-3xl"}`}>
         {/* Back link */}
         <Link
           href="/work"
