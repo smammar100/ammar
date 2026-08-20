@@ -1,77 +1,94 @@
 ---
-title: "From Webflow to a Product Platform"
+title: "An investment account in under five minutes"
 client: "Mahaana"
-statement: "Designing one of Pakistan's first fully digital wealth management platforms."
-subtext: "From opening an investment account in under 5 minutes to managing portfolios, retirement funds, and AI-powered financial guidance, I helped design the end-to-end experience that powers Mahaana's investment ecosystem."
+statement: "Pakistan's first SECP-licensed digital wealth manager, redesigned end to end."
+subtext: "Voluntary pension schemes, gold vaults and equity trading in one app, designed so a first-time investor can open an account without calling someone to explain it."
 kpis: ["35K+ Registered Users", "20K+ Active Clients", "<5 Min Onboarding"]
 liveUrl: "https://mahaana.com"
 type: "professional"
-description: "How rebuilding Mahaana's website eliminated operational bottlenecks, lifted Lighthouse performance from 57 to 100, and let Marketing and Operations own content, designed and built end to end in Next.js, React, and Sanity."
-skills: ["Product Design", "Front-end Development", "Design Systems"]
+description: "How Mahaana's Shariah-compliant investing app was redesigned across iOS and Android: pensions, gold and equities made openable in under five minutes, on one shared design system."
+skills: ["Product Design", "Design Systems", "Mobile Design"]
 thumbnail: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.png"
 thumbnailWide: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.png"
-heroImage: "/images/projects/mahaana-wealth/thumbnail-mahaana-light-wide.png"
+heroImage: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.png"
 sortOrder: 1
 draft: false
+
+# Structured case-study header
+tagline: "Mahaana is Pakistan's first SECP-licensed digital wealth manager. I redesigned pensions, gold and equities into one app a first-time investor can actually open."
+tags: ["Product Design", "Design Systems", "Mobile"]
+pills: ["2024 – 2025", "iOS · Android"]
+role: "Senior Product Designer"
+team: "Noor Abbasi (Junior Designer) · Daniyal (Product Manager) · Aqib (Mobile Engineer) · Minhaj (VP Engineering) · Shamoon (Founder)"
+platforms: "iOS & Android"
+services: ["product design", "design systems", "ios & android design", "design tokens"]
+problem:
+  - "Pakistanis already save. They just save in gold kept at home and cash sitting in a current account. The instruments that actually compound, a voluntary pension scheme or a managed equity fund, get sold across a desk in a branch, by someone using words you are expected to already know."
+  - "Mahaana had the licence, the funds and the regulator's approval. What it did not have was a product a person could open on their own, on a phone, without ringing anyone to explain it first."
+overview:
+  - "I designed the app end to end across iOS and Android: onboarding, the portfolio dashboard, every product journey, and the market and advisory surfaces around them. Here is how it went."
 ---
 
-> What do you do when the tool that got you here becomes the thing holding you back?
+## Three things had to be true
 
-Transforming a marketing website into a scalable product platform, designed and built end to end.
+Before anyone moves real money, three things have to be true at once. Miss one and the other two stop mattering.
 
-**Role** Product Designer & Front-end Developer · **Duration** 2025–Present (in staging)
+<Goals>
+<Goal n="1" title="People had to be able to check the compliance, not take it on faith">
+Shariah compliance is not a badge you add at the end. If someone cannot see the screening, the expected yield and where their money actually sits, they do not invest cautiously. They close the app. So every product surface carries its own proof, on the card, before anyone has to go looking.
+</Goal>
+<Goal n="2" title="The account had to open in five minutes">
+Onboarding was the biggest drop-off in the funnel. Every extra field was a person deciding to finish it later, and later mostly means never. The target was five minutes, entirely in-app: no branch visit, no paperwork, no callback.
+</Goal>
+<Goal n="3" title="It had to start where the trust already was">
+Pakistani savers understand pensions and gold. An equity fund is a harder first ask. Leading with the familiar instruments meant meeting people at the intuition they already had, instead of teaching a new asset class on day one. Equities come later, once the account exists.
+</Goal>
+</Goals>
 
-## Context
+## What that turned into
 
-As Mahaana grew from a single investment product into a wealth-management platform, the website struggled to keep pace. It was originally built in Webflow, which had carried the company's early growth well. But as new products, campaigns, and content needs piled up, the platform got harder and harder to maintain.
+Three surfaces have to feel like one app: a retirement plan measured in decades, a market that moves every second, and an advisory layer that explains both to someone seeing it for the first time.
 
-Rather than ship yet another visual refresh, I proposed rebuilding the site from the ground up: a faster, more scalable platform that served both our customers and our internal teams.
+<MahaanaScreenWall />
 
-## The Problem
+<Feature title="One screen that answers “how am I doing?”">
+Net asset value, contributions and active pots resolve into a single number, with the projection pushed out to twenty-five years. Risk reads as a plain three-way split, money market against debt against equity, instead of a score nobody can act on.
+</Feature>
 
-The website wasn't failing because of its design. It was failing because of its workflow and technical limits.
+<Feature title="Products framed as goals, not funds">
+Save+, the pension scheme and the gold vault each read as something you are saving *for*. Every card carries its compliance marker and expected yield, so the Shariah question is answered before anyone thinks to ask it.
+</Feature>
 
-Marketing and Operations leaned on me for even the smallest content updates. Webflow's interface felt too complex to touch, so routine changes that should have taken minutes became design requests that slowed the whole team down.
+<Feature title="A reason to open the app on a day you aren't depositing">
+Index tickers, sector heatmaps, Mahaana's Pick, gainers and losers give the app a pulse between deposits. Market wrap, explainer videos and a prompt-led assistant catch the first-time investor at the moment the numbers stop being obvious.
+</Feature>
 
-Meanwhile, our fund pages already showed live NAVs and real-time performance, but doing that in Webflow meant piling on custom code and JavaScript workarounds. As features grew, those scripts got brittle and started dragging down performance.
+## Holding it together
 
-- Marketing and Operations couldn't confidently manage content on their own.
-- Live fund data depended on custom scripts and code embeds inside Webflow.
-- Growing customization hurt both maintainability and performance.
-- The architecture wasn't flexible enough for Mahaana's expanding product line.
+Four products across two platforms only stay one product if the pieces are shared. The system stays deliberately small: three brand colours and two type roles, composed into the cards, list rows and account picker that every journey reuses.
 
-<ArchitectureBefore />
+<MahaanaFoundations />
 
-{/* TODO(ammar): drop in the old homepage + Lighthouse 57 screenshot here. */}
+Building the libraries this way cut design-to-development handoff by 35%, mostly by ending the round-trip where engineering has to ask what a spacing value or a state is supposed to be.
 
-## What I Built
+## What changed
 
-Instead of extending Webflow further, I redesigned and rebuilt the entire site on a modern, component-based architecture. This wasn't just a redesign. It changed how the website was built, managed, and maintained.
+<MahaanaImpact />
 
-- **Next.js and React**: a scalable front-end foundation.
-- **Tailwind CSS and reusable components**: faster development, consistent UI.
-- **Sanity CMS**: full content ownership for Marketing and Operations.
-- **Framer Motion**: smoother, more engaging interactions.
-- **Direct API integrations**: live fund data without the Webflow workarounds.
-- **Cursor**: an AI-assisted workflow to move faster while keeping production-quality code.
+Under five minutes to open an account is the difference between someone who invests and someone who meant to. And 4.8 stars on iOS, in a category people are right to be suspicious of, is the trust objective showing up as something you can measure.
 
-<ArchitectureAfter />
+{/* TODO(ammar): real endorsement goes here. The quote in the Figma file was
+    placeholder copy, not a statement from anyone at Mahaana. Once you have one
+    you're cleared to publish, the block below just needs uncommenting.
 
-{/* TODO(ammar): drop in the before/after homepage comparison screenshot here. */}
+> "..."
+>
+> **Name**, Title, Mahaana
 
-## Impact
+*/}
 
-The rebuild improved both the customer experience and internal operations.
+## What I took from it
 
-- **Customers**: a modern, product-first experience with faster loads, smoother interactions, better accessibility, and real-time fund information through a cleaner architecture.
-- **Internal teams**: Marketing and Operations now manage content independently in Sanity, no longer waiting on Design or Engineering for routine updates. Reusable components make launching new pages and campaigns far quicker.
+The hard part was never the interface. It was the translation: taking instruments that are genuinely complicated, and that carry a religious compliance requirement most fintech never has to think about, and making them legible without flattening them into a lie.
 
-<LighthouseCompare />
-
-## Lessons
-
-This project taught me that great product design reaches well beyond beautiful interfaces. The biggest problem here wasn't visual. It was operational.
-
-By rebuilding from the ground up, I wasn't just improving the customer experience; I was removing friction for the people maintaining the site every day. Owning both the design and the implementation showed me how architecture, performance, accessibility, and internal workflows all feed into a successful product.
-
-The most valuable outcome wasn't a perfect Lighthouse score. It was a platform that lets teams move faster, and a solid foundation for Mahaana's next stage of growth.
+The design system is what made that survive two platforms. Every simplification had to hold up as a real component an engineer could build twice, which is a stricter test than anything a design file can tell you on its own.

@@ -4,8 +4,6 @@ import rehypeSlug from "rehype-slug";
 import { rehypeFigure } from "@/lib/mdx-plugins";
 import { FigmaEmbed } from "@/components/FigmaEmbed";
 import { YouTubeEmbed } from "@/components/YouTubeEmbed";
-import { ArchitectureBefore, ArchitectureAfter } from "@/components/case-study/FlowDiagram";
-import { LighthouseCompare } from "@/components/case-study/LighthouseCompare";
 import {
   IconimateHoverGrid,
   IconimateRestStateGrid,
@@ -14,6 +12,11 @@ import {
 import { IconimateLabCandidates } from "@/components/case-study/IconimateLab";
 import { IconimateCardDemo } from "@/components/case-study/IconimateCard";
 import { Goals, Goal, Feature } from "@/components/case-study/CaseStudySections";
+import {
+  MahaanaScreenWall,
+  MahaanaFoundations,
+  MahaanaImpact,
+} from "@/components/case-study/MahaanaSections";
 
 // Components available to MDX content. `YouTube` matches the old astro-embed
 // component name used in the project files (<YouTube id="..." />).
@@ -23,9 +26,6 @@ const components = {
   FigmaEmbed,
   YouTubeEmbed,
   YouTube: YouTubeEmbed,
-  ArchitectureBefore,
-  ArchitectureAfter,
-  LighthouseCompare,
   IconimateHoverGrid,
   IconimateRestStateGrid,
   IconimateSizeScale,
@@ -34,6 +34,9 @@ const components = {
   Goals,
   Goal,
   Feature,
+  MahaanaScreenWall,
+  MahaanaFoundations,
+  MahaanaImpact,
 };
 
 export function Mdx({ source, format = "mdx" }: { source: string; format?: "md" | "mdx" }) {

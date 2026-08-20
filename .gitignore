@@ -32,3 +32,6 @@ pnpm-debug.log*
 
 # impeccable per-session hook cache (machine-local paths, churns every edit)
 .impeccable/hook.cache.json
+
+# Symlink created by `skills add`; points at an absolute worktree path
+.claude/skills/copywriting

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Mdx } from "@/components/Mdx";
 import { CaseStudyHeader } from "@/components/case-study/CaseStudyHeader";
 import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc";
+import { Intersection } from "@/components/layout/Intersection";
 import { getProject, getProjects } from "@/lib/content";
 
 export async function generateStaticParams() {
@@ -32,9 +33,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   // case-study header, the rest keep the original title-and-skills one.
   const isStructured = Boolean(project.data.tagline);
 
-  return (
-    <>
-      <article className={`mx-auto px-6 py-16 ${isStructured ? "max-w-4xl" : "max-w-3xl"}`}>
+  const article = (
+    <article className={`mx-auto px-6 py-16 ${isStructured ? "max-w-4xl" : "max-w-3xl"}`}>
         {/* Back link */}
         <Link
           href="/work"
@@ -64,7 +64,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </header>
         )}
 
-        {heroImage && (
+        {/* The structured header places the lead image itself, between the
+            framing paragraph and the write-up. */}
+        {!isStructured && heroImage && (
           <div className="project-load project-load-media mb-8 overflow-hidden rounded-lg border border-border bg-card">
             <img
               src={heroImage}
@@ -75,10 +77,15 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         )}
 
         {/* Markdown body */}
-        <div className={`project-load project-load-body prose ${isStructured ? "case-body" : ""}`}>
-          <Mdx source={project.body} format={project.format} />
-        </div>
-      </article>
+      <div className={`project-load project-load-body prose ${isStructured ? "case-body" : ""}`}>
+        <Mdx source={project.body} format={project.format} />
+      </div>
+    </article>
+  );
+
+  return (
+    <>
+      {isStructured ? <Intersection>{article}</Intersection> : article}
 
       <DynamicIslandTOC selector=".prose h2, .prose h3, .prose h4" />
 

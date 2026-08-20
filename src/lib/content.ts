@@ -62,6 +62,9 @@ export interface ProjectData {
   platforms?: string;
   problem?: string | string[];
   overview?: string | string[];
+  /** Right-hand pill groups in the structured header. */
+  services?: string[];
+  tools?: string[];
 }
 
 export interface WritingVisual {
