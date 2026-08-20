@@ -1,4 +1,6 @@
-import type { ProjectData } from "@/lib/content";
+import type { ProjectData, TeamMember } from "@/lib/content";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarGroup, AvatarGroupTooltip } from "@/components/ui/avatar-group";
 
 // Structured case-study intro: the client name set large, a short framing
 // paragraph, the lead image, then the write-up paired with pill groups for
@@ -8,6 +10,30 @@ import type { ProjectData } from "@/lib/content";
 function toParagraphs(value?: string | string[]): string[] {
   if (!value) return [];
   return Array.isArray(value) ? value : [value];
+}
+
+function initialsOf(name: string) {
+  return name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
+
+/** Accepts either "Noor Abbasi (Junior Designer)" or a TeamMember object. */
+function parseMember(entry: string | TeamMember) {
+  if (typeof entry !== "string") {
+    return { ...entry, initials: initialsOf(entry.name) };
+  }
+  const match = entry.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  const name = (match ? match[1] : entry).trim();
+  return {
+    name,
+    role: match ? match[2].trim() : undefined,
+    avatar: undefined as string | undefined,
+    initials: initialsOf(name),
+  };
 }
 
 /** A right-column group: small heading over a wrapped set of pills. */
@@ -35,16 +61,17 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
     title,
     client,
     tagline,
-    role,
     team,
-    platforms,
     services,
     tools,
     heroImage,
   } = data;
+  const members = (Array.isArray(team) ? team : toParagraphs(team)).map(parseMember);
   const problem = toParagraphs(data.problem);
   const overview = toParagraphs(data.overview);
-  const story = [...overview, ...problem];
+  // Problem first, then how it resolved: the merged block is a narrative now,
+  // not two labelled columns.
+  const story = [...problem, ...overview];
 
   // The client name carries the display heading; the descriptive `title` still
   // does the work in metadata and on the work index.
@@ -81,14 +108,21 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
         <div className="flex flex-col gap-8">
           <PillGroup title="Services" items={services} />
           <PillGroup title="Tools" items={tools} />
-          <PillGroup
-            title="Role"
-            items={[role, platforms].filter((v): v is string => Boolean(v))}
-          />
-          {team && (
+          {members.length > 0 && (
             <div>
               <h2 className="mb-3 text-xl font-medium tracking-tight text-foreground">Team</h2>
-              <p className="text-sm leading-relaxed text-muted-foreground">{team}</p>
+              <AvatarGroup className="h-10 -space-x-2.5">
+                {members.map((member) => (
+                  <Avatar key={member.name} className="size-10 border-2 border-background">
+                    {member.avatar && <AvatarImage src={member.avatar} alt={member.name} />}
+                    <AvatarFallback>{member.initials}</AvatarFallback>
+                    <AvatarGroupTooltip>
+                      <p className="font-medium text-foreground">{member.name}</p>
+                      {member.role && <p className="text-muted-foreground">{member.role}</p>}
+                    </AvatarGroupTooltip>
+                  </Avatar>
+                ))}
+              </AvatarGroup>
             </div>
           )}
         </div>

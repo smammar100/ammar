@@ -10,6 +10,12 @@ import matter from "gray-matter";
 
 const CONTENT_ROOT = path.join(process.cwd(), "src", "content");
 
+export interface TeamMember {
+  name: string;
+  role?: string;
+  avatar?: string;
+}
+
 export interface ProjectData {
   title: string;
   type: "professional" | "personal" | "experiment";
@@ -58,7 +64,12 @@ export interface ProjectData {
   pills?: string[];
   /** Left-hand labelled facts. `problem` and `overview` accept multiple paragraphs. */
   role?: string;
-  team?: string;
+  /**
+   * Team credits, rendered as an avatar group. Each entry is either a plain
+   * "Name (Role)" string or an object that can also carry a photo. Members
+   * without one fall back to initials.
+   */
+  team?: string | Array<string | TeamMember>;
   platforms?: string;
   problem?: string | string[];
   overview?: string | string[];
