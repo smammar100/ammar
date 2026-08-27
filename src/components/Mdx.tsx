@@ -11,11 +11,12 @@ import {
 } from "@/components/case-study/IconimateDemo";
 import { IconimateLabCandidates } from "@/components/case-study/IconimateLab";
 import { IconimateCardDemo } from "@/components/case-study/IconimateCard";
-import { Goals, Goal, Feature } from "@/components/case-study/CaseStudySections";
+import { Goals, Goal, Feature, HowMightWe } from "@/components/case-study/CaseStudySections";
 import {
   MahaanaScreenWall,
   MahaanaFoundations,
   MahaanaImpact,
+  MahaanaVoices,
 } from "@/components/case-study/MahaanaSections";
 
 // Components available to MDX content. `YouTube` matches the old astro-embed
@@ -34,9 +35,11 @@ const components = {
   Goals,
   Goal,
   Feature,
+  HowMightWe,
   MahaanaScreenWall,
   MahaanaFoundations,
   MahaanaImpact,
+  MahaanaVoices,
 };
 
 export function Mdx({ source, format = "mdx" }: { source: string; format?: "md" | "mdx" }) {

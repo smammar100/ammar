@@ -59,7 +59,7 @@ export interface ProjectData {
   tags?: string[];
   /** Flat pills next to the CTA, e.g. ["186 icons", "MIT"]. */
   pills?: string[];
-  /** Left-hand labelled facts. `problem` and `overview` accept multiple paragraphs. */
+  /** Left-hand labelled facts. */
   role?: string;
   /**
    * Team credits, rendered as an avatar group. Each entry is either a plain
@@ -67,8 +67,11 @@ export interface ProjectData {
    * without one fall back to initials.
    */
   team?: string | Array<string | TeamMember>;
-  problem?: string | string[];
-  overview?: string | string[];
+  /**
+   * The "Long story short" block in the structured header: what the project is,
+   * and what the author owned. One paragraph per entry.
+   */
+  summary?: string | string[];
   /** Right-hand pill groups in the structured header. */
   services?: string[];
   tools?: string[];

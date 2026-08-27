@@ -35,60 +35,117 @@ team:
     role: "Founder"
     avatar: "/images/team/shamoon.jpg"
 services: ["product design", "design systems", "ios & android design", "design tokens"]
-problem:
-  - "Mahaana didn't have an investing problem. It had a trust problem."
-  - "People in Pakistan already save for the future. They keep gold at home, leave money sitting in bank accounts, and make long-term plans around what they know. The challenge was getting them to put that same money into something unfamiliar: a digital wealth platform filled with products, financial language and decisions they weren't used to making alone."
-overview:
-  - "So I redesigned Mahaana end to end: from opening an account and making the first investment to managing a portfolio across mutual funds, retirement and gold. The goal was simple: make something financially complicated feel simple enough to trust."
+# "Long story short" in the header: what Mahaana is, then what I owned.
+summary:
+  - "Mahaana is Pakistan's first digital-only asset management company, licensed by the SECP and backed by IGI Holdings, Vostok Emerging Finance and Y Combinator. Client money sits with the Central Depository Company. Everything it offers is Shariah-compliant, and all of it opens in an app."
+  - "I joined as senior product designer and led design across iOS and Android, working with a product manager, a mobile engineer, a junior designer I mentored, and the founder."
+  - "The funds, the compliance rulings and the backend were other people's work. Mine was everything a customer touches, and the design system that holds it together across every product and both platforms."
 ---
 
-## The first investment is always the hardest
+{/* Structure: Freytag's five-part arc from the IxDF case-study template -
+    exposition, rising action, climax, falling action, resolution. Headings stay
+    narrative; the arc orders the story rather than labelling it for the reader.
+    Research sourcing, open gaps and fact-check flags for this draft live in
+    /mahaana-case-study-notes.md, kept outside src/content so it never ships.
+    DRAFT-GAP markers below are the places only Ammar can fill. Strip every one
+    of these comments before publishing - MDX source is serialised into the page
+    payload, so anything written here is readable from view-source. */}
 
-Not because people don't save. Because moving money into something unfamiliar requires confidence.
+{/* ===== 1. EXPOSITION ===== */}
 
-<Goals>
-<Goal n="01" title="Make trust visible">
-Show the compliance, screening and destination of their money.
-</Goal>
-<Goal n="02" title="Remove the friction">
-Make onboarding as seamless as possible since we are totally digital.
-</Goal>
-<Goal n="03" title="Build from what they know">
-We started with familiar products like Mutual Fund and Retirement and then slowly added more
-</Goal>
-</Goals>
+## Pakistan saves. It just doesn't invest.
 
-## What that turned into
+The licence was real. The funds were already trading. What was missing was everything between a licence and a customer.
 
-Three surfaces have to feel like one app: a retirement plan measured in decades, a market that moves every second, and an advisory layer that explains both to someone seeing it for the first time.
+Because this was never an investing problem. It was a trust problem. People in Pakistan already save for the future: gold kept at home, money left sitting in bank accounts, long-term plans built around what they know. Moving that into an app meant trusting products, financial language and decisions they were not used to making alone, with no branch to walk into. So the work was to create an experience seamless enough that nobody would need one.
 
-<MahaanaScreenWall />
+{/* TODO(ammar): the four quotes in <MahaanaVoices /> are illustrative, written
+    to stand in for the confusion the product had to answer. Replace them with
+    things real people actually said and this becomes a research artefact rather
+    than a drawing - which is most of what DRAFT-GAP 1 is asking for. Edit them
+    in MahaanaSections.tsx; the underline positions are measured, so re-run the
+    measurement if the wording changes length. */}
 
-<Feature title="One screen that answers “how am I doing?”">
-Net asset value, contributions and active pots resolve into a single number, with the projection pushed out to twenty-five years. Risk reads as a plain three-way split, money market against debt against equity, instead of a score nobody can act on.
-</Feature>
+<MahaanaVoices />
 
-<Feature title="Products framed as goals, not funds">
-Save+, the pension scheme and the gold vault each read as something you are saving *for*. Every card carries its compliance marker and expected yield, so the Shariah question is answered before anyone thinks to ask it.
-</Feature>
+Three constraints made it harder, and none were negotiable. The product is regulated, so onboarding could not simply be shortened: identity checks, risk profiling and CDC account creation had to happen, in that order. It is digital-only, so nothing could fall back on a branch visit. And it is Shariah-compliant, so every product had to carry its ruling in a form an ordinary saver could read.
 
-<Feature title="A reason to open the app on a day you aren't depositing">
-Index tickers, sector heatmaps, Mahaana's Pick, gainers and losers give the app a pulse between deposits. Market wrap, explainer videos and a prompt-led assistant catch the first-time investor at the moment the numbers stop being obvious.
-</Feature>
+<HowMightWe>
 
-## Holding it together
+- create an experience so seamless that nobody needs a branch to feel sure of it?
+- prove that by getting someone onboarded and invested in under ten minutes, with the compliance and the destination of their money visible the whole way?
+- and start that journey from the products people already understand, earning the unfamiliar ones later?
 
-Four products across two platforms only stay one product if the pieces are shared. The system stays deliberately small: three brand colours and two type roles, composed into the cards, list rows and account picker that every journey reuses.
+</HowMightWe>
+
+
+{/* ===== 2. RISING ACTION ===== */}
+
+
+
+{/* DRAFT-GAP 1 of 3 - research and process. The template wants this beat to
+    carry how the strategies were arrived at, with something to show for it:
+    who was talked to, what came back, and the personas, journey maps or early
+    sketches that came out of it. Right now the three strategies arrive as
+    assertions. Two or three sentences plus one artefact closes it. See the
+    notes file for the exact prompts. */}
+
+---
+
+## The Design System
+
+The design system was what made Mahaana work at scale. Two platforms, the products that had already shipped, and a roadmap of ones that had not, all pulling on the same interface. That needed one set of foundations, components and page patterns rather than a fresh interpretation per product. Held in one place, a change lands on every product, platform and breakpoint at once, at the same level of quality.
 
 <MahaanaFoundations />
 
+---
+
+{/* ===== 3. CLIMAX ===== */}
+
+{/* DRAFT-GAP 2 of 3 - THE BIG ONE. The template asks this beat for one or two
+    moments a hirer remembers: a tough decision, a research insight that changed
+    direction, a time-sensitive challenge solved, or a genuinely novel solution.
+    What follows is the strongest thing available in the existing material, and
+    it is a real design problem, but it is written as a standing difficulty
+    rather than a decision with a before and an after. If there was a specific
+    call - a product cut, a compliance ruling that forced a late redesign, an
+    onboarding step the regulator would not let you drop - it replaces this and
+    the case study gets twice as strong. */}
+
+## The hardest thing to design was a sentence
+
+A pension is not hard to draw. It is hard to say.
+
+Every product on the platform carried two things an ordinary saver needed at once: a financial instrument that is genuinely complicated, and a compliance ruling that decides whether they are allowed to touch it at all. Say too little and the product is a black box asking to be trusted. Say too much and it reads as a prospectus, which is its own kind of black box.
+
+So the compliance answer stopped being a page someone could go and find, and became a property of the thing itself, carried on the product card next to the expected yield. The Shariah question gets answered in the same glance that answers what this is and what it might return, before anyone has to think to ask it.
+
+The test I held it to: every simplification had to survive being built as a real component, twice, on two platforms, by an engineer who was not in the room when it was decided. That is a stricter test than any design file can apply to itself.
+
+{/* ===== 4. FALLING ACTION ===== */}
+
+## Holding it together
+
+Products that ship years apart only feel like one product if the pieces are shared. The system stays deliberately small: three brand colours and two type roles, composed into the cards, list rows and account picker that every journey reuses.
+
+<MahaanaScreenWall />
+
+Gold and trading were still ahead of us when this was built, which is the part I would argue for hardest: the pattern for a product tile existed before there was a gold product to put in one. New products arrive into a shape that is already decided, instead of arguing for their own.
+
 Building the libraries this way cut design-to-development handoff by 35%, mostly by ending the round-trip where engineering has to ask what a spacing value or a state is supposed to be.
+
+{/* DRAFT-GAP 3 of 3 - iteration and testing. The template wants sketches
+    becoming wireframes becoming shipped screens, what testing sent back, and
+    what changed because of it. The build side is covered; the evidence side is
+    not. Even one before-and-after on a screen that tested badly would do it. */}
+
+{/* ===== 5. RESOLUTION ===== */}
 
 ## What changed
 
 <MahaanaImpact />
 
-Under ten minutes to open an account is the difference between someone who invests and someone who meant to. And 4.8 stars on iOS, in a category people are right to be suspicious of, is the trust objective showing up as something you can measure.
+Under ten minutes to open an account is the difference between someone who invests and someone who only meant to. That was the number the whole brief hung on, and it is the one that answers the question this case study opened with: not whether people in Pakistan want to save, but whether a screen can carry enough trust to make them act.
 
 {/* TODO(ammar): real endorsement goes here. The quote in the Figma file was
     placeholder copy, not a statement from anyone at Mahaana. Once you have one
@@ -102,6 +159,8 @@ Under ten minutes to open an account is the difference between someone who inves
 
 ## What I took from it
 
-The hard part was never the interface. It was the translation: taking instruments that are genuinely complicated, and that carry a religious compliance requirement most fintech never has to think about, and making them legible without flattening them into a lie.
+The design system is what let the translation survive two platforms. Simplifying a pension or a cash fund is easy to do once, in one screen, in a design file. Doing it as components that hold their meaning in every product they appear in, built by someone else, months later, is the part that took the work.
 
-The design system is what made that survive two platforms. Every simplification had to hold up as a real component an engineer could build twice, which is a stricter test than anything a design file can tell you on its own.
+What I would do differently is start the compliance conversation earlier. We treated the Shariah ruling as something to communicate well once the product existed. It would have been better as an input to what the product was, from the first sketch.
+
+These numbers are a snapshot, and numbers age: a rating moves, a competitor ships, an interface starts to look like its year. What I would want read from them is the how, not the score. Trust was treated as something to design for rather than something to claim, and every claim on the screen had to be one the licence, the custodian and the compliance ruling could actually back.

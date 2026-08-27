@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Lightbulb } from "lucide-react";
 
 // Body building blocks for the structured case-study layout, used from MDX.
 // String props and children only — next-mdx-remote doesn't reliably pass
@@ -39,9 +40,14 @@ export function Goal({ n, title, children }: { n?: string; title?: string; child
           {n}
         </span>
       </span>
-      <div className="min-w-0 flex-1 pt-1 sm:pt-2">
+      {/* Pulled up so the heading's cap-top sits level with the numeral's, not its
+          box: at leading 0.72 the glyph overflows its own line box upward, so
+          matching the two needs a negative offset rather than top padding. The
+          required shift measures within 0.2px at both numeral sizes, so one
+          value covers 64px and 72px. */}
+      <div className="min-w-0 flex-1 -mt-1.5">
         {title && (
-          <h3 className="case-goal-title text-base font-semibold leading-snug tracking-tight text-foreground">
+          <h3 className="case-goal-title heading-sub leading-snug">
             {title}
           </h3>
         )}
@@ -59,8 +65,36 @@ export function Goal({ n, title, children }: { n?: string; title?: string; child
 export function Feature({ title, children }: { title?: string; children?: ReactNode }) {
   return (
     <section className="case-feature my-10">
-      {title && <h3 className="mb-2 text-base font-semibold tracking-tight text-foreground">{title}</h3>}
+      {title && <h3 className="heading-sub mb-2">{title}</h3>}
       {children}
     </section>
+  );
+}
+
+/**
+ * The one-line framing a case study hangs on, set apart from the body so it
+ * reads as the thing to take away rather than another paragraph.
+ *
+ * Emphasis comes from a bloom of accent bleeding in from the corner rather than
+ * from size: the card stays close to body scale, so it sits inside the reading
+ * rhythm instead of interrupting it.
+ * <HowMightWe>statement</HowMightWe>
+ */
+export function HowMightWe({ children }: { children?: ReactNode }) {
+  return (
+    <div className="case-hmw relative my-8 overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm sm:p-5">
+      {/* The card's only colour. Blurred well past its own box so it reads as
+          light falling across the corner rather than as a shape sitting in it. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-10 left-0 h-28 w-28 rounded-full bg-accent blur-[64px] dark:opacity-60"
+      />
+      {/* Positioned, so the content paints above the absolute bloom. */}
+      <div className="relative flex flex-row items-center gap-2 text-sm font-semibold text-foreground">
+        <Lightbulb className="h-4 w-4 shrink-0" aria-hidden="true" />
+        <span>How might we</span>
+      </div>
+      <div className="case-hmw-body relative mt-2">{children}</div>
+    </div>
   );
 }

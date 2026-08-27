@@ -2,6 +2,8 @@
 @import "tw-animate-css";
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
+/* Marker handwriting, used only by the whiteboard-sketch case-study graphics. */
+@import "@fontsource-variable/caveat";
 @font-face {
   font-family: 'Geist Pixel Square';
   src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
@@ -63,6 +65,7 @@
     --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
     --font-pixel: 'Geist Pixel Square', ui-monospace, monospace;
+    --font-hand: 'Caveat Variable', 'Bradley Hand', 'Segoe Print', cursive;
     --color-ring: var(--ring);
     --color-input: var(--input);
     --color-border: var(--border);
@@ -155,11 +158,30 @@
   @apply text-foreground leading-relaxed;
   max-width: 65ch;
 }
+/* ── Long-form heading scale ────────────────────────────────────────────────
+   One scale shared by the structured case-study header and the MDX body, so
+   the two cannot drift apart. Markdown headings cannot carry a class, so
+   `.prose h2/h3` alias the same tokens the components apply by name:
+     .heading-section  20px medium    section headings (Long story short,
+                                      Services, Team, What that turned into)
+     .heading-sub      16px semibold  sub-headings (goal, feature titles)
+   Note the element selectors outrank a bare utility class, so a component
+   cannot restyle a heading inside .prose with `text-base` alone - it has to
+   change the tier here. Spacing is deliberately left out of both tiers: the
+   body needs section rhythm, the header and cards set their own. */
+.heading-section,
 .prose h2 {
-  @apply mt-12 mb-4 text-xl font-semibold tracking-tight;
+  @apply text-xl font-medium tracking-tight text-foreground;
+}
+.heading-sub,
+.prose h3 {
+  @apply text-base font-semibold tracking-tight text-foreground;
+}
+.prose h2 {
+  @apply mt-12 mb-4;
 }
 .prose h3 {
-  @apply mt-8 mb-3 text-lg font-semibold tracking-tight;
+  @apply mt-8 mb-3;
 }
 .prose p {
   @apply mb-4 text-base text-muted-foreground;
@@ -200,8 +222,28 @@
 .prose figcaption {
   @apply mt-2 text-center text-sm text-muted-foreground;
 }
+/* Thematic breaks read as a centred run of three dithered diamonds rather than a
+   hairline: a beat between sections, drawn in the same 1-bit language as the
+   pixel-mark and pixel-wave work. The dither is a 2px checkerboard, so it
+   resolves into a ~50% tone at reading distance and stays visibly dithered up
+   close. The diamonds are clipped out of that field rather than produced with a
+   45deg transform: rotating the element would rotate the checkerboard off the
+   pixel grid and turn the dither into moire. */
 .prose hr {
-  @apply my-10 border-border;
+  @apply my-12 border-0 text-muted-foreground;
+  display: block;
+  text-align: center;
+  height: auto;
+}
+.prose hr::before {
+  content: "";
+  display: inline-block;
+  /* three 8px squares stood on a corner (11.314px point to point), 12px apart */
+  width: 57.942px;
+  height: 11.314px;
+  background: repeating-conic-gradient(currentColor 0 25%, transparent 0 50%) 0 0 /
+    2px 2px;
+  clip-path: path("M 5.657 0 L 11.314 5.657 L 5.657 11.314 L 0 5.657 Z M 28.971 0 L 34.628 5.657 L 28.971 11.314 L 23.314 5.657 Z M 52.285 0 L 57.942 5.657 L 52.285 11.314 L 46.628 5.657 Z");
 }
 .prose code {
   @apply rounded bg-secondary px-1.5 py-0.5 font-mono text-sm;
@@ -238,6 +280,34 @@
 }
 .prose .case-goals .case-goal-body p {
   @apply text-sm leading-relaxed;
+}
+
+/* The how-might-we statement sets its own type. Markdown wraps the children in
+   a paragraph, which would otherwise inherit body copy size and muted colour
+   and flatten the card back into the article. */
+.prose .case-hmw-body p {
+  @apply mb-0 text-base leading-relaxed text-foreground;
+}
+/* Several statements share one card and one 'How might we' header, so each is
+   numbered rather than bulleted: a disc would read as a checklist, and the
+   numerals echo the ghosted 01/02/03 used elsewhere in the case studies. */
+.prose .case-hmw-body ul {
+  @apply m-0 list-none space-y-2 p-0;
+  counter-reset: hmw;
+}
+/* The numeral is a flex item baseline-aligned against the statement, rather than
+   absolutely positioned. Absolute positioning meant guessing an offset, and the
+   guess was wrong: leading-relaxed is unitless, so the 12px numeral recomputed it
+   to a 19.5px line box against the statement's 26px and sat high. Baseline
+   alignment holds at any font size or leading. */
+.prose .case-hmw-body ul li {
+  @apply m-0 flex gap-3 text-base leading-relaxed text-foreground;
+  align-items: baseline;
+  counter-increment: hmw;
+}
+.prose .case-hmw-body ul li::before {
+  content: counter(hmw, decimal-leading-zero);
+  @apply shrink-0 font-mono text-xs tabular-nums text-muted-foreground;
 }
 
 .prose .case-goal-title,

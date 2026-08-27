@@ -35,3 +35,6 @@ pnpm-debug.log*
 
 # Symlink created by `skills add`; points at an absolute worktree path
 .claude/skills/copywriting
+
+# Local working notes for case-study drafts, not for publication
+mahaana-case-study-notes.md

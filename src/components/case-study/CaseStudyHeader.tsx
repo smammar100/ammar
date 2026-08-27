@@ -41,7 +41,7 @@ function PillGroup({ title, items }: { title: string; items?: string[] }) {
   if (!items || items.length === 0) return null;
   return (
     <div>
-      <h2 className="mb-3 text-xl font-medium tracking-tight text-foreground">{title}</h2>
+      <h2 className="heading-section mb-3">{title}</h2>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
           <span
@@ -67,11 +67,7 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
     heroImage,
   } = data;
   const members = (Array.isArray(team) ? team : toParagraphs(team)).map(parseMember);
-  const problem = toParagraphs(data.problem);
-  const overview = toParagraphs(data.overview);
-  // Problem first, then how it resolved: the merged block is a narrative now,
-  // not two labelled columns.
-  const story = [...problem, ...overview];
+  const story = toParagraphs(data.summary);
 
   // The client name carries the display heading; the descriptive `title` still
   // does the work in metadata and on the work index.
@@ -97,7 +93,7 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
       {/* Write-up against the delivery pills */}
       <div className="grid gap-10 pt-10 md:grid-cols-3 md:gap-12">
         <div className="md:col-span-2">
-          <h2 className="mb-4 text-xl font-medium tracking-tight text-foreground">Long story short</h2>
+          <h2 className="heading-section mb-4">Long story short</h2>
           {story.map((paragraph, i) => (
             <p key={i} className="mb-4 text-base leading-relaxed text-muted-foreground last:mb-0">
               {paragraph}
@@ -110,7 +106,7 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
           <PillGroup title="Tools" items={tools} />
           {members.length > 0 && (
             <div>
-              <h2 className="mb-3 text-xl font-medium tracking-tight text-foreground">Team</h2>
+              <h2 className="heading-section mb-3">Team</h2>
               <AvatarGroup className="h-10 -space-x-2.5">
                 {members.map((member) => (
                   <Avatar key={member.name} className="size-10 border-2 border-background">
