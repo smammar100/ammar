@@ -10,7 +10,7 @@ import { getProjects, getLab, getWriting } from "@/lib/content";
 const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
 
 const heroHeadline = "Ammar designs it, builds it, ships it.";
-const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) with 10,000+ downloads and 4.8★ on iOS, and I build what I design.";
+const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) with 10,000+ downloads, and I build what I design.";
 const heroIntroDetail = "Currently #1 Top Author on 21st.dev and shipping 100 built projects in public. Receipts, not adjectives.";
 const heroCurrentWorkLead = "Right now, I'm designing Pakistan's first SECP-licensed digital wealth manager at";
 const heroCurrentWorkTail = "and shipping my way through 100 design-engineering projects in public.";

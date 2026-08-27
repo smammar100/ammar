@@ -193,7 +193,7 @@ export default function Page() {
             >
               Mahaana (YC W22)
             </Link>
-            , Pakistan&apos;s first SECP-licensed digital wealth manager, as Senior Product Designer since April 2025, leading design across mobile and web: 10,000+ downloads, 4.8★+ on iOS. On the side, a full{" "}
+            , Pakistan&apos;s first SECP-licensed digital wealth manager, as Senior Product Designer since April 2025, leading design across mobile and web, with 10,000+ downloads. On the side, a full{" "}
             <Link
               href="/work/truewind-rebrand"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"

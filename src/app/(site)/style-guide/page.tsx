@@ -74,7 +74,7 @@ export default function Page() {
         <ul>
           <li><strong>Investment Calculator:</strong> A Webflow calculator that lifted conversion 20% by letting visitors model returns before signing up.</li>
           <li><strong>Component Libraries:</strong> Figma libraries that cut design-to-dev turnaround 35% across the product team.</li>
-          <li><strong>App Store Receipts:</strong> 10,000+ downloads with a 4.8★+ iOS rating and <em>4.0★+ on Android</em>.</li>
+          <li><strong>App Store Receipts:</strong> 10,000+ downloads across <em>iOS and Android</em>.</li>
         </ul>
 
         <h2>Links</h2>

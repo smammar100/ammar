@@ -50,7 +50,6 @@ const STATS = [
   { value: "50K+", label: "Registered users" },
   { value: "20K+", label: "Active clients" },
   { value: "10K+", label: "App downloads" },
-  { value: "4.8★", label: "iOS App Store rating" },
   { value: "<10 min", label: "Account onboarding" },
   { value: "+20%", label: "Conversion on the investment calculator" },
 ];
@@ -58,9 +57,17 @@ const STATS = [
 export function MahaanaImpact() {
   return (
     <figure className="case-figure my-10">
-      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
+      {/* Wrapping flex rather than a fixed grid. The gap-px over bg-border trick
+          draws the dividers, which means any row the tiles do not fill exactly
+          shows as a slab of border colour rather than as empty space. Letting the
+          last row grow to fill the width keeps that from happening at any number
+          of stats, on either breakpoint. */}
+      <div className="flex flex-wrap gap-px overflow-hidden rounded-xl border border-border bg-border">
         {STATS.map((stat) => (
-          <div key={stat.label} className="flex flex-col gap-1 bg-card px-5 py-6">
+          <div
+            key={stat.label}
+            className="flex flex-1 basis-[calc(50%-1px)] flex-col gap-1 bg-card px-5 py-6 sm:basis-[calc(33.333%-1px)]"
+          >
             <span className="text-3xl font-semibold tabular-nums tracking-tight text-foreground">
               {stat.value}
             </span>
