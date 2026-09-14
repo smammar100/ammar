@@ -9,12 +9,34 @@ export function MahaanaScreenWall() {
       {/* No negative-margin breakout: the article sits inside the Intersection
           frame now, and pulling wider would push the image through the vertical
           rules into the hatched margin. */}
-      <div className="overflow-hidden rounded-xl bg-[#FAFAFA]">
+      <div className="overflow-hidden rounded-xl border border-border bg-[#FAFAFA]">
         <img
           src="/images/projects/mahaana-wealth/screen-wall.png"
           alt="Ten Mahaana screens: AI financial guidance over a sector heatmap, the portfolio dashboard at PKR 124,235, an FPJM order detail, a savings-pot promo, the risk level selector, the Mahaana X IGI life insurance plan, the investment account picker, onboarding, explore market, and pending orders"
           width={2248}
           height={1742}
+          className="block w-full"
+        />
+      </div>
+    </figure>
+  );
+}
+
+/** The FigJam journey map from usability testing the staging onboarding. */
+export function MahaanaJourneyMap() {
+  return (
+    <figure className="case-figure my-10">
+      {/* A screenshot of the board, not an export: the curve, stage names and
+          sticky note carry at article width, the per-stage notes do not. A
+          2x export from FigJam would make those legible. */}
+      <div className="overflow-hidden rounded-xl border border-border bg-card">
+        <img
+          src="/images/projects/mahaana-wealth/onboarding-journey-map.png"
+          alt="Onboarding journey map from usability testing on the staging app. An emotion curve runs across seven stages - splash, sign-up and login, welcome, account selection, playground, risk profile and additional screens - dipping to its lowest at the playground screen. Screenshots of each stage sit below, and a sticky note sums up: the process felt quite lengthy, bugs made it longer, the look and feel is good, and most of it was easy apart from a few screens. Average UX score: 78."
+          width={1852}
+          height={847}
+          loading="lazy"
+          decoding="async"
           className="block w-full"
         />
       </div>
@@ -28,8 +50,11 @@ export function MahaanaFoundations() {
     <figure className="case-figure my-10">
       {/* Clipped flush like the wall image: the export's outer 24px is flat
           background on all four corners, so the rounded clip takes nothing but
-          empty margin. */}
-      <div className="overflow-hidden rounded-xl bg-[#FAFAFA]">
+          empty margin. That canvas is #F3F1EE, the light --card, so the white
+          components sit on the same ground as the other case-study panels -
+          re-export on that colour. The phone images can't follow: their grey
+          screens (#F2F2F0) would disappear into it. */}
+      <div className="overflow-hidden rounded-xl border border-border bg-card">
         <img
           src="/images/projects/mahaana-wealth/atomic-system.png"
           alt="Mahaana component inventory: index, gainer and loser list rows, a sector heatmap, investment comparison bars, the portfolio dashboard header and chart, an order card, editorial content cards, and the Save+, Retirement, Gold and Trade product cards"

@@ -337,6 +337,12 @@
 .prose .case-figure {
   max-width: none;
 }
+/* Case-figure images sit inside a rounded, clipped frame that draws the stroke.
+   Left on the image, the .prose img border has a smaller radius than the clip, so
+   its corners get sliced off - and in the carousel it draws a seam between slides. */
+.prose .case-figure img {
+  @apply rounded-none border-0;
+}
 
 /* Hide the scrollbar while keeping the element scrollable (used by the
    Dynamic Island TOC panel, which auto-fits its height and only scrolls when a

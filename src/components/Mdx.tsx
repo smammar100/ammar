@@ -17,7 +17,9 @@ import {
   MahaanaFoundations,
   MahaanaImpact,
   MahaanaVoices,
+  MahaanaJourneyMap,
 } from "@/components/case-study/MahaanaSections";
+import { MahaanaOnboarding } from "@/components/case-study/MahaanaOnboarding";
 
 // Components available to MDX content. `YouTube` matches the old astro-embed
 // component name used in the project files (<YouTube id="..." />).
@@ -40,6 +42,8 @@ const components = {
   MahaanaFoundations,
   MahaanaImpact,
   MahaanaVoices,
+  MahaanaJourneyMap,
+  MahaanaOnboarding,
 };
 
 export function Mdx({ source, format = "mdx" }: { source: string; format?: "md" | "mdx" }) {
