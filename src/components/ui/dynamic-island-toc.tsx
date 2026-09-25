@@ -169,41 +169,46 @@ export function DynamicIslandTOC({
     return () => clearTimeout(timer);
   }, [selector]);
 
-  // 2. Scroll spy. Scroll events are coalesced to one check per frame, and
-  // state only changes when the active heading does.
+  // 2. Scroll spy. Heading positions are measured once (document coordinates)
+  // and again only when the page changes size, so scrolling compares numbers
+  // instead of measuring every heading every frame. The scroll position comes
+  // from motion's scrollY, which motion already reads for the ring in a
+  // batched read-then-write frame; reading window.scrollY ourselves, after
+  // motion's style write, forced a synchronous style recalc every frame.
+  // State only changes when the active heading does.
+  const { scrollY } = useScroll();
   useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      let currentActiveId: string | null = null;
-      for (const heading of headings) {
-        const top = heading.element.getBoundingClientRect().top;
-        // 120px offset to trigger active state just as heading reaches the top
-        if (top <= 120) {
-          currentActiveId = heading.id;
-        } else {
-          break;
-        }
+    let offsets: number[] = [];
+    const measure = () => {
+      offsets = headings.map((h) => h.element.getBoundingClientRect().top + window.scrollY);
+    };
+    const update = (y: number) => {
+      // 120px offset to trigger active state just as heading reaches the top
+      const line = y + 120;
+      let currentActiveId: string | null = headings[0]?.id ?? null;
+      for (let i = 0; i < offsets.length; i++) {
+        if (offsets[i] <= line) currentActiveId = headings[i].id;
+        else break;
       }
-
-      if (!currentActiveId && headings.length > 0) {
-        currentActiveId = headings[0].id;
-      }
-
       setActiveId((prev) => (prev === currentActiveId ? prev : currentActiveId));
     };
-    const handleScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
+    // Content above a heading can change height after load (fonts, a carousel,
+    // an image without reserved space); the body resizing covers all of them.
+    const ro = new ResizeObserver(() => {
+      measure();
+      update(window.scrollY);
+    });
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    update();
+    measure();
+    update(window.scrollY);
+    const unsubscribe = scrollY.on("change", update);
+    ro.observe(document.body);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (frame) cancelAnimationFrame(frame);
+      unsubscribe();
+      ro.disconnect();
     };
-  }, [headings]);
+  }, [headings, scrollY]);
 
   // 3. Keep the expanded panel within the viewport (leaves room for the
   //    bottom offset + breathing space at the top).

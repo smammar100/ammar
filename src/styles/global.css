@@ -10,6 +10,38 @@
   font-display: swap;
 }
 
+/* Size-matched fallbacks, shown until the Geist files arrive. Without them the
+   first paint uses Arial, and when Geist swaps in, lines re-wrap and the page
+   shifts (it moved the home page's first project row 38px). Values measured
+   in Chrome: regular Geist runs 2.85% wider than Arial, semibold Geist matches
+   Arial Bold's width, and both Geists have a 1.01 ascent and 0.30 descent. */
+@font-face {
+  font-family: 'Geist Fallback';
+  src: local('Arial'), local('ArialMT');
+  font-weight: 100 500;
+  size-adjust: 102.85%;
+  ascent-override: 98.2%;
+  descent-override: 29.2%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Geist Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 600 900;
+  size-adjust: 99.85%;
+  ascent-override: 101.2%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Geist Mono Fallback';
+  src: local('Courier New'), local('CourierNewPSMT');
+  size-adjust: 100%;
+  ascent-override: 101%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -62,8 +94,8 @@
 }
 
 @theme inline {
-    --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
-    --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+    --font-sans: 'Geist Variable', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'Geist Mono Variable', 'Geist Mono Fallback', ui-monospace, 'SFMono-Regular', monospace;
     --font-pixel: 'Geist Pixel Square', ui-monospace, monospace;
     --font-hand: 'Caveat Variable', 'Bradley Hand', 'Segoe Print', cursive;
     --color-ring: var(--ring);
