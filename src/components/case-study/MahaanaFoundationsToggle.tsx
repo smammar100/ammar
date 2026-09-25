@@ -14,18 +14,14 @@ export function MahaanaFoundationsToggle() {
   return (
     <figure className="case-figure my-10">
       {/* Both images stay mounted and stacked so the switch never waits on a
-          download or shifts the layout; only opacity changes. The exports share
-          the same 1166x908 canvas. */}
-      <div className="overflow-hidden rounded-xl border border-border bg-card">
-        {/* The band under the image takes the showing export's canvas colour
-            (#F3F1EE light, #FAF8F5 dark), so the switch reads as part of the
-            image rather than a strip. */}
-        <div
-          className={cn(
-            "relative pb-10 transition-colors duration-300 motion-reduce:transition-none",
-            dark ? "bg-[#FAF8F5]" : "bg-[#F3F1EE]",
-          )}
-        >
+          download or shifts the layout; only opacity changes. The light export
+          is 1166x908 and sets the height; the dark one is 2px taller, and the
+          extra falls into the band below, which is the same colour. */}
+      {/* Both exports sit on #FAF8F5, the light --background, so the frame and
+          the band under the image use that token and the switch reads as part
+          of the image rather than a strip. */}
+      <div className="overflow-hidden rounded-xl border border-border bg-background">
+        <div className="relative pb-10">
           <img
             src="/images/projects/mahaana-wealth/atomic-system.png"
             alt={dark ? "" : `${ALT}, in light mode`}
@@ -42,7 +38,7 @@ export function MahaanaFoundationsToggle() {
             alt={dark ? `${ALT}, in dark mode` : ""}
             aria-hidden={!dark}
             width={1166}
-            height={908}
+            height={910}
             className={cn(
               "absolute inset-x-0 top-0 block w-full transition-opacity duration-300 motion-reduce:transition-none",
               dark ? "opacity-100" : "opacity-0",
