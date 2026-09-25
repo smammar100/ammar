@@ -39,7 +39,7 @@ services: ["product design", "design systems", "ios & android design", "design t
 summary:
   - "Mahaana is Pakistan's first digital-only asset management company, licensed by the SECP and backed by IGI Holdings, Vostok Emerging Finance and Y Combinator. Client money sits with the Central Depository Company. Everything it offers is Shariah-compliant, and all of it opens in an app."
   - "I joined as senior product designer and led design across iOS and Android, working with a product manager, a mobile engineer, a junior designer I mentored, and the founder."
-  - "The funds, the compliance rulings and the backend were other people's work. Mine was everything a customer touches, and the design system that holds it together across every product and both platforms."
+  - "The funds, the compliance rulings and the backend were other people's work. Mine was everything a customer touches, and the design system that holds it together across every product and all four platforms."
 ---
 
 {/* Structure: Freytag's five-part arc from the IxDF case-study template -
@@ -94,7 +94,7 @@ Three constraints made it harder, and none were negotiable. The product is regul
 
 ## The Design System
 
-The design system was what made Mahaana work at scale. Two platforms, the products that had already shipped, and a roadmap of ones that had not, all pulling on the same interface. That needed one set of foundations, components and page patterns rather than a fresh interpretation per product. Held in one place, a change lands on every product, platform and breakpoint at once, at the same level of quality.
+The design system was what made Mahaana work at scale. Four platforms, the products that had already shipped, and a roadmap of ones that had not, all pulling on the same interface. That needed one set of foundations, components and page patterns rather than a fresh interpretation per product. The system was built for dark mode as well as light, with every colour defined as a token that has a value in both themes, so nothing had to be redrawn for the second one. Held in one place, a change lands on every product, platform, breakpoint and theme at once, at the same level of quality.
 
 <MahaanaFoundations />
 
@@ -126,15 +126,18 @@ The redesign answers that in two ways. Some steps explain before they ask: the f
 
 And the length had a target: ten minutes to invested, not to submitted, so the first investment is chosen inside onboarding, before the review. An account that opens and never gets funded is still a drop-off, just harder to see.
 
-## The hardest thing to design was a sentence
+## Everything they own, on one screen
 
-A pension is not hard to draw. It is hard to say.
+Once the money was in, the question people brought back to the app changed. It was no longer how to start. It was how it was going.
 
-Every product on the platform carried two things an ordinary saver needed at once: a financial instrument that is genuinely complicated, and a compliance ruling that decides whether they are allowed to touch it at all. Say too little and the product is a black box asking to be trusted. Say too much and it reads as a prospectus, which is its own kind of black box.
+The home screen had to answer that in one place: a snapshot of every product someone holds, the total value and total return across all of them, the latest news, and the day's market update. Four jobs on one screen, and none of them allowed to bury the others.
 
-So the compliance answer stopped being a page someone could go and find, and became a property of the thing itself, carried on the product card next to the expected yield. The Shariah question gets answered in the same glance that answers what this is and what it might return, before anyone has to think to ask it.
+So the screen opens on the answer. The total value comes first, with the return beside it in rupees and as a percentage, over a chart that reads from a month back to all time. Each product follows on its own card with its own value, return and risk level, so someone holding only Save+ and someone with a pension read their home the same way. The news and the market update sit below, there for the reason behind a number and out of the way for anyone who only came to check it.
 
-The test I held it to: every simplification had to survive being built as a real component, twice, on two platforms, by an engineer who was not in the room when it was decided. That is a stricter test than any design file can apply to itself.
+{/* TODO(ammar): this section needs its screen. Export the full-length home
+    screen (total value through news and market update) and it goes here. Also
+    confirm the last paragraph: the news-and-market placement is inferred from
+    the screen wall, which only shows the top of home. */}
 
 {/* ===== 4. FALLING ACTION ===== */}
 
@@ -173,7 +176,7 @@ Under ten minutes to open an account is the difference between someone who inves
 
 ## What I took from it
 
-The design system is what let the translation survive two platforms. Simplifying a pension or a cash fund is easy to do once, in one screen, in a design file. Doing it as components that hold their meaning in every product they appear in, built by someone else, months later, is the part that took the work.
+The design system is what let the translation survive four platforms. Simplifying a pension or a cash fund is easy to do once, in one screen, in a design file. Doing it as components that hold their meaning in every product they appear in, built by someone else, months later, is the part that took the work.
 
 What I would do differently is start the compliance conversation earlier. We treated the Shariah ruling as something to communicate well once the product existed. It would have been better as an input to what the product was, from the first sketch.
 

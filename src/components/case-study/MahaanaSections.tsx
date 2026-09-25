@@ -1,3 +1,5 @@
+import { MahaanaFoundationsToggle } from "./MahaanaFoundationsToggle";
+
 // Mahaana case-study graphics. Zero-prop presets, same as the other
 // case-study components — next-mdx-remote doesn't reliably pass array/object
 // expression props through MDX (see Mdx.tsx).
@@ -46,26 +48,9 @@ export function MahaanaJourneyMap() {
 
 /** The component inventory every product journey is assembled from. */
 export function MahaanaFoundations() {
-  return (
-    <figure className="case-figure my-10">
-      {/* Clipped flush like the wall image: the export's outer 24px is flat
-          background on all four corners, so the rounded clip takes nothing but
-          empty margin. That canvas is #F3F1EE, the light --card, so the white
-          components sit on the same ground as the other case-study panels -
-          re-export on that colour. The phone images can't follow: their grey
-          screens (#F2F2F0) would disappear into it. */}
-      <div className="overflow-hidden rounded-xl border border-border bg-card">
-        <img
-          src="/images/projects/mahaana-wealth/atomic-system.png"
-          alt="Mahaana component inventory: index, gainer and loser list rows, a sector heatmap, investment comparison bars, the portfolio dashboard header and chart, an order card, editorial content cards, and the Save+, Retirement, Gold and Trade product cards"
-          width={1166}
-          height={908}
-          className="block w-full"
-        />
-      </div>
-    </figure>
-  );
+  return <MahaanaFoundationsToggle />;
 }
+
 
 /**
  * Outcomes. Every figure here is one Mahaana publishes or that sits on the
