@@ -1,3 +1,4 @@
+import { Coins, Download, Timer, Users, type LucideIcon } from "lucide-react";
 import { MahaanaFoundationsToggle } from "./MahaanaFoundationsToggle";
 export { MahaanaHomeAnnotated } from "./MahaanaHomeAnnotated";
 
@@ -14,7 +15,9 @@ export function MahaanaScreenWall() {
           rules into the hatched margin. */}
       <div className="overflow-hidden rounded-xl border border-border bg-[#FAFAFA]">
         <img
-          src="/images/projects/mahaana-wealth/screen-wall.png"
+          src="/images/projects/mahaana-wealth/screen-wall.webp"
+          loading="lazy"
+          decoding="async"
           alt="Ten Mahaana screens: AI financial guidance over a sector heatmap, the portfolio dashboard at PKR 124,235, an FPJM order detail, a savings-pot promo, the risk level selector, the Mahaana X IGI life insurance plan, the investment account picker, onboarding, explore market, and pending orders"
           width={2248}
           height={1742}
@@ -34,7 +37,7 @@ export function MahaanaJourneyMap() {
           2x export from FigJam would make those legible. */}
       <div className="overflow-hidden rounded-xl border border-border bg-card">
         <img
-          src="/images/projects/mahaana-wealth/onboarding-journey-map.png"
+          src="/images/projects/mahaana-wealth/onboarding-journey-map.webp"
           alt="Onboarding journey map from usability testing on the staging app. An emotion curve runs across seven stages - splash, sign-up and login, welcome, account selection, playground, risk profile and additional screens - dipping to its lowest at the playground screen. Screenshots of each stage sit below, and a sticky note sums up: the process felt quite lengthy, bugs made it longer, the look and feel is good, and most of it was easy apart from a few screens. Average UX score: 78."
           width={1852}
           height={847}
@@ -56,34 +59,37 @@ export function MahaanaFoundations() {
  * Outcomes. Every figure here is one Mahaana publishes or that sits on the
  * public App Store listing. No modelled or projected numbers.
  */
-const STATS = [
-  { value: "50K+", label: "Registered users" },
-  { value: "20K+", label: "Active clients" },
-  { value: "10K+", label: "App downloads" },
-  { value: "<10 min", label: "Account onboarding" },
-  { value: "+20%", label: "Conversion on the investment calculator" },
+// Tints echo the app: Mahaana's violet, the green it uses for gains, gold
+// for money. Kept translucent so the icons stay texture behind the numbers.
+const STATS: { value: string; label: string; Icon: LucideIcon; tint: string }[] = [
+  { value: "50K+", label: "Registered users", Icon: Users, tint: "text-violet-500/30 dark:text-violet-400/30" },
+  { value: "10K+", label: "App downloads", Icon: Download, tint: "text-sky-500/30 dark:text-sky-400/30" },
+  { value: "20K+", label: "Active clients", Icon: Coins, tint: "text-amber-500/35 dark:text-amber-400/30" },
+  { value: "<10 min", label: "Account onboarding", Icon: Timer, tint: "text-emerald-500/30 dark:text-emerald-400/30" },
 ];
 
 export function MahaanaImpact() {
   return (
     <figure className="case-figure my-10">
-      {/* Wrapping flex rather than a fixed grid. The gap-px over bg-border trick
-          draws the dividers, which means any row the tiles do not fill exactly
-          shows as a slab of border colour rather than as empty space. Letting the
-          last row grow to fill the width keeps that from happening at any number
-          of stats, on either breakpoint. */}
-      <div className="flex flex-wrap gap-px overflow-hidden rounded-xl border border-border bg-border">
-        {STATS.map((stat) => (
+      {/* A 2×2 grid. The gap-px over bg-border trick draws the dividers, so the
+          stat count must fill every cell: an empty cell would show as a slab of
+          border colour. Keep STATS at an even number. */}
+      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border">
+        {STATS.map(({ value, label, Icon, tint }) => (
           <div
-            key={stat.label}
-            className="flex flex-1 basis-[calc(50%-1px)] flex-col gap-1 bg-card px-5 py-6 sm:basis-[calc(33.333%-1px)]"
+            key={label}
+            className="relative flex flex-col overflow-hidden bg-card px-5 py-6"
           >
-            <span className="text-3xl font-semibold tabular-nums tracking-tight text-foreground">
-              {stat.value}
+            {/* Oversized, tinted icon in the corner: texture, not content. */}
+            <Icon
+              aria-hidden="true"
+              strokeWidth={1.25}
+              className={`pointer-events-none absolute -right-5 -bottom-6 h-28 w-28 sm:h-32 sm:w-32 ${tint}`}
+            />
+            <span className="relative text-3xl font-semibold tabular-nums tracking-tight text-foreground sm:text-4xl">
+              {value}
             </span>
-            <span className="text-sm leading-snug text-muted-foreground">
-              {stat.label}
-            </span>
+            <span className="relative mt-1 text-sm leading-snug text-muted-foreground">{label}</span>
           </div>
         ))}
       </div>
@@ -267,10 +273,12 @@ export function MahaanaDawnArticle() {
           <span className="flex items-center gap-3 whitespace-nowrap font-mono text-xs uppercase tracking-widest text-muted-foreground">
             {/* Black wordmark on transparent; inverted for the dark theme. */}
             <img
-              src="/images/projects/mahaana-wealth/dawn-logo.png"
+              src="/images/projects/mahaana-wealth/dawn-logo.webp"
               alt="Dawn"
               width={400}
               height={95}
+              loading="lazy"
+              decoding="async"
               className="my-0! block h-4 w-[67px]! shrink-0 rounded-none! border-0! dark:invert"
             />
             <span aria-hidden>·</span>
@@ -291,7 +299,7 @@ export function MahaanaDawnArticle() {
         {/* White illustration on white: the frame keeps its edge visible. */}
         <span className="block shrink-0 overflow-hidden rounded-lg border border-border bg-white sm:w-56">
           <img
-            src="/images/projects/mahaana-wealth/dawn-financial-literacy.png"
+            src="/images/projects/mahaana-wealth/dawn-financial-literacy.webp"
             alt="Dawn's illustration for the article: two hands passing a 1000 rupee note through a smartphone"
             width={800}
             height={480}
@@ -313,7 +321,7 @@ export function MahaanaDiscover() {
           uses that token rather than --card to sit flush with it. */}
       <div className="overflow-hidden rounded-xl border border-border bg-background">
         <img
-          src="/images/projects/mahaana-wealth/discover.png"
+          src="/images/projects/mahaana-wealth/discover.webp"
           alt="Eight Mahaana Discover screens. Top row: the Discover tab with an 'Ask any question about finance' prompt over Market today, shown on its Indices, Trending and Sectors views, and a Grow with Mahaana list of plain-language articles such as What are ETFs and What are Mutual Funds. Bottom row: the Mahaana AI Chat welcome screen, a new chat with suggested prompts, an answer comparing retirement returns with a portfolio projection chart, and Videos and podcasts with Mahaana Explained and Market Wrap episodes."
           width={1801}
           height={1753}

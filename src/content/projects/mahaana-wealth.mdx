@@ -8,9 +8,11 @@ liveUrl: "https://mahaana.com"
 type: "professional"
 description: "How Mahaana's Shariah-compliant investing app was redesigned across iOS and Android: pensions, gold and equities made openable in under ten minutes, on one shared design system."
 skills: ["Product Design", "Design Systems", "Mobile Design"]
-thumbnail: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.png"
-thumbnailWide: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.png"
-heroImage: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.png"
+thumbnail: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.webp"
+thumbnailWide: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.webp"
+thumbnailWideSize: [1700, 1275]
+heroImage: "/images/projects/mahaana-wealth/thumbnail-mahaana-app-wide.webp"
+heroImageSize: [1700, 1275]
 sortOrder: 1
 draft: false
 
@@ -37,9 +39,9 @@ team:
 services: ["product design", "design systems", "ios & android design", "design tokens"]
 # "Long story short" in the header: what Mahaana is, then what I owned.
 summary:
-  - "Mahaana is Pakistan's first digital-only asset management company, licensed by the SECP and backed by IGI Holdings, Vostok Emerging Finance and Y Combinator. Client money sits with the Central Depository Company. Everything it offers is Shariah-compliant, and all of it opens in an app."
-  - "I joined as senior product designer and led design across iOS and Android, working with a product manager, a mobile engineer, a junior designer I mentored, and the founder."
-  - "The funds, the compliance rulings and the backend were other people's work. Mine was everything a customer touches, and the design system that holds it together across every product and all four platforms."
+  - "Mahaana is Pakistan's first digital-only asset management company, licensed by the SECP and backed by IGI Holdings, Vostok Emerging Finance and Y Combinator. Everything it offers is Shariah-compliant, with client money held by the Central Depository Company."
+  - "As senior product designer I led design across iOS and Android, alongside a product manager, a mobile engineer, a junior designer I mentored, and the founder."
+  - "The funds, compliance and backend were other people's work. Mine was everything a customer touches, and the design system that holds it together."
 ---
 
 {/* Structure: Freytag's five-part arc from the IxDF case-study template -
@@ -53,11 +55,13 @@ summary:
 
 {/* ===== 1. EXPOSITION ===== */}
 
+<TocGroup label="Problem" />
+
 ## Pakistan saves. It just doesn't invest.
 
-The licence was real. The funds were already trading. What was missing was everything between a licence and a customer.
+The licence was real and the funds were already trading. What was missing was everything between a licence and a customer.
 
-Because this was never an investing problem. It was a trust problem. People in Pakistan already save for the future: gold kept at home, money left sitting in bank accounts, long-term plans built around what they know. Moving that into an app meant trusting products, financial language and decisions they were not used to making alone, with no branch to walk into. So the work was to create an experience seamless enough that nobody would need one.
+This was never an investing problem; it was a trust problem. People in Pakistan already save: gold kept at home, money sitting in bank accounts. Moving that into an app meant trusting unfamiliar products, language and decisions, with no branch to walk into. The work was to make the experience seamless enough that nobody would need one.
 
 {/* TODO(ammar): the four quotes in <MahaanaVoices /> are illustrative, written
     to stand in for the confusion the product had to answer. Replace them with
@@ -68,13 +72,13 @@ Because this was never an investing problem. It was a trust problem. People in P
 
 <MahaanaVoices />
 
-Three constraints made it harder, and none were negotiable. The product is regulated, so onboarding could not simply be shortened: risk profiling, identity checks and CDC account creation had to happen, in that order. It is digital-only, so nothing could fall back on a branch visit. And it is Shariah-compliant, so every product had to carry its ruling in a form an ordinary saver could read.
+Three constraints were non-negotiable. It is regulated, so risk profiling, identity checks and CDC account creation had to happen, in that order. It is digital-only, so nothing could fall back on a branch. And it is Shariah-compliant, so every product had to carry its ruling in plain language.
 
 <HowMightWe>
 
-- get someone onboarded and invested in under ten minutes, with the compliance and the destination of their money visible the whole way?
-- start that journey from the products people already understand, earning the unfamiliar ones later?
-- and teach the language of investing along the way, so an ordinary saver understands what they own?
+- get someone onboarded and invested in under ten minutes, with compliance and the destination of their money visible throughout?
+- start from the products people already understand, and earn the unfamiliar ones later?
+- and teach the language of investing along the way?
 
 </HowMightWe>
 
@@ -92,11 +96,15 @@ Three constraints made it harder, and none were negotiable. The product is regul
 
 ---
 
+<TocGroup label="Solution" />
+
 ## The Design System
 
-The design system was what made Mahaana work at scale. Four platforms, the products that had already shipped, and a roadmap of ones that had not, all pulling on the same interface. That needed one set of foundations, components and page patterns rather than a fresh interpretation per product. The system was built for dark mode as well as light, with every colour defined as a token that has a value in both themes, so nothing had to be redrawn for the second one. Held in one place, a change lands on every product, platform, breakpoint and theme at once, at the same level of quality.
+The design system is what made Mahaana work at scale. Four platforms and a roadmap of products not yet built all pulled on the same interface, so it needed one set of foundations, components and patterns rather than a fresh take per product. Every colour is a token with a light and a dark value, so one change lands on every product, platform and theme at once.
 
 <MahaanaFoundations />
+
+Gold and trading didn't exist yet when this was built. The product-tile pattern came first, so new products arrived into a shape already decided instead of arguing for their own. It also cut design-to-development handoff by 35%, by ending the back-and-forth over what a spacing value or a state should be.
 
 ---
 
@@ -114,60 +122,58 @@ The design system was what made Mahaana work at scale. Four platforms, the produ
 
 ## Ten minutes, and nothing skipped
 
-Before redesigning anything, I ran usability tests on the staging app and mapped how each stage of onboarding felt, from the splash screens to the last step.
+Before redesigning anything, I ran usability tests on the staging app and mapped how each stage of onboarding felt.
 
 <MahaanaJourneyMap />
 
-Onboarding averaged a UX score of 78. The look and most screens were fine; the complaint was length, and bugs made it worse. The regulated steps were not ours to remove, so the question became how to make every required step feel worth finishing.
+Onboarding averaged a UX score of 78. The look was fine; the complaint was length, made worse by bugs. The regulated steps couldn't go, so the question became how to make each one feel worth finishing.
 
 <MahaanaOnboarding />
 
-The redesign answers that in two ways. Some steps explain before they ask: the first screen offers Save+ against a bank account and Retirement against the income tax it saves, and set-up names its two parts before the first question. Others ask for less: risk questions come one to a screen, the ID card is photographed instead of typed out, and the answers turn straight into an allocation someone can see and change.
+Some steps now explain before they ask: the first screen sets Save+ against a bank account and Retirement against the income tax it saves. Others ask for less: one risk question per screen, the ID card photographed instead of typed, and answers turned straight into an allocation people can see and change.
 
-And the length had a target: ten minutes to invested, not to submitted, so the first investment is chosen inside onboarding, before the review. An account that opens and never gets funded is still a drop-off, just harder to see.
+The ten-minute target was to invested, not submitted, so the first investment is chosen inside onboarding. An account that never gets funded is still a drop-off, just harder to see.
 
 ## Everything they own, on one screen
 
-Once the money was in, people stopped asking how to start and started asking how it was going, so the home screen answers their questions in the order they ask them. First, how much do I have: the total value leads, with the return in rupees and as a percentage, over a chart from one month to all time. Then, where is it: each product gets its own card with its value, return and risk level, so one product or four, the home reads the same way.
+Once the money was in, the question became how it was going, so the home screen answers in the order people ask. How much do I have: total value and return, over a chart from one month to all time. Where is it: one card per product, with its value, return and risk level.
 
-Below that, the screen helps people understand what they are looking at. The day's market data explains why a number moved. Wealth Advisor puts a real person one tap away, for an app with no branch to walk into. And short videos and news from Mahaana's desk help people new to investing learn as they go.
-
-The order is the design decision. Someone who only opens the app to check gets their answer from the total value and chart, before they scroll. The rest is there for when someone wants to go deeper, and never in the way when they don't.
+Below that sit the day's market data, a Wealth Advisor one tap away, and short reads for people new to investing. Someone who only came to check gets their answer before they scroll; the rest is there when they want more.
 
 <MahaanaHomeAnnotated />
 
 ## Making Pakistan financially literate
 
-Only 26% of adults in Pakistan are financially literate, and that number was at the heart of Mahaana. Most Pakistanis were never taught what a return, a risk level or compounding means, and nobody invests in what they can't explain. So a core part of the vision was to double down on financial literacy and make investing easy for an ordinary saver to follow.
+Only 26% of adults in Pakistan are financially literate, and nobody invests in what they can't explain. So a core part of Mahaana's vision was to make investing easy for an ordinary saver to follow.
 
 <MahaanaDawnArticle />
 
-That became Discover, one tab from home: a snapshot of the Pakistani market, an AI chatbot that answers questions in plain language, videos and articles from Mahaana's YouTube channel, and the latest market news. Home gives a taste of each, and Discover is where people go deeper. The aim was never to turn savers into analysts, just to give them enough of the language to trust the number on their screen and act on it.
+That became Discover, one tab from home: a snapshot of the Pakistani market, an AI chatbot that answers questions in plain language, videos and articles from Mahaana's YouTube channel, and the latest news. The aim was never to turn savers into analysts, just to give them enough of the language to trust the number on their screen.
 
 <MahaanaDiscover />
 
-## Holding it together
+## The whole product
 
-Products that ship years apart only feel like one product if the pieces are shared. The system stays deliberately small: three brand colours and two type roles, composed into the cards, list rows and account picker that every journey reuses.
+Put together, one app covers saving, investing, retirement, gold, trading and insurance, and every part reads as one product, whichever door someone came in through.
 
 <MahaanaScreenWall />
-
-Gold and trading were still ahead of us when this was built, which is the part I would argue for hardest: the pattern for a product tile existed before there was a gold product to put in one. New products arrive into a shape that is already decided, instead of arguing for their own.
-
-Building the libraries this way cut design-to-development handoff by 35%, mostly by ending the round-trip where engineering has to ask what a spacing value or a state is supposed to be.
 
 {/* DRAFT-GAP 3 of 3 - iteration and testing. The template wants sketches
     becoming wireframes becoming shipped screens, what testing sent back, and
     what changed because of it. The build side is covered; the evidence side is
     not. Even one before-and-after on a screen that tested badly would do it. */}
 
+---
+
 {/* ===== 5. RESOLUTION ===== */}
 
-## What changed
+<TocGroup label="Result" />
+
+## The Impact
 
 <MahaanaImpact />
 
-Under ten minutes to open an account is the difference between someone who invests and someone who only meant to. That was the number the whole brief hung on, and it is the one that answers the question this case study opened with: not whether people in Pakistan want to save, but whether a screen can carry enough trust to make them act.
+Under ten minutes to open an account is the difference between someone who invests and someone who only meant to. It answers the question this case study opened with: whether a screen can carry enough trust to make people act.
 
 {/* TODO(ammar): real endorsement goes here. The quote in the Figma file was
     placeholder copy, not a statement from anyone at Mahaana. Once you have one
@@ -179,10 +185,10 @@ Under ten minutes to open an account is the difference between someone who inves
 
 */}
 
-## What I took from it
+## Reflection
 
-The design system is what let the translation survive four platforms. Simplifying a pension or a cash fund is easy to do once, in one screen, in a design file. Doing it as components that hold their meaning in every product they appear in, built by someone else, months later, is the part that took the work.
+**What worked.** The design system is what let the work survive four platforms. Simplifying a pension once, in a design file, is easy. Making it hold its meaning in every component, built by someone else months later, is the hard part.
 
-What I would do differently is start the compliance conversation earlier. We treated the Shariah ruling as something to communicate well once the product existed. It would have been better as an input to what the product was, from the first sketch.
+**What I'd do differently.** Start the compliance conversation earlier. We treated the Shariah ruling as something to explain once the product existed; it would have been better as an input from the first sketch.
 
-These numbers are a snapshot, and numbers age: a rating moves, a competitor ships, an interface starts to look like its year. What I would want read from them is the how, not the score. Trust was treated as something to design for rather than something to claim, and every claim on the screen had to be one the licence, the custodian and the compliance ruling could actually back.
+**What I'm taking forward.** In finance, trust has to be designed for, not claimed. Every claim on screen should be one the licence, the custodian and the compliance ruling can back.

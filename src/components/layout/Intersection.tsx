@@ -14,7 +14,23 @@ import { cn } from "@/lib/utils";
 // 0.5px stroke on a 7px repeat: finer and denser than the snippet's 1px/10px,
 // which is what lets the alpha go up without the texture turning heavy.
 const HATCH =
-  "bg-[image:repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_0.5px,transparent_0,transparent_50%)] bg-[size:7px_7px] bg-fixed";
+  "bg-[image:repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_0.5px,transparent_0,transparent_50%)] bg-[size:7px_7px]";
+
+/**
+ * The hatch stays still while the page scrolls. It used to do that with
+ * background-attachment: fixed, which repaints both full-height gutters on
+ * every scroll frame (a masked fixed background can't be composited). A
+ * viewport-tall sticky layer looks the same and only moves as a layer. It
+ * sits in an absolute wrapper so it adds no height to the grid, and max-h-full
+ * keeps it inside a gutter shorter than the screen.
+ */
+function StillHatch() {
+  return (
+    <div className="absolute inset-0">
+      <div className={cn("sticky top-0 h-screen max-h-full", HATCH)} />
+    </div>
+  );
+}
 
 export function Intersection({
   children,
@@ -52,17 +68,19 @@ export function Intersection({
       <div
         aria-hidden="true"
         className={cn(
-          "col-start-1 col-end-3 row-span-full row-start-1 border-r border-(--pattern-fg) mask-y-from-60%",
-          HATCH,
+          "relative col-start-1 col-end-3 row-span-full row-start-1 border-r border-(--pattern-fg) mask-y-from-60%",
         )}
-      />
+      >
+        <StillHatch />
+      </div>
       <div
         aria-hidden="true"
         className={cn(
-          "col-start-4 col-end-6 row-span-full row-start-1 border-l border-(--pattern-fg) mask-y-from-60%",
-          HATCH,
+          "relative col-start-4 col-end-6 row-span-full row-start-1 border-l border-(--pattern-fg) mask-y-from-60%",
         )}
-      />
+      >
+        <StillHatch />
+      </div>
 
       {/* Dashed rules. */}
       <div

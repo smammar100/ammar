@@ -11,7 +11,7 @@ import {
 } from "@/components/case-study/IconimateDemo";
 import { IconimateLabCandidates } from "@/components/case-study/IconimateLab";
 import { IconimateCardDemo } from "@/components/case-study/IconimateCard";
-import { Goals, Goal, Feature, HowMightWe } from "@/components/case-study/CaseStudySections";
+import { Goals, Goal, Feature, HowMightWe, TocGroup } from "@/components/case-study/CaseStudySections";
 import {
   MahaanaScreenWall,
   MahaanaFoundations,
@@ -41,6 +41,7 @@ const components = {
   Goal,
   Feature,
   HowMightWe,
+  TocGroup,
   MahaanaScreenWall,
   MahaanaFoundations,
   MahaanaHomeAnnotated,

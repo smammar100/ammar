@@ -98,6 +98,7 @@ export default function HomePage() {
               kpis={project.data.kpis}
               thumbnail={project.data.thumbnailWide ?? project.data.thumbnail}
               thumbnailDark={project.data.thumbnailWideDark ?? project.data.thumbnailDark}
+              thumbnailSize={project.data.thumbnailWide ? project.data.thumbnailWideSize : undefined}
               index={i}
             />
           ))}

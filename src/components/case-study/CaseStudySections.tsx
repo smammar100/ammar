@@ -98,3 +98,13 @@ export function HowMightWe({ children }: { children?: ReactNode }) {
     </div>
   );
 }
+
+/**
+ * Invisible marker that starts a table-of-contents group. Every heading
+ * after it, up to the next marker, is listed under `label` in the floating
+ * TOC (see dynamic-island-toc.tsx). Renders nothing visible on the page.
+ */
+export function TocGroup({ label }: { label?: string }) {
+  if (!label) return null;
+  return <span data-toc-group={label} hidden />;
+}

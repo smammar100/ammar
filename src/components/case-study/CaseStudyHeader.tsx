@@ -65,6 +65,7 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
     services,
     tools,
     heroImage,
+    heroImageSize,
   } = data;
   const members = (Array.isArray(team) ? team : toParagraphs(team)).map(parseMember);
   const story = toParagraphs(data.summary);
@@ -86,7 +87,16 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
       {/* Lead image sits between the framing and the write-up */}
       {heroImage && (
         <div className="overflow-hidden rounded-xl border border-border bg-card">
-          <img src={heroImage} alt={title} className="block w-full" />
+          {/* The page's largest image: fetch it first, and reserve its box so
+              the header doesn't jump when it arrives. */}
+          <img
+            src={heroImage}
+            alt={title}
+            width={heroImageSize?.[0]}
+            height={heroImageSize?.[1]}
+            fetchPriority="high"
+            className="block h-auto w-full"
+          />
         </div>
       )}
 

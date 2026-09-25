@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, ReactNode, useMemo } from "react";
-import { motion, AnimatePresence, Transition } from "motion/react";
+import { useState, useEffect, useLayoutEffect, useRef, ReactNode, useMemo } from "react";
+import { motion, AnimatePresence, Transition, useScroll, useSpring, useTransform } from "motion/react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +12,8 @@ type HeadingData = {
   text: string;
   level: number;
   element: HTMLElement;
+  /** Label from the nearest preceding [data-toc-group] marker, if any. */
+  group?: string;
 };
 
 // --- Shared Animation Configs ---
@@ -22,24 +24,26 @@ const islandTransition: Transition = {
   duration: 0.5,
 };
 
-// Expanded-panel size math (measured against the real render):
-// header block 52px + list bottom padding 16px = 68px chrome, minus the 2px
-// trailing gap the formula double-counts → 66px base, then 38px per heading
-// (36px row + 2px gap).
-const PANEL_BASE = 66;
-const PANEL_PER_ITEM = 38;
+// Expanded-panel chrome: the 52px header block plus the list's 16px bottom
+// padding. The list itself is measured, since group labels make row counts an
+// unreliable guide to its height.
+const PANEL_CHROME = 52 + 16;
 
 // --- Progress Circle Component ---
 // Colours are inverted relative to the page: the island paints itself with the
 // page's `--foreground`, so everything on it (including this ring) uses
 // `--background`.
 
-function CircleProgress({ percentage }: { percentage: number }) {
+// Driven by motion values straight from the page scroll, so moving the ring
+// never re-renders the island (it used to set React state on every scroll event).
+function CircleProgress() {
   const size = 24;
   const strokeWidth = 2.5;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percentage / 100) * circumference;
+  const { scrollYProgress } = useScroll();
+  const smooth = useSpring(scrollYProgress, { stiffness: 300, damping: 40, restDelta: 0.001 });
+  const strokeDashoffset = useTransform(smooth, (p) => circumference * (1 - p));
 
   return (
     <svg width={size} height={size} className="-rotate-90 shrink-0">
@@ -60,9 +64,7 @@ function CircleProgress({ percentage }: { percentage: number }) {
         stroke="var(--background)"
         strokeWidth={strokeWidth}
         strokeDasharray={circumference}
-        initial={{ strokeDashoffset: circumference }}
-        animate={{ strokeDashoffset: offset }}
-        transition={{ duration: 0.15, ease: "easeOut" }}
+        style={{ strokeDashoffset }}
         strokeLinecap="round"
       />
     </svg>
@@ -88,7 +90,6 @@ export function DynamicIslandTOC({
   const [activeId, setActiveId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [maxHeight, setMaxHeight] = useState(440);
 
   // 1. DOM Scanning Strategy
@@ -98,7 +99,7 @@ export function DynamicIslandTOC({
 
       const validHeadings = elements
         .filter((el) => !el.hasAttribute("data-toc-ignore")) // Allow explicit skipping
-        .map((el, index) => {
+        .map((el, index): HeadingData => {
           // Auto-generate ID if missing (common in generic Markdown/CMS output)
           if (!el.id) {
             const generatedId =
@@ -131,9 +132,28 @@ export function DynamicIslandTOC({
         });
 
       // Sort by DOM order mathematically
-      validHeadings.sort((a, b) =>
-        a.element.compareDocumentPosition(b.element) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1,
+      const byDomOrder = (a: HTMLElement, b: HTMLElement) =>
+        a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+      validHeadings.sort((a, b) => byDomOrder(a.element, b.element));
+
+      // Group headings under the nearest preceding [data-toc-group] marker
+      // (placed from MDX with <TocGroup label="..." />).
+      const markers = (Array.from(document.querySelectorAll("[data-toc-group]")) as HTMLElement[]).sort(
+        byDomOrder,
       );
+      if (markers.length > 0) {
+        for (const heading of validHeadings) {
+          let group: string | undefined;
+          for (const marker of markers) {
+            if (marker.compareDocumentPosition(heading.element) & Node.DOCUMENT_POSITION_FOLLOWING) {
+              group = marker.dataset.tocGroup;
+            } else {
+              break;
+            }
+          }
+          heading.group = group;
+        }
+      }
 
       setHeadings(validHeadings);
     };
@@ -143,9 +163,12 @@ export function DynamicIslandTOC({
     return () => clearTimeout(timer);
   }, [selector]);
 
-  // 2. Scroll Spy & Progress
+  // 2. Scroll spy. Scroll events are coalesced to one check per frame, and
+  // state only changes when the active heading does.
   useEffect(() => {
-    const handleScroll = () => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
       let currentActiveId: string | null = null;
       for (const heading of headings) {
         const top = heading.element.getBoundingClientRect().top;
@@ -161,16 +184,19 @@ export function DynamicIslandTOC({
         currentActiveId = headings[0].id;
       }
 
-      setActiveId(currentActiveId);
-
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(total > 0 ? Math.min(100, Math.max(0, (window.scrollY / total) * 100)) : 0);
+      setActiveId((prev) => (prev === currentActiveId ? prev : currentActiveId));
+    };
+    const handleScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    update();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [headings]);
 
   // 3. Keep the expanded panel within the viewport (leaves room for the
@@ -191,7 +217,14 @@ export function DynamicIslandTOC({
   }, [headings]);
 
   // Height fits the content; longer TOCs cap at maxHeight and scroll internally.
-  const expandedHeight = Math.min(PANEL_BASE + headings.length * PANEL_PER_ITEM, maxHeight);
+  // The list is rendered (invisibly) while collapsed and its rows never wrap,
+  // so its height can be measured before the panel opens.
+  const listRef = useRef<HTMLDivElement>(null);
+  const [listHeight, setListHeight] = useState(0);
+  useLayoutEffect(() => {
+    if (listRef.current) setListHeight(listRef.current.offsetHeight);
+  }, [headings]);
+  const expandedHeight = Math.min(PANEL_CHROME + listHeight, maxHeight);
 
   // Don't render the island on pages with no headings (e.g. very short posts).
   if (headings.length === 0) {
@@ -268,7 +301,7 @@ export function DynamicIslandTOC({
               </AnimatePresence>
             </div>
 
-            <CircleProgress percentage={progress} />
+            <CircleProgress />
           </motion.div>
 
           {/* EXPANDED MENU CONTENT */}
@@ -298,16 +331,18 @@ export function DynamicIslandTOC({
             </div>
 
             <div className="no-scrollbar flex-1 overflow-y-auto overscroll-contain px-3 pb-4" data-lenis-prevent="true">
-              <div className="flex flex-col gap-0.5">
-                {headings.map((h) => {
+              <div ref={listRef} className="flex flex-col gap-0.5">
+                {headings.map((h, i) => {
                   const isActive = activeId === h.id;
+                  const startsGroup = !!h.group && h.group !== headings[i - 1]?.group;
+                  const groupIsActive = !!h.group && activeHeading?.group === h.group;
                   const isHovered = hoveredId === h.id;
 
                   // Dynamically calculate padding based on nesting depth!
                   const indentLevel = Math.max(0, h.level - minLevel);
                   const paddingLeft = indentLevel * 14 + 12; // 12px base + 14px per depth
 
-                  return (
+                  const row = (
                     <button
                       key={h.id}
                       onMouseEnter={() => setHoveredId(h.id)}
@@ -339,6 +374,22 @@ export function DynamicIslandTOC({
                         className="ml-3 h-1.5 w-1.5 shrink-0 rounded-full bg-background"
                       />
                     </button>
+                  );
+
+                  if (!startsGroup) return row;
+                  return (
+                    <div key={h.id} className="flex flex-col gap-0.5">
+                      <span
+                        className={cn(
+                          "px-3 pb-1 font-mono text-[10px] font-semibold uppercase tracking-[0.08em] transition-colors duration-300",
+                          i === 0 ? "pt-1" : "pt-3",
+                          groupIsActive ? "text-background/70" : "text-background/35",
+                        )}
+                      >
+                        {h.group}
+                      </span>
+                      {row}
+                    </div>
                   );
                 })}
               </div>

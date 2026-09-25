@@ -28,7 +28,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const project = getProject(slug);
   if (!project) notFound();
 
-  const { title, skills, heroImage } = project.data;
+  const { title, skills, heroImage, heroImageSize } = project.data;
   // `tagline` is the switch: projects that define it get the structured
   // case-study header, the rest keep the original title-and-skills one.
   const isStructured = Boolean(project.data.tagline);
@@ -71,7 +71,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             <img
               src={heroImage}
               alt={title}
-              className="w-full object-cover"
+              width={heroImageSize?.[0]}
+              height={heroImageSize?.[1]}
+              fetchPriority="high"
+              className="h-auto w-full object-cover"
             />
           </div>
         )}

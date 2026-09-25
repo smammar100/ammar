@@ -14,10 +14,12 @@ interface FeaturedWorkRowProps {
   /** Public URL of the shipped work. Omitted when there is nothing live to link. */
   thumbnail?: string;
   thumbnailDark?: string;
+  /** Intrinsic [width, height] of the thumbnail, to reserve its space. */
+  thumbnailSize?: [number, number];
   index: number;
 }
 
-export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail, thumbnailDark, index }: FeaturedWorkRowProps) {
+export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail, thumbnailDark, thumbnailSize, index }: FeaturedWorkRowProps) {
   const href = `/work/${slug}`;
 
   return (
@@ -73,14 +75,21 @@ export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail,
                 <img
                   src={thumbnail}
                   alt=""
+                  width={thumbnailSize?.[0]}
+                  height={thumbnailSize?.[1]}
                   loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : undefined}
+                  decoding="async"
                   className={`block h-auto w-full transition-transform duration-500 group-hover:scale-[1.02] ${thumbnailDark ? "dark:hidden" : ""}`}
                 />
                 {thumbnailDark && (
                   <img
                     src={thumbnailDark}
                     alt=""
-                    loading={index === 0 ? "eager" : "lazy"}
+                    width={thumbnailSize?.[0]}
+                    height={thumbnailSize?.[1]}
+                    loading="lazy"
+                    decoding="async"
                     className="hidden block h-auto w-full transition-transform duration-500 group-hover:scale-[1.02] dark:block"
                   />
                 )}

@@ -1,7 +1,4 @@
-﻿import { Caveat } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-const hand = Caveat({ subsets: ["latin"], weight: ["500"], display: "swap" });
 
 /**
  * Notes, top to bottom. `at` is the vertical centre of the section on the
@@ -68,7 +65,7 @@ export function MahaanaHomeAnnotated() {
         <div className="relative mx-auto grid max-w-[300px] grid-cols-1 sm:max-w-none sm:grid-cols-[1fr_280px_1fr]">
           <div aria-hidden className="hidden sm:block" />
           <img
-            src="/images/projects/mahaana-wealth/home-screen-full.png"
+            src="/images/projects/mahaana-wealth/home-screen-full.webp"
             alt="The full Mahaana home screen, top to bottom: a greeting, total value of PKR 124,235 with a PKR 29,340 (5.60%) return, a portfolio chart with 1M to All ranges, cards for Save+, Retirement, Gold and Trade each with value, return and risk level, daily market data for KSE100, USD, crude oil and gold, a Wealth Advisor booking card, articles from Mahaana's desk, news, and the tab bar with a central trade button"
             width={455}
             height={2312}
@@ -86,7 +83,9 @@ export function MahaanaHomeAnnotated() {
               aria-hidden
               style={{ top: `${n.at}%` }}
               className={cn(
-                hand.className,
+                // Caveat is already loaded site-wide (global.css); a second
+                // next/font copy downloaded the same face twice.
+                "font-hand font-medium",
                 "absolute hidden -translate-y-1/2 items-center gap-1 text-base leading-[1.1] text-muted-foreground sm:flex lg:text-lg",
                 n.side === "left"
                   ? "left-0 right-[calc(50%+148px)] flex-row justify-end text-right"

@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "sync-writing": "node scripts/sync-writing.mjs",
-    "generate:writing-art": "node scripts/generate-writing-art.mjs"
+    "generate:writing-art": "node scripts/generate-writing-art.mjs",
+    "images:optimize": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",

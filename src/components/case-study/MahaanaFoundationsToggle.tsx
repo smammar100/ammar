@@ -23,22 +23,26 @@ export function MahaanaFoundationsToggle() {
       <div className="overflow-hidden rounded-xl border border-border bg-background">
         <div className="relative pb-10">
           <img
-            src="/images/projects/mahaana-wealth/atomic-system.png"
+            src="/images/projects/mahaana-wealth/atomic-system.webp"
             alt={dark ? "" : `${ALT}, in light mode`}
             aria-hidden={dark}
             width={1166}
             height={908}
+            loading="lazy"
+            decoding="async"
             className={cn(
               "block w-full transition-opacity duration-300 motion-reduce:transition-none",
               dark ? "opacity-0" : "opacity-100",
             )}
           />
           <img
-            src="/images/projects/mahaana-wealth/atomic-system-dark.png"
+            src="/images/projects/mahaana-wealth/atomic-system-dark.webp"
             alt={dark ? `${ALT}, in dark mode` : ""}
             aria-hidden={!dark}
             width={1166}
             height={910}
+            loading="lazy"
+            decoding="async"
             className={cn(
               "absolute inset-x-0 top-0 block w-full transition-opacity duration-300 motion-reduce:transition-none",
               dark ? "opacity-100" : "opacity-0",

@@ -3,7 +3,10 @@
 import { useEffect, useRef } from "react";
 import { Roboto_Mono } from "next/font/google";
 
-const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "500", "700"], display: "swap" });
+// Variable font, so no weight list. preload: false keeps it from being
+// preloaded at high priority on every page that imports this module (the home
+// page's lab cards included); it loads when the button renders instead.
+const robotoMono = Roboto_Mono({ subsets: ["latin"], display: "swap", preload: false });
 
 const COLS = 32;
 const ROWS = 8;

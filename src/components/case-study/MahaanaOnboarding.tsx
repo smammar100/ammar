@@ -12,22 +12,22 @@ type Drag = { x: number; left: number; from: number; lastX: number; lastT: numbe
 
 const SLIDES = [
   {
-    src: "/images/projects/mahaana-wealth/onboarding-1-account.png",
+    src: "/images/projects/mahaana-wealth/onboarding-1-account.webp",
     caption: "Choosing an account",
     alt: "Six onboarding screens: choosing between Mahaana Save+ and Mahaana Retirement, the Mahaana x IGI retirement overview, picking a voluntary or occupational pension scheme, who the Voluntary Pension Scheme is for, the two-part set-up checklist, and the annual income question",
   },
   {
-    src: "/images/projects/mahaana-wealth/onboarding-2-risk-profile.png",
+    src: "/images/projects/mahaana-wealth/onboarding-2-risk-profile.webp",
     caption: "Risk profile, one question per screen",
     alt: "Six risk profile questions, one per screen: sources of income, occupation, highest education, marital status, whether you save or invest regularly, and how long you plan to keep the investment",
   },
   {
-    src: "/images/projects/mahaana-wealth/onboarding-3-risk-profile.png",
+    src: "/images/projects/mahaana-wealth/onboarding-3-risk-profile.webp",
     caption: "Risk profile, continued",
     alt: "Six more risk profile questions: investing experience, the main reason for investing, when you plan to use the money, what you would do if its value dropped 10 to 15 percent, how stable your income is, and insurance cover",
   },
   {
-    src: "/images/projects/mahaana-wealth/onboarding-4-identity-review.png",
+    src: "/images/projects/mahaana-wealth/onboarding-4-identity-review.webp",
     caption: "Risk level, identity, first investment and review",
     alt: "Six screens that close onboarding: the suggested Balanced risk level with its asset allocation, CNIC photo upload with consent to NADRA verification, CNIC details being extracted, permanent and mailing address, the first investment amount with a five-year projection, and the final review",
   },
@@ -156,7 +156,7 @@ export function MahaanaOnboarding() {
               alt={slide.alt}
               width={2580}
               height={931}
-              loading={i === 0 ? "eager" : "lazy"}
+              loading="lazy"
               decoding="async"
               draggable={false}
               className="block h-auto w-full"

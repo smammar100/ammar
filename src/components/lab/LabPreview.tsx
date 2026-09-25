@@ -44,27 +44,19 @@ export function LabPreview({ preview, title }: Props) {
     <div className="relative aspect-[1200/630] overflow-hidden bg-card texture-bg">
       {preview === "pattern-engine" && (
         <div className="absolute inset-0" data-preview="pattern-engine">
-          <div className="absolute inset-0 hidden bg-[#1a1816] dark:block">
+          {/* One canvas for both themes: the surface swaps configs itself, so a
+              second always-hidden copy would only burn frames. */}
+          <div className="absolute inset-0 bg-[#f5f1ec] dark:bg-[#1a1816]">
             <PatternSurfaceClient
-              name="lab-pattern-engine-dark"
+              name="lab-pattern-engine"
               config={patternEngineDarkConfig}
-              lightConfig={patternEngineDarkConfig}
-              motion={patternEngineMotion}
-              duration={2400}
-              className="absolute inset-0 opacity-90"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1816]/70 via-transparent to-transparent"></div>
-          </div>
-          <div className="absolute inset-0 block bg-[#f5f1ec] dark:hidden">
-            <PatternSurfaceClient
-              name="lab-pattern-engine-light"
-              config={patternEngineLightConfig}
+              darkConfig={patternEngineDarkConfig}
               lightConfig={patternEngineLightConfig}
               motion={patternEngineMotion}
               duration={2400}
-              className="absolute inset-0"
+              className="absolute inset-0 dark:opacity-90"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#f5f1ec]/60 via-transparent to-transparent"></div>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#f5f1ec]/60 via-transparent to-transparent dark:from-[#1a1816]/70"></div>
           </div>
           <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
             <span>Flow Field</span>

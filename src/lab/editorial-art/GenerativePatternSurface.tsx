@@ -88,7 +88,7 @@ export function GenerativePatternSurface({
       style={{ pointerEvents: 'none' }}
     >
       <GenerativeCanvas
-        key={`${name}-${isDark ? 'dark' : 'light'}-${replayKey}`}
+        key={`${name}-${replayKey}`}
         config={resolvedConfig}
         bgColor={bgColor}
         motion={motion}

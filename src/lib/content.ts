@@ -25,7 +25,11 @@ export interface ProjectData {
   thumbnailDark?: string;
   thumbnailWide?: string;
   thumbnailWideDark?: string;
+  /** Intrinsic [width, height] of thumbnailWide, so the image reserves its space before it loads. */
+  thumbnailWideSize?: [number, number];
   heroImage?: string;
+  /** Intrinsic [width, height] of heroImage. */
+  heroImageSize?: [number, number];
   sortOrder: number;
   draft: boolean;
 

@@ -135,14 +135,48 @@ export function useGenerativeCanvas(
     let startTime: number | null = null;
 
     if (activeMotion.mode === 'ambient') {
+      // Runs only while the canvas is on screen: an offscreen (or display:none)
+      // canvas keeps its last frame and costs nothing. Elapsed time is carried
+      // across pauses so the drift resumes where it stopped instead of jumping.
+      // Drawing is capped at ~30fps; the drift is slow enough not to show it.
+      const canvas = canvasRef.current;
+      let elapsed = 0;
+      let lastTs: number | null = null;
+      let lastDraw = -Infinity;
+      let running = false;
+
       const tick = (ts: number) => {
-        if (!startTime) startTime = ts;
-        redraw({ progress: 1, time: ts - startTime, motion: motionRef.current });
+        if (lastTs !== null) elapsed += Math.min(ts - lastTs, 50);
+        lastTs = ts;
+        if (ts - lastDraw >= 30) {
+          lastDraw = ts;
+          redraw({ progress: 1, time: elapsed, motion: motionRef.current });
+        }
         rafId = requestAnimationFrame(tick);
       };
+      const start = () => {
+        if (running) return;
+        running = true;
+        lastTs = null;
+        rafId = requestAnimationFrame(tick);
+      };
+      const stop = () => {
+        running = false;
+        cancelAnimationFrame(rafId);
+      };
 
-      rafId = requestAnimationFrame(tick);
-      return () => cancelAnimationFrame(rafId);
+      if (!canvas || typeof IntersectionObserver === 'undefined') {
+        start();
+        return stop;
+      }
+      const io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()), {
+        rootMargin: '100px',
+      });
+      io.observe(canvas);
+      return () => {
+        stop();
+        io.disconnect();
+      };
     }
 
     function tick(ts: number) {
