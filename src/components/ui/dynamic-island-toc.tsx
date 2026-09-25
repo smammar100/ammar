@@ -42,7 +42,13 @@ function CircleProgress() {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const { scrollYProgress } = useScroll();
-  const smooth = useSpring(scrollYProgress, { stiffness: 300, damping: 40, restDelta: 0.001 });
+  // motion reports 1 for a page that can't scroll and doesn't clamp overscroll
+  // (iOS bounce); the ring should read empty and stay within 0–1.
+  const guarded = useTransform(scrollYProgress, (p) => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    return max > 0 ? Math.min(1, Math.max(0, p)) : 0;
+  });
+  const smooth = useSpring(guarded, { stiffness: 300, damping: 40, restDelta: 0.001 });
   const strokeDashoffset = useTransform(smooth, (p) => circumference * (1 - p));
 
   return (

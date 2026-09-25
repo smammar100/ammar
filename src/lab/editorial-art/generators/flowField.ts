@@ -52,7 +52,15 @@ function ambientBaseLayer(
   const cached = ambientBaseCache.get(paths);
   if (cached && cached.key === key) return cached.canvas;
 
-  const canvas = cached?.canvas ?? document.createElement('canvas');
+  let canvas = cached?.canvas;
+  if (!canvas) {
+    canvas = document.createElement('canvas');
+    // A GPU reset clears the detached canvas without changing the key; drop
+    // the entry so the next frame redraws the base lines.
+    const invalidate = () => ambientBaseCache.delete(paths);
+    canvas.addEventListener('contextlost', invalidate);
+    canvas.addEventListener('contextrestored', invalidate);
+  }
   canvas.width = w;
   canvas.height = h;
   const ctx = canvas.getContext('2d');
@@ -111,11 +119,10 @@ export function drawFlowField(
       0,
     );
 
-    // All highlights in a single stroke: one draw call per frame instead of
-    // one per path.
+    // One stroke per highlight, so crossing highlights still brighten where
+    // they overlap.
     ctx.globalAlpha = Math.min(1, baseAlpha * (0.65 + 0.55 * intensity));
     ctx.lineWidth = strokeWidth * (1.15 + 0.85 * intensity);
-    ctx.beginPath();
     for (let pathIndex = 0; pathIndex < paths.length; pathIndex++) {
       const { points } = paths[pathIndex];
       if (points.length < 6) continue;
@@ -123,12 +130,13 @@ export function drawFlowField(
       const head = Math.floor(phase * points.length);
       const windowSize = Math.max(5, Math.floor(points.length * (0.16 + 0.24 * intensity)));
       const tail = Math.max(0, head - windowSize);
+      ctx.beginPath();
       ctx.moveTo(points[tail][0] * scaleX, points[tail][1] * scaleY);
       for (let i = tail + 1; i <= head; i++) {
         ctx.lineTo(points[i][0] * scaleX, points[i][1] * scaleY);
       }
+      ctx.stroke();
     }
-    ctx.stroke();
     ctx.restore();
     return;
   }

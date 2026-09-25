@@ -169,9 +169,12 @@ export function useGenerativeCanvas(
         start();
         return stop;
       }
-      const io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()), {
-        rootMargin: '100px',
-      });
+      // Entries can arrive batched (an out-then-in pair while the main thread
+      // is busy); only the newest one reflects where the canvas is now.
+      const io = new IntersectionObserver(
+        (entries) => (entries[entries.length - 1].isIntersecting ? start() : stop()),
+        { rootMargin: '100px' },
+      );
       io.observe(canvas);
       return () => {
         stop();
@@ -201,13 +204,14 @@ export function useGenerativeCanvas(
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Only the backing store is sized. The CSS box stays at its 100%/100%, so
+    // the canvas keeps following its container and the observer keeps firing;
+    // pinning style.width/height in px froze it at its first measurement.
     const resizeCanvas = (width: number, height: number) => {
       if (width === 0 || height === 0) return;
       const dpr = window.devicePixelRatio || 1;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
       redraw(renderRef.current);
     };
 

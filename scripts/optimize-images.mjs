@@ -27,8 +27,9 @@ const JOBS = [
   ["mahaana-wealth/onboarding-3-risk-profile.png", "onboarding-3-risk-profile.webp", 1700, { quality: 90 }],
   ["mahaana-wealth/onboarding-4-identity-review.png", "onboarding-4-identity-review.webp", 1700, { quality: 90 }],
   ["mahaana-wealth/home-screen-full.png", "home-screen-full.webp", 455, { quality: 90 }],
-  ["mahaana-wealth/dawn-financial-literacy.png", "dawn-financial-literacy.webp", 448, { quality: 85 }],
-  ["mahaana-wealth/dawn-logo.png", "dawn-logo.webp", 134, { quality: 90 }],
+  // Full card width on phones (up to ~504 CSS px), so keep the source width.
+  ["mahaana-wealth/dawn-financial-literacy.png", "dawn-financial-literacy.webp", 800, { quality: 85 }],
+  ["mahaana-wealth/dawn-logo.png", "dawn-logo.webp", 400, { quality: 90 }],
   // The Iconimate hero and wide thumbnail are the same file under two names;
   // one WebP serves both.
   ["iconimate/hero-iconimate-landing.png", "iconimate-landing.webp", 1600, { quality: 85 }],
