@@ -15,6 +15,7 @@ import { Goals, Goal, Feature, HowMightWe } from "@/components/case-study/CaseSt
 import {
   MahaanaScreenWall,
   MahaanaFoundations,
+  MahaanaHomeAnnotated,
   MahaanaImpact,
   MahaanaVoices,
   MahaanaJourneyMap,
@@ -40,6 +41,7 @@ const components = {
   HowMightWe,
   MahaanaScreenWall,
   MahaanaFoundations,
+  MahaanaHomeAnnotated,
   MahaanaImpact,
   MahaanaVoices,
   MahaanaJourneyMap,

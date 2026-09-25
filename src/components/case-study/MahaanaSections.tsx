@@ -1,4 +1,5 @@
 import { MahaanaFoundationsToggle } from "./MahaanaFoundationsToggle";
+export { MahaanaHomeAnnotated } from "./MahaanaHomeAnnotated";
 
 // Mahaana case-study graphics. Zero-prop presets, same as the other
 // case-study components — next-mdx-remote doesn't reliably pass array/object
