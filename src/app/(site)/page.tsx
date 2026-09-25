@@ -87,10 +87,6 @@ export default function HomePage() {
 
       {/* ── Work ── */}
       <section className={homeFirstSection}>
-        <div className={homeSectionHeader}>
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Work</p>
-          <Link href="/work" className="text-xs text-muted-foreground transition-colors hover:text-foreground">View all →</Link>
-        </div>
         <div>
           {featuredProjects.slice(0, 4).map((project, i) => (
             <FeaturedWorkRow

@@ -43,7 +43,7 @@ export function TopNav() {
   const pathname = usePathname() ?? "/";
 
   return (
-    <header className="topnav hidden md:block sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-sm">
+    <header className="topnav hidden md:block sticky top-0 z-40 bg-background/80 backdrop-blur-sm">
       <div className="mx-auto grid h-16 max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-2 px-4 lg:gap-4 lg:px-10">
 
         {/* Left: brand */}
