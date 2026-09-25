@@ -65,7 +65,7 @@ const STATS: { value: string; label: string; Icon: LucideIcon; tint: string }[] 
   { value: "50K+", label: "Registered users", Icon: Users, tint: "text-violet-500/30 dark:text-violet-400/30" },
   { value: "10K+", label: "App downloads", Icon: Download, tint: "text-sky-500/30 dark:text-sky-400/30" },
   { value: "20K+", label: "Active clients", Icon: Coins, tint: "text-amber-500/35 dark:text-amber-400/30" },
-  { value: "<10 min", label: "Account onboarding", Icon: Timer, tint: "text-emerald-500/30 dark:text-emerald-400/30" },
+  { value: "<5 min", label: "Account onboarding", Icon: Timer, tint: "text-emerald-500/30 dark:text-emerald-400/30" },
 ];
 
 export function MahaanaImpact() {

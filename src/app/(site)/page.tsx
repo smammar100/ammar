@@ -9,6 +9,12 @@ import { getProjects, getLab, getWriting } from "@/lib/content";
 
 const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
 
+// Home sections switched off for now. Flip to true to bring them back; the
+// routes they link to (/lab, /writing, /work/design-engineering-100) are untouched.
+const showLabSection = false;
+const showNowShippingCard = false;
+const showWritingSection = false;
+
 const heroHeadline = "Ammar designs it, builds it, ships it.";
 const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) with 10,000+ downloads, and I build what I design.";
 const heroIntroDetail = "Currently #1 Top Author on 21st.dev and shipping 100 built projects in public. Receipts, not adjectives.";
@@ -106,6 +112,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Lab ── */}
+      {showLabSection && (
       <section className={homeSection}>
         <div className={homeSectionHeader}>
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Lab</p>
@@ -119,14 +126,17 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+      )}
 
       {/* ── Writing ── */}
+      {showWritingSection && (
       <section className={homeSection}>
         <div className={homeSectionHeader}>
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Writing</p>
           <Link href="/writing" className="text-xs text-muted-foreground transition-colors hover:text-foreground">View all →</Link>
         </div>
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-6">
+        <div className={showNowShippingCard ? "grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-6" : undefined}>
+          {showNowShippingCard && (
           <div>
             <Link href="/work/design-engineering-100" className="group block h-full" aria-label="The 100: design-engineering projects shipped in public">
               <article className="h-full overflow-hidden rounded-xl border border-border bg-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md group-hover:shadow-black/5 dark:group-hover:shadow-black/20">
@@ -150,6 +160,7 @@ export default function HomePage() {
               </article>
             </Link>
           </div>
+          )}
           <div>
             <div className="flex flex-col divide-y divide-border">
               {writingPosts.slice(0, 6).map((post) => (
@@ -164,6 +175,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ── Closing ── */}
       <section className={`${homeShell} pb-20 pt-2 text-center sm:pb-24 lg:pb-28`}>

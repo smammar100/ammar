@@ -11,7 +11,8 @@ export const siteConfig = {
     // Work hidden from the nav. The /work route and every case study still
     // resolve, and the home page's "View all" still links there.
     { label: "Lab", href: "/lab" },
-    { label: "Writing", href: "/writing" },
+    // Writing hidden from the nav. /writing and every post still resolve, and
+    // the home page's Writing section still links there.
     // Community removed from nav: no real testimonials or community photos exist
     // yet. The /community route still resolves. TODO: re-add once Kind Words and
     // community content are real.
