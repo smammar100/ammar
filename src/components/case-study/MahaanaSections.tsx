@@ -314,7 +314,7 @@ export function MahaanaDiscover() {
       <div className="overflow-hidden rounded-xl border border-border bg-background">
         <img
           src="/images/projects/mahaana-wealth/discover.png"
-          alt="Eight Mahaana Discover screens. Top row: the Advisory tab with an 'Ask any question about finance' prompt over Market today, shown on its Indices, Trending and Sectors views, and a Grow with Mahaana list of plain-language articles such as What are ETFs and What are Mutual Funds. Bottom row: the Mahaana AI Chat welcome screen, a new chat with suggested prompts, an answer comparing retirement returns with a portfolio projection chart, and Videos and podcasts with Mahaana Explained and Market Wrap episodes."
+          alt="Eight Mahaana Discover screens. Top row: the Discover tab with an 'Ask any question about finance' prompt over Market today, shown on its Indices, Trending and Sectors views, and a Grow with Mahaana list of plain-language articles such as What are ETFs and What are Mutual Funds. Bottom row: the Mahaana AI Chat welcome screen, a new chat with suggested prompts, an answer comparing retirement returns with a portfolio projection chart, and Videos and podcasts with Mahaana Explained and Market Wrap episodes."
           width={1801}
           height={1753}
           loading="lazy"
