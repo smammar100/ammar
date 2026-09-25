@@ -1,0 +1,14 @@
+---
+title: "Pixel Scatter Button"
+description: "A call-to-action after the Next.js Conf 2025 ticket button, where hover shatters it into flashing pixels."
+slug: "pixel-scatter"
+preview: "pixel-scatter"
+experience: "demo"
+draft: false
+---
+
+A study of the "Get Tickets" button from Next.js Conf 2025. At rest it is a solid blue block. On hover, 256 white pixels flash on and off across its surface, each one picking its own moment to appear and its own time to stay, so no two neighbours light up together and the pattern never forms a band.
+
+A small bias nudges the centre columns to start a little earlier on enter, and the edges a little earlier on leave. It is only 80ms against a 380ms random window: enough to give the scatter a direction, not enough to turn it into a wave.
+
+It uses no animation library, just timeouts that show and hide each pixel.

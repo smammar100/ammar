@@ -89,10 +89,10 @@ export default function Page() {
           <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
             Being collected the slow way, by shipping. If we&apos;ve built something together, send a line:{" "}
             <a
-              href="mailto:mrammarbest110@gmail.com"
+              href="mailto:syed.m.ammar@hotmail.com"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
             >
-              mrammarbest110@gmail.com
+              syed.m.ammar@hotmail.com
             </a>
             .
           </p>

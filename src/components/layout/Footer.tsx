@@ -41,7 +41,7 @@ export function Footer() {
             href="/colophon"
             className="text-muted-foreground/60 transition-colors hover:text-foreground"
           >
-            Colophon
+            SMAMMAR
           </a>
           <span>&copy; {new Date().getFullYear()}</span>
           {/* Top nav already shows local time on desktop. */}

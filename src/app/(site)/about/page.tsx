@@ -233,10 +233,10 @@ export default function Page() {
           <p>
             What I want next: high-impact teams where the designer who writes the code is an asset, not a category error. If you&apos;re building something worth shipping, email me at{" "}
             <a
-              href="mailto:mrammarbest110@gmail.com"
+              href="mailto:syed.m.ammar@hotmail.com"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
             >
-              mrammarbest110@gmail.com
+              syed.m.ammar@hotmail.com
             </a>
             , or find me on{" "}
             <a

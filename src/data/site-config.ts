@@ -27,6 +27,6 @@ export const siteConfig = {
     x: "",
     // TODO: add real CodePen handle — UI must skip/hide empty links, never render them.
     codepen: "",
-    email: "mrammarbest110@gmail.com",
+    email: "syed.m.ammar@hotmail.com",
   },
 } as const;

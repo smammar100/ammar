@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const preferredOrder = ["pixel-mark", "pattern-engine", "pixel-wave"];
+const preferredOrder = ["pixel-mark", "pattern-engine", "pixel-wave", "pixel-scatter"];
 
 export default async function Page() {
   const entries = getLab().sort((a, b) => {

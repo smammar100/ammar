@@ -1,6 +1,7 @@
 import PixelWaveText from "@/components/PixelWaveText";
 import { DitherAMark } from "@/lab/pixel-mark/DitherMark";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
+import { PixelScatterButton } from "@/components/lab/PixelScatterButton";
 import type { GeneratorConfig, MotionConfig } from "@/lab/editorial-art/themes";
 
 interface Props {
@@ -100,9 +101,23 @@ export function LabPreview({ preview, title }: Props) {
         </div>
       )}
 
+      {/* ── Pixel Scatter ─────────────────────────────────── */}
+      {preview === "pixel-scatter" && (
+        <div
+          className="flex h-full items-center justify-center bg-background"
+          data-preview="pixel-scatter"
+        >
+          {/* The card is 560×240; scaled to sit inside the 1200/630 frame. */}
+          <div className="origin-center scale-[0.5] sm:scale-[0.55]">
+            <PixelScatterButton />
+          </div>
+        </div>
+      )}
+
       {preview !== "pattern-engine" &&
         preview !== "pixel-wave" &&
-        preview !== "pixel-mark" && (
+        preview !== "pixel-mark" &&
+        preview !== "pixel-scatter" && (
           <div className="flex h-full items-center justify-center px-6 text-center">
             <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
               {title}
