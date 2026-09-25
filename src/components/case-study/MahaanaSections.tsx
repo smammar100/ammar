@@ -52,7 +52,6 @@ export function MahaanaFoundations() {
   return <MahaanaFoundationsToggle />;
 }
 
-
 /**
  * Outcomes. Every figure here is one Mahaana publishes or that sits on the
  * public App Store listing. No modelled or projected numbers.
@@ -82,7 +81,9 @@ export function MahaanaImpact() {
             <span className="text-3xl font-semibold tabular-nums tracking-tight text-foreground">
               {stat.value}
             </span>
-            <span className="text-sm leading-snug text-muted-foreground">{stat.label}</span>
+            <span className="text-sm leading-snug text-muted-foreground">
+              {stat.label}
+            </span>
           </div>
         ))}
       </div>
@@ -114,27 +115,62 @@ const MARK =
  * baseline + 5). Re-measure whenever the wording changes length.
  */
 const QUOTES = [
-  { x: 660, y: 66, rot: -1.5, lines: [["Is this like a ", "bank account", "?"]], underline: "M 650 74 C 702.8 79, 755.6 80, 790.8 77 C 804.9 76, 817.2 74, 831 71" },
-  { x: 205, y: 180, rot: -13, lines: [["But is it ", "halal", "?"]], underline: "M 222 188 C 242.7 193, 263.4 194, 277.2 191 C 282.7 190, 287.6 188, 296 185" },
   {
-    x: 1105, y: 160, rot: 7,
-    lines: [["Don't I need ", "lakhs", ""], ["to start?", "", ""]],
-    underline: "M 1159 168 C 1180.6 173, 1202.2 174, 1216.6 171 C 1222.4 170, 1227.4 168, 1236 165",
+    x: 660,
+    y: 66,
+    rot: -1.5,
+    lines: [["Is this like a ", "bank account", "?"]],
+    underline:
+      "M 650 74 C 702.8 79, 755.6 80, 790.8 77 C 804.9 76, 817.2 74, 831 71",
   },
   {
-    x: 195, y: 430, rot: 11,
-    lines: [["Can I ", "get it out", ""], ["when I need it?", "", ""]],
-    underline: "M 182 438 C 218 443, 254 444, 278 441 C 287.6 440, 296 438, 307 435",
+    x: 205,
+    y: 180,
+    rot: -13,
+    lines: [["But is it ", "halal", "?"]],
+    underline:
+      "M 222 188 C 242.7 193, 263.4 194, 277.2 191 C 282.7 190, 287.6 188, 296 185",
   },
   {
-    x: 1100, y: 420, rot: -8,
-    lines: [["The last app I tried,", "", ""], ["I ", "gave up halfway", "."]],
-    underline: "M 1001 474 C 1062.5 479, 1124 480, 1165 477 C 1181.4 476, 1195.8 474, 1211 471",
+    x: 1105,
+    y: 160,
+    rot: 7,
+    lines: [
+      ["Don't I need ", "lakhs", ""],
+      ["to start?", "", ""],
+    ],
+    underline:
+      "M 1159 168 C 1180.6 173, 1202.2 174, 1216.6 171 C 1222.4 170, 1227.4 168, 1236 165",
   },
   {
-    x: 660, y: 545, rot: 1,
+    x: 195,
+    y: 430,
+    rot: 11,
+    lines: [
+      ["Can I ", "get it out", ""],
+      ["when I need it?", "", ""],
+    ],
+    underline:
+      "M 182 438 C 218 443, 254 444, 278 441 C 287.6 440, 296 438, 307 435",
+  },
+  {
+    x: 1100,
+    y: 420,
+    rot: -8,
+    lines: [
+      ["The last app I tried,", "", ""],
+      ["I ", "gave up halfway", "."],
+    ],
+    underline:
+      "M 1001 474 C 1062.5 479, 1124 480, 1165 477 C 1181.4 476, 1195.8 474, 1211 471",
+  },
+  {
+    x: 660,
+    y: 545,
+    rot: 1,
     lines: [["Where does my money ", "actually go", "?"]],
-    underline: "M 728 553 C 769.1 558, 810.2 559, 837.6 556 C 848.6 555, 858.2 553, 870 550",
+    underline:
+      "M 728 553 C 769.1 558, 810.2 559, 837.6 556 C 848.6 555, 858.2 553, 870 550",
   },
 ];
 
@@ -161,7 +197,12 @@ export function MahaanaVoices() {
           }
         >
           {/* Face. One marker stroke, overshooting where it closes. */}
-          <g stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round">
+          <g
+            stroke="currentColor"
+            strokeWidth="4.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M 656 213 C 706 210, 749 252, 748 302 C 747 352, 707 390, 658 389 C 609 388, 572 350, 572 300 C 572 250, 608 215, 663 214" />
             {/* Brows up at the inner edge, mouth wavering: unconvinced, not unhappy. */}
             <path d="M 618 262 C 625 256, 636 256, 643 261" />
@@ -181,7 +222,10 @@ export function MahaanaVoices() {
             textAnchor="middle"
           >
             {QUOTES.map((q) => (
-              <g key={q.x + ":" + q.y} transform={`rotate(${q.rot} ${q.x} ${q.y})`}>
+              <g
+                key={q.x + ":" + q.y}
+                transform={`rotate(${q.rot} ${q.x} ${q.y})`}
+              >
                 <text x={q.x} y={q.y}>
                   {q.lines.map(([before, mark, after], i) => (
                     <tspan key={i} x={q.x} dy={i === 0 ? 0 : 46}>
@@ -193,11 +237,90 @@ export function MahaanaVoices() {
                     </tspan>
                   ))}
                 </text>
-                {q.underline ? <path className={MARK_STROKE} d={q.underline} /> : null}
+                {q.underline ? (
+                  <path className={MARK_STROKE} d={q.underline} />
+                ) : null}
               </g>
             ))}
           </g>
         </svg>
+      </div>
+    </figure>
+  );
+}
+
+/**
+ * Dawn's op-ed on financial literacy, as a link card. Dawn sends
+ * X-Frame-Options: SAMEORIGIN, so a real iframe embed renders blank.
+ * The thumbnail is the article's lead illustration, credited to Dawn.
+ */
+export function MahaanaDawnArticle() {
+  return (
+    <figure className="case-figure not-prose my-10">
+      <a
+        href="https://www.dawn.com/news/1724272"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex flex-col gap-5 rounded-xl no-underline! border border-border bg-card p-5 transition-colors sm:flex-row sm:items-center hover:border-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-6"
+      >
+        <span className="block min-w-0 flex-1">
+          <span className="flex items-center gap-3 whitespace-nowrap font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            {/* Black wordmark on transparent; inverted for the dark theme. */}
+            <img
+              src="/images/projects/mahaana-wealth/dawn-logo.png"
+              alt="Dawn"
+              width={400}
+              height={95}
+              className="my-0! block h-4 w-[67px]! shrink-0 rounded-none! border-0! dark:invert"
+            />
+            <span aria-hidden>·</span>
+            2 December 2022
+          </span>
+          <span className="mt-2 block text-lg text-foreground">
+            Making our children financial literate
+          </span>
+          <span className="mt-2 block text-sm text-muted-foreground">
+            Only 26% of adults in Pakistan are financially literate. The authors
+            argue for teaching it in schools, so the next generation grows up
+            with the basics.
+          </span>
+          <span className="mt-4 block text-sm text-muted-foreground transition-colors group-hover:text-foreground">
+            Read on dawn.com ↗
+          </span>
+        </span>
+        {/* White illustration on white: the frame keeps its edge visible. */}
+        <span className="block shrink-0 overflow-hidden rounded-lg border border-border bg-white sm:w-56">
+          <img
+            src="/images/projects/mahaana-wealth/dawn-financial-literacy.png"
+            alt="Dawn's illustration for the article: two hands passing a 1000 rupee note through a smartphone"
+            width={800}
+            height={480}
+            loading="lazy"
+            decoding="async"
+            className="block w-full"
+          />
+        </span>
+      </a>
+    </figure>
+  );
+}
+
+/** The Discover screens: market, AI chat, articles, and videos. */
+export function MahaanaDiscover() {
+  return (
+    <figure className="case-figure my-10">
+      {/* The export's canvas is #FAF8F5, the light --background, so the frame
+          uses that token rather than --card to sit flush with it. */}
+      <div className="overflow-hidden rounded-xl border border-border bg-background">
+        <img
+          src="/images/projects/mahaana-wealth/discover.png"
+          alt="Eight Mahaana Discover screens. Top row: the Advisory tab with an 'Ask any question about finance' prompt over Market today, shown on its Indices, Trending and Sectors views, and a Grow with Mahaana list of plain-language articles such as What are ETFs and What are Mutual Funds. Bottom row: the Mahaana AI Chat welcome screen, a new chat with suggested prompts, an answer comparing retirement returns with a portfolio projection chart, and Videos and podcasts with Mahaana Explained and Market Wrap episodes."
+          width={1801}
+          height={1753}
+          loading="lazy"
+          decoding="async"
+          className="block w-full"
+        />
       </div>
     </figure>
   );
