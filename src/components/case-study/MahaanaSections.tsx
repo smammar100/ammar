@@ -383,7 +383,7 @@ export function MahaanaDiscover() {
   );
 }
 
-/** Shamoon's endorsement, closing the case study. */
+/** Shamoon Tariq's endorsement, closing the case study. */
 export function MahaanaTestimonial() {
   return (
     <TestimonialsSection
@@ -396,11 +396,11 @@ export function MahaanaTestimonial() {
           follow.
         </>
       }
-      name="Shamoon"
+      name="Shamoon Tariq"
       title="CEO, Mahaana Wealth (YC W22)"
-      image="/images/team/shamoon.jpg"
-      imageAlt="Portrait of Shamoon, CEO of Mahaana"
-      initials="S"
+      image="/images/team/shamoon-tariq.webp"
+      imageAlt="Portrait of Shamoon Tariq, CEO of Mahaana"
+      initials="ST"
     />
   );
 }
