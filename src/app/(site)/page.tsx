@@ -18,8 +18,9 @@ const showWritingSection = false;
 const heroHeadline = "Ammar designs it, builds it, ships it.";
 const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) with 10,000+ downloads, and I build what I design.";
 const heroIntroDetail = "Currently #1 Top Author on 21st.dev and shipping 100 built projects in public. Receipts, not adjectives.";
-const heroCurrentWorkLead = "Right now, I'm designing Pakistan's first SECP-licensed digital wealth manager at";
-const heroCurrentWorkTail = "and shipping my way through 100 design-engineering projects in public.";
+// The Mahaana facts match the case study's "My role" block.
+const heroCurrentWorkLead = "Right now, I'm leading product design for the iOS and Android apps at";
+const heroCurrentWorkTail = ", Pakistan's first digital-only asset management company, and shipping my way through 100 design-engineering projects in public.";
 
 const nowShippingPattern = {
   type: "isoline", seed: 211, levels: 9, scale: 340, strokeWidth: 0.9, opacity: 66, color: "copper",
@@ -74,7 +75,7 @@ export default function HomePage() {
           <PixelWaveText text={heroHeadline} as="h1" wave="hero" className="mb-7 max-w-[20rem] text-[2.05rem] font-medium leading-[1.08] tracking-tight" />
           <div className="mb-4 space-y-3 text-[15px] leading-relaxed">
             <p className="text-foreground/80">{heroIntro}</p>
-            <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:text-accent">Mahaana (YC W22)</a> {heroCurrentWorkTail}</p>
+            <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:text-accent">Mahaana (YC W22)</a>{heroCurrentWorkTail}</p>
           </div>
         </div>
 
@@ -84,7 +85,7 @@ export default function HomePage() {
             <PixelWaveText text={heroHeadline} as="h1" wave="headline" className="mb-8 text-4xl font-medium leading-[1.2] tracking-tight lg:text-[2.6rem] xl:text-5xl" />
             <div className="max-w-xl space-y-4 text-base leading-relaxed xl:max-w-2xl">
               <p className="text-foreground/80">{heroIntro} {heroIntroDetail}</p>
-              <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 transition-colors hover:text-accent">Mahaana (YC W22)</a> {heroCurrentWorkTail}</p>
+              <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 transition-colors hover:text-accent">Mahaana (YC W22)</a>{heroCurrentWorkTail}</p>
             </div>
           </div>
           <BuilderPhoto />
@@ -99,6 +100,8 @@ export default function HomePage() {
               key={project.slug}
               slug={project.slug}
               client={project.data.client}
+              clientLogo={project.data.clientLogo}
+              clientLogoDark={project.data.clientLogoDark}
               title={project.data.statement ?? project.data.title}
               subtext={project.data.subtext}
               kpis={project.data.kpis}

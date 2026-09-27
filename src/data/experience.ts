@@ -21,7 +21,7 @@ export const roles: Role[] = [
     role: "Product Designer → Senior Product Designer",
     dateRange: "2023–Now",
     summary:
-      "Leading design for Pakistan's first SECP-licensed digital wealth manager, founded by the team behind Sweden's Tundra Fonder. 10,000+ app downloads, working directly with engineers and founders to ship it.",
+      "Leading product design for the iOS and Android apps at Pakistan's first digital-only asset management company, licensed by the SECP and founded by the team behind Sweden's Tundra Fonder. 50K+ registered users and 10K+ app downloads, working directly with engineers and founders to ship it.",
     projects: ["mahaana-wealth"],
     descriptions: [
       "Led design for Mahaana's investment platform across mobile and web: 10,000+ downloads.",

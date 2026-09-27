@@ -8,6 +8,9 @@ interface FeaturedWorkRowProps {
   slug: string;
   /** Muted opening of the sentence, e.g. "Mahaana". Falls back to the title alone. */
   client?: string;
+  /** Wordmark shown instead of the client name, as [src, width, height]. */
+  clientLogo?: [string, number, number];
+  clientLogoDark?: string;
   title: string;
   subtext?: string;
   kpis?: string[];
@@ -19,7 +22,7 @@ interface FeaturedWorkRowProps {
   index: number;
 }
 
-export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail, thumbnailDark, thumbnailSize, index }: FeaturedWorkRowProps) {
+export function FeaturedWorkRow({ slug, client, clientLogo, clientLogoDark, title, subtext, kpis, thumbnail, thumbnailDark, thumbnailSize, index }: FeaturedWorkRowProps) {
   const href = `/work/${slug}`;
 
   return (
@@ -30,7 +33,32 @@ export function FeaturedWorkRow({ slug, client, title, subtext, kpis, thumbnail,
         <div className="flex flex-col lg:w-2/5">
           <h3 className="text-balance text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
             {/* block, so the statement starts on its own line under the name */}
-            {client && <span className="block text-muted-foreground">{client}.</span>}
+            {/* The wordmark sits a touch below cap height of the statement so it
+                reads as a label for the sentence rather than competing with it.
+                Its alt is the client name, so the heading still reads
+                "Mahaana, Investing starts..." to a screen reader. */}
+            {client && clientLogo ? (
+              <span className="mb-3 block sm:mb-4">
+                <img
+                  src={clientLogo[0]}
+                  alt={client}
+                  width={clientLogo[1]}
+                  height={clientLogo[2]}
+                  className={`block h-6 w-auto sm:h-7 ${clientLogoDark ? "dark:hidden" : ""}`}
+                />
+                {clientLogoDark && (
+                  <img
+                    src={clientLogoDark}
+                    alt={client}
+                    width={clientLogo[1]}
+                    height={clientLogo[2]}
+                    className="hidden h-6 w-auto sm:h-7 dark:block"
+                  />
+                )}
+              </span>
+            ) : (
+              client && <span className="block text-muted-foreground">{client}.</span>
+            )}
             <span className="text-foreground">{title}</span>
           </h3>
 

@@ -46,6 +46,13 @@ export interface ProjectData {
    */
   client?: string;
   /**
+   * Wordmark shown in place of `client` at the start of the featured row, as
+   * [src, width, height]. `client` stays the alt text and the accessible name.
+   */
+  clientLogo?: [string, number, number];
+  /** The same wordmark recoloured for the dark theme. */
+  clientLogoDark?: string;
+  /**
    * The sentence the featured row's product name finishes. Needed when `title`
    * is itself the product name ("Iconimate") and would otherwise repeat it.
    * Falls back to `title`.
