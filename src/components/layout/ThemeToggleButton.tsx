@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ThemeToggleButtonProps {
   className?: string;
@@ -9,7 +10,7 @@ interface ThemeToggleButtonProps {
 }
 
 /** Theme toggle with View-Transitions cross-fade; persists to localStorage. */
-export function ThemeToggleButton({ className = "", size = 18 }: ThemeToggleButtonProps) {
+export function ThemeToggleButton({ className, size = 18 }: ThemeToggleButtonProps) {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
@@ -39,7 +40,8 @@ export function ThemeToggleButton({ className = "", size = 18 }: ThemeToggleButt
       onClick={toggle}
       aria-label={label}
       title={label}
-      className={`inline-flex items-center justify-center rounded-md text-muted-foreground transition-colors duration-200 hover:bg-foreground/5 hover:text-foreground ${className}`}
+      // The skeuomorphic icon button (styles/global.css); callers size it.
+      className={cn("skeu skeu-press skeu-icon", className)}
     >
       {dark ? <Sun size={size} /> : <Moon size={size} />}
     </button>

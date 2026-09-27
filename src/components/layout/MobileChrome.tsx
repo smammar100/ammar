@@ -3,15 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/data/site-config";
+import { SocialButtons } from "@/components/ui/skeu";
 import { Logo } from "./Logo";
 import { ThemeToggleButton } from "./ThemeToggleButton";
 
-const elsewhere = [
-  { label: "LinkedIn", href: siteConfig.social.linkedin },
-  { label: "GitHub", href: siteConfig.social.github },
-  { label: "X", href: siteConfig.social.x },
-  { label: "CodePen", href: siteConfig.social.codepen },
-].filter((item) => item.href);
+// The bar's icon buttons: the skeuomorphic material at 36px with 16px icons.
+const iconButton = "skeu skeu-press skeu-icon size-9 rounded-[10px] [&_svg]:size-4";
 
 /** Mobile top bar + full-screen nav overlay (replaces Header.astro + MobileNav.astro). */
 export function MobileChrome() {
@@ -40,17 +37,18 @@ export function MobileChrome() {
           <Link href="/" className="block no-underline" aria-label="Home">
             <Logo className="h-7 w-7" />
           </Link>
-          <div className="flex items-center gap-1">
-            <ThemeToggleButton className="h-8 w-8" size={16} />
+          <div className="flex items-center gap-2">
+            {/* The CSS icon size beats lucide's size attribute, so size it here too. */}
+            <ThemeToggleButton className="size-9 rounded-[10px] [&_svg]:size-4" size={16} />
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="flex h-8 w-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+              className={iconButton}
               aria-label="Open navigation"
               aria-expanded={open}
               aria-controls="mobile-nav"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -74,10 +72,10 @@ export function MobileChrome() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="flex h-9 w-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+              className={iconButton}
               aria-label="Close navigation"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -100,23 +98,7 @@ export function MobileChrome() {
           </nav>
 
           <div className="shrink-0 border-t border-border px-8 py-6">
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-4">
-              {elsewhere.map((item) => (
-                <li key={item.label}>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 py-1 text-base text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {item.label}
-                    <svg className="h-3.5 w-3.5 shrink-0 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M7 17L17 7M7 7h10v10" />
-                    </svg>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <SocialButtons />
           </div>
         </div>
       )}

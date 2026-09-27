@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useIsPresent, useReducedMotion } from "motion/react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { CanvasShot } from "./items";
 
@@ -9,7 +9,9 @@ import type { CanvasShot } from "./items";
 // spot on the canvas (a FLIP from the clicked tile's rect) and closes back into
 // it; stepping to another shot crossfades instead, since that shot has no tile
 // on screen to grow from. Esc closes, arrow keys step, and focus goes to the
-// close button on open and back to the tile on close.
+// close button on open and back to the tile on close. While it's open, Tab
+// cycles through its own buttons (the canvas behind is inert), and each step
+// is announced.
 
 interface Props {
   shots: CanvasShot[];
@@ -36,6 +38,9 @@ export function Lightbox({ shots, index, origin, onIndex, onClose }: Props) {
   const { w: vw, h: vh } = useViewport();
   const reduce = useReducedMotion();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  // False while the close animation plays: keys shouldn't reopen it then.
+  const present = useIsPresent();
   const count = shots.length;
   const step = (dir: 1 | -1) => onIndex((index + dir + count) % count);
 
@@ -58,9 +63,25 @@ export function Lightbox({ shots, index, origin, onIndex, onClose }: Props) {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (!present) return;
       if (e.key === "Escape") onClose();
       else if (e.key === "ArrowRight") step(1);
       else if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "Tab") {
+        // Keep focus inside: wrap from the last button to the first, and back.
+        const buttons = Array.from(dialogRef.current?.querySelectorAll<HTMLButtonElement>("button") ?? []);
+        if (!buttons.length) return;
+        const first = buttons[0];
+        const last = buttons[buttons.length - 1];
+        const inside = buttons.includes(document.activeElement as HTMLButtonElement);
+        if (e.shiftKey && (document.activeElement === first || !inside)) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && (document.activeElement === last || !inside)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -90,11 +111,15 @@ export function Lightbox({ shots, index, origin, onIndex, onClose }: Props) {
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label={`${shot.title}, ${index + 1} of ${count}`}
       className="fixed inset-0 z-[60]"
     >
+      <p className="sr-only" aria-live="polite">
+        {shot.title}, {index + 1} of {count}
+      </p>
       <motion.div
         className="absolute inset-0 bg-background/85 backdrop-blur-md"
         initial={{ opacity: 0 }}
@@ -139,7 +164,7 @@ export function Lightbox({ shots, index, origin, onIndex, onClose }: Props) {
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-4 right-4 flex size-10 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="skeu skeu-press absolute top-4 right-4 flex size-10 items-center justify-center rounded-full"
         >
           <X className="size-4" />
         </button>
@@ -149,7 +174,7 @@ export function Lightbox({ shots, index, origin, onIndex, onClose }: Props) {
               type="button"
               onClick={() => step(-1)}
               aria-label="Previous shot"
-              className="absolute top-1/2 left-3 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:left-6"
+              className="skeu skeu-press absolute top-1/2 left-3 flex size-10 -translate-y-1/2 items-center justify-center rounded-full sm:left-6"
             >
               <ChevronLeft className="size-4" />
             </button>
@@ -157,7 +182,7 @@ export function Lightbox({ shots, index, origin, onIndex, onClose }: Props) {
               type="button"
               onClick={() => step(1)}
               aria-label="Next shot"
-              className="absolute top-1/2 right-3 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-card/90 text-foreground shadow-sm transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:right-6"
+              className="skeu skeu-press absolute top-1/2 right-3 flex size-10 -translate-y-1/2 items-center justify-center rounded-full sm:right-6"
             >
               <ChevronRight className="size-4" />
             </button>

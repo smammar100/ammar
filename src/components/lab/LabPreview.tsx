@@ -3,6 +3,8 @@ import { DitherAMark } from "@/lab/pixel-mark/DitherMark";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
 import { PixelScatterButton } from "@/components/lab/PixelScatterButton";
 import type { GeneratorConfig, MotionConfig } from "@/lab/editorial-art/themes";
+import { LAB_DEMOS } from "@/components/lab/demos/registry";
+import { ScaledFit } from "@/components/lab/demos/ScaledFit";
 
 interface Props {
   preview: string;
@@ -41,7 +43,9 @@ const patternEngineMotion: MotionConfig = {
 
 export function LabPreview({ preview, title }: Props) {
   return (
-    <div className="relative aspect-[1200/630] overflow-hidden bg-card texture-bg">
+    // Previews sit inside links (cards, canvas tiles) and in the canvas's
+    // aria-hidden repeats, so nothing in them may take focus or clicks.
+    <div inert className="relative aspect-[1200/630] overflow-hidden bg-card texture-bg">
       {preview === "pattern-engine" && (
         <div className="absolute inset-0" data-preview="pattern-engine">
           {/* One canvas for both themes: the surface swaps configs itself, so a
@@ -106,16 +110,32 @@ export function LabPreview({ preview, title }: Props) {
         </div>
       )}
 
+      {/* ── Component experiments (see demos/registry) ───── */}
+      {LAB_DEMOS[preview] && <DemoPreview slug={preview} />}
+
       {preview !== "pattern-engine" &&
         preview !== "pixel-wave" &&
         preview !== "pixel-mark" &&
-        preview !== "pixel-scatter" && (
+        preview !== "pixel-scatter" &&
+        !LAB_DEMOS[preview] && (
           <div className="flex h-full items-center justify-center px-6 text-center">
             <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
               {title}
             </p>
           </div>
         )}
+    </div>
+  );
+}
+
+/** A component experiment, shown live (and inert, like every preview). */
+function DemoPreview({ slug }: { slug: string }) {
+  const { Preview, previewWidth } = LAB_DEMOS[slug];
+  return (
+    <div className="absolute inset-0 bg-background" data-preview={slug}>
+      <ScaledFit width={previewWidth}>
+        <Preview />
+      </ScaledFit>
     </div>
   );
 }

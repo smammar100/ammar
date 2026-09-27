@@ -1,0 +1,14 @@
+---
+title: "Perspective Highlight"
+description: "A card that tilts toward your cursor while its highlighted phrases lift off the page."
+slug: "perspective-highlight"
+preview: "perspective-highlight"
+experience: "demo"
+draft: false
+---
+
+Three nested wrappers, each with one job: the outer one sets up the 3D space with `perspective`, the middle one preserves it, and only the innermost card rotates. The tilt follows the cursor at full strength over the card and fades out over the next two card-widths, so it responds before you arrive.
+
+Every frame the rotation eases toward its target and is written to CSS variables, along with a `lift` value for how far the card has turned. The highlights read that value: they translate one way and throw a hard, coloured shadow the other, which the eye reads as the marks rising off the page.
+
+When the card has settled, the loop stops until the mouse moves again, so a still page isn't repainting every frame.

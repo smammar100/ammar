@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { FeaturedWorkCard } from "@/components/home/FeaturedWorkCard";
 import { Curiosity } from "@/components/home/Curiosity";
+import { AvailabilityBadge } from "@/components/home/AvailabilityBadge";
+import { getCanvasItems } from "@/components/lab/canvas/getCanvasItems";
 import { Services } from "@/components/home/Services";
-import { Intersection, IntersectionRule } from "@/components/layout/Intersection";
+import { HATCH, Intersection, IntersectionRule } from "@/components/layout/Intersection";
 import PixelWaveText from "@/components/PixelWaveText";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
 import { siteConfig } from "@/data/site-config";
-import { getProjects, getLab, getWriting } from "@/lib/content";
-
-const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
+import { getProjects, getWriting } from "@/lib/content";
 
 // Home sections switched off for now. Flip to true to bring them back; the
 // routes they link to (/writing, /work/design-engineering-100) are untouched.
@@ -36,14 +36,15 @@ const homeSection = `${frameSection} py-12 sm:py-14`;
 const homeSectionHeader = "mb-7 flex items-center justify-between";
 
 /**
- * The hero's call to action, styled like the featured row's "Read case study".
- * There is no contact page, so it opens an email with the subject filled in.
+ * The hero's call to action, in the site's skeuomorphic button material
+ * (styles/global.css, "Skeuomorphic buttons"). There is no contact page, so it
+ * opens an email with the subject filled in.
  */
 function HeroCta({ className }: { className?: string }) {
   return (
     <a
       href={`mailto:${siteConfig.social.email}?subject=${encodeURIComponent("New project")}`}
-      className={`group inline-flex h-10 items-center gap-1.5 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-90 focus-visible:opacity-90 focus-visible:outline-none ${className ?? ""}`}
+      className={`group skeu skeu-press skeu-button ${className ?? ""}`}
     >
       {heroCta}
       <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
@@ -64,14 +65,6 @@ export default function HomePage() {
     .filter((p) => !homeExcludedProjects.includes(p.slug))
     .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
 
-  const labEntries = getLab().sort((a, b) => {
-    const ai = preferredLabOrder.indexOf(a.data.slug);
-    const bi = preferredLabOrder.indexOf(b.data.slug);
-    if (ai !== -1 || bi !== -1) {
-      return (ai === -1 ? Number.MAX_SAFE_INTEGER : ai) - (bi === -1 ? Number.MAX_SAFE_INTEGER : bi);
-    }
-    return a.data.title.localeCompare(b.data.title);
-  });
 
   const writingPosts = getWriting();
 
@@ -79,6 +72,7 @@ export default function HomePage() {
     <Intersection>
       {/* ── Hero ── */}
       <section className={`${frameSection} pt-14 pb-12 md:pt-20 md:pb-16`}>
+        <AvailabilityBadge className="mb-6 md:mb-7" />
         {/* One headline for every width; it wraps to fit rather than
             switching layouts. */}
         <PixelWaveText
@@ -125,17 +119,14 @@ export default function HomePage() {
       <IntersectionRule />
       <Services padding={frameSection} />
 
-      {/* ── Curiosity: the Lab experiments ── */}
+      {/* ── Break: a band of the frame's margin hatch between the services
+          and the wall, so the wall doesn't butt straight onto the cells. ── */}
       <IntersectionRule />
-      <Curiosity
-        padding={frameSection}
-        entries={labEntries.map((entry) => ({
-          slug: entry.data.slug,
-          title: entry.data.title,
-          description: entry.data.description,
-          preview: entry.data.preview,
-        }))}
-      />
+      <div aria-hidden="true" className={`h-16 sm:h-20 ${HATCH}`} />
+
+      {/* ── Curiosity: a window onto the Lab's wall ── */}
+      <IntersectionRule />
+      <Curiosity items={getCanvasItems()} />
 
       {/* ── Writing ── */}
       {showWritingSection && (
@@ -188,42 +179,6 @@ export default function HomePage() {
       </section>
       </>
       )}
-
-      {/* ── Closing ── */}
-      <IntersectionRule />
-      <section className={`${frameSection} py-16 text-center sm:py-20`}>
-        <PixelWaveText text="Let's build something worth shipping." as="p" wave="cta" className="text-3xl font-medium tracking-tight sm:text-4xl" />
-      </section>
-      <IntersectionRule />
-      {/* Two cells, like a footer: stacked with a rule between on phones,
-          side by side with a dashed divider from sm up. */}
-      <section className="grid grid-cols-1 sm:grid-cols-2">
-        <div className={`${frameSection} py-10`}>
-          <p className="mb-4 text-sm text-muted-foreground">Currently open to new projects</p>
-          <HeroCta />
-        </div>
-        <div className={`${frameSection} border-t border-dashed border-(--pattern-fg) py-10 sm:border-t-0 sm:border-l`}>
-          <p className="mb-4 text-sm text-muted-foreground">Connect on socials</p>
-          <ul className="flex flex-wrap gap-2">
-            {[
-              { label: "LinkedIn", href: siteConfig.social.linkedin },
-              { label: "GitHub", href: siteConfig.social.github },
-              { label: "Email", href: `mailto:${siteConfig.social.email}` },
-            ].map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border bg-card px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {link.label}
-                  <span aria-hidden="true" className="text-muted-foreground">↗</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
 
     </Intersection>
   );

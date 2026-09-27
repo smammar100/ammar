@@ -5,12 +5,12 @@
 // has to read well across its own seams: the leftmost and rightmost items, and
 // the top and bottom rows, leave room for the neighbouring repeat.
 //
-// The layout is four columns. Each row of repeats is shifted half a tile (two
+// The layout is four columns of four pieces. Each row of repeats is shifted half a tile (two
 // columns) sideways, so the same piece never sits directly under itself; for
 // that seam to stay even, columns two apart start at the same height.
 
 export const TILE_W = 2032;
-export const TILE_H = 1016;
+export const TILE_H = 1272;
 /**
  * How far past an edge an item travels before it wraps. At least the widest
  * item (and the tallest item plus its caption), so a wrap never happens with
@@ -22,7 +22,7 @@ export const SEAM_Y = 380;
 interface Placed {
   id: string;
   title: string;
-  /** Short category line in the caption, e.g. "Web design". */
+  /** Category, e.g. "Web design". Shown in the lightbox for shots. */
   label: string;
   x: number;
   y: number;
@@ -62,7 +62,7 @@ export function itemHeight(item: CanvasItem): number {
     if (item.image) return (item.w * item.image.height) / item.image.width;
     return (item.w * 630) / 1200; // LabPreview's frame
   }
-  return 250;
+  return 230;
 }
 
 export const SHOTS: Omit<CanvasShot, "kind">[] = [
@@ -74,7 +74,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     width: 1504,
     height: 846,
     x: 1534,
-    y: 547,
+    y: 821,
     w: 440,
   },
   {
@@ -84,9 +84,9 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/archealth-dashboard.webp",
     width: 1200,
     height: 900,
-    x: 1574,
+    x: 1564,
     y: 180,
-    w: 360,
+    w: 380,
   },
   {
     id: "wallet-onboarding",
@@ -95,9 +95,9 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/wallet-onboarding.webp",
     width: 1200,
     height: 900,
-    x: 1086,
-    y: 682,
-    w: 320,
+    x: 80,
+    y: 681,
+    w: 300,
   },
   {
     id: "alpha-ledger-dashboard",
@@ -117,9 +117,9 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/cubetalk-landing.webp",
     width: 1504,
     height: 1128,
-    x: 1056,
+    x: 1046,
     y: 0,
-    w: 380,
+    w: 400,
   },
   {
     id: "eclipse-nft-marketplace",
@@ -136,11 +136,15 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
 
 /** Where each build sits, keyed by Lab slug (plus "iconimate"). */
 export const BUILD_SPOTS: Record<string, { x: number; y: number; w: number }> = {
-  "pixel-wave": { x: 40, y: 723, w: 380 },
-  "pattern-engine": { x: 20, y: 408, w: 420 },
-  iconimate: { x: 548, y: 588, w: 380 },
-  "pixel-mark": { x: 578, y: 927, w: 320 },
-  "pixel-scatter": { x: 1046, y: 379, w: 400 },
+  "pixel-wave": { x: 1534, y: 1145, w: 440 },
+  "pattern-engine": { x: 30, y: 393, w: 400 },
+  iconimate: { x: 548, y: 1135, w: 380 },
+  "pixel-mark": { x: 548, y: 856, w: 380 },
+  "pixel-scatter": { x: 1036, y: 692, w: 420 },
+  "scroll-reel-testimonials": { x: 1026, y: 380, w: 440 },
+  "anti-metal-button": { x: 1056, y: 992, w: 380 },
+  "music-player": { x: 538, y: 566, w: 400 },
+  "perspective-highlight": { x: 30, y: 984, w: 400 },
 };
 
 export const NOTE: CanvasNote = {
@@ -149,6 +153,6 @@ export const NOTE: CanvasNote = {
   title: "The Lab",
   label: "Index",
   x: 1534,
-  y: 893,
+  y: 541,
   w: 440,
 };

@@ -249,7 +249,7 @@ export default function Page() {
             </a>{" "}
             and{" "}
             <a
-              href="https://github.com/SMAmmar14"
+              href="https://github.com/smammar100"
               target="_blank"
               rel="noopener noreferrer"
               className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"

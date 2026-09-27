@@ -8,7 +8,7 @@ import { PixelScatterButton } from "@/components/lab/PixelScatterButton";
 const entry = getLabEntry("pixel-scatter");
 
 export const metadata: Metadata = {
-  title: `${entry?.data.title ?? "Pixel Scatter Button"} | Syed Mohammad Ammar`,
+  title: entry?.data.title ?? "Pixel Scatter Button",
   description: entry?.data.description,
   robots: { index: false, follow: false },
 };

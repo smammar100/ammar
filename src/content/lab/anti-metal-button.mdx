@@ -1,0 +1,14 @@
+---
+title: "Anti-Metal Button"
+description: "A dark metal button whose lime tab slides across on hover while its dot chevrons ripple."
+slug: "anti-metal-button"
+preview: "anti-metal-button"
+experience: "demo"
+draft: false
+---
+
+At rest it is a brushed-black pill with a small lime tab on its left edge. On hover (or keyboard focus) the tab widens across the whole button in 200ms, revealing five double chevrons drawn as dots.
+
+Each chevron is ten SVG circles. They share one keyframe that brightens and grows a dot, then settles it back, and every dot starts a little later than the last, 50ms down its own chevron and 120ms per chevron along the row, so the wave rolls left to right.
+
+The tab colours and the dot colour are props, so the same button can carry a different accent without touching its motion. In the dark theme the metal inverts to a pale finish.

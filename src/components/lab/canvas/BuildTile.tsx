@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useReducedMotion } from "motion/react";
 import { useRef, useState, type PointerEvent } from "react";
 import { LabPreview } from "@/components/lab/LabPreview";
 import type { CanvasBuild } from "./items";
 
 // A design-engineering build on the canvas. At rest it shows the live preview
-// (or a still). Hovering it, focusing it, or a first tap on touch reveals an
+// (or a still). Hovering it, tabbing to it, or a first tap on touch reveals an
 // overlay describing the build: a circle that grows out from where the pointer
 // came in, then the lines rise into it one after another. The whole tile links
 // to the build; on touch the first tap only reveals, the second follows.
@@ -17,6 +18,9 @@ export function BuildTile({ item, focusable = true }: { item: CanvasBuild; focus
   const [open, setOpen] = useState(false);
   const [origin, setOrigin] = useState({ x: 50, y: 100 });
   const lastPointer = useRef<string>("mouse");
+  // The transitions are inline styles, which beat motion-reduce:transition-none,
+  // so reduced motion is handled here: the overlay just appears and disappears.
+  const reduceMotion = useReducedMotion();
 
   const aim = (event: PointerEvent<HTMLElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -70,7 +74,10 @@ export function BuildTile({ item, focusable = true }: { item: CanvasBuild; focus
       onPointerLeave={(e) => {
         if (e.pointerType === "mouse") setOpen(false);
       }}
-      onFocus={() => {
+      onFocus={(e) => {
+        // Keyboard focus only. A tap focuses the link before its click (Android
+        // Chrome), and opening here would let that first tap navigate.
+        if (!e.currentTarget.matches(":focus-visible")) return;
         setOrigin({ x: 50, y: 100 });
         setOpen(true);
       }}
@@ -106,7 +113,7 @@ export function BuildTile({ item, focusable = true }: { item: CanvasBuild; focus
         className="absolute inset-0 flex flex-col justify-end gap-2 bg-neutral-950/88 p-5 text-white backdrop-blur-[2px] motion-reduce:transition-none"
         style={{
           clipPath: `circle(${open ? 150 : 0}% at ${origin.x}% ${origin.y}%)`,
-          transition: `clip-path ${open ? 620 : 380}ms ${EASE}`,
+          transition: reduceMotion ? "none" : `clip-path ${open ? 620 : 380}ms ${EASE}`,
         }}
       >
         {lines.map((line, i) => (
@@ -116,7 +123,7 @@ export function BuildTile({ item, focusable = true }: { item: CanvasBuild; focus
             style={{
               opacity: open ? 1 : 0,
               transform: open ? "none" : "translateY(10px)",
-              transition: `opacity 360ms ${EASE}, transform 460ms ${EASE}`,
+              transition: reduceMotion ? "none" : `opacity 360ms ${EASE}, transform 460ms ${EASE}`,
               transitionDelay: open ? `${120 + i * 70}ms` : "0ms",
             }}
           >

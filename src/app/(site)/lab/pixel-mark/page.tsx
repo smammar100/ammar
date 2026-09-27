@@ -14,7 +14,7 @@ import {
 const entry = getLabEntry("pixel-mark");
 
 export const metadata: Metadata = {
-  title: `${entry?.data.title ?? "Pixel Mark"} | Syed Mohammad Ammar`,
+  title: entry?.data.title ?? "Pixel Mark",
   description: entry?.data.description,
   robots: { index: false, follow: false },
 };

@@ -21,7 +21,7 @@ export function PixelWaveDemo() {
       <button
         type="button"
         aria-label="Play"
-        className="absolute bottom-3 right-3 flex h-7 w-7 items-center justify-center rounded border border-border text-muted-foreground transition-colors hover:border-foreground hover:text-foreground disabled:opacity-40"
+        className="skeu skeu-press skeu-icon absolute bottom-3 right-3 size-8 rounded-lg disabled:opacity-40 [&_svg]:size-3"
         onClick={() => setReplayKey((k) => k + 1)}
       >
         <svg width="8" height="10" viewBox="0 0 8 10" fill="currentColor" aria-hidden>

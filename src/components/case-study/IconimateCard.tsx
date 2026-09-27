@@ -66,10 +66,8 @@ export function IconimateCardDemo() {
               title={label}
               onClick={() => copy(key, payload)}
               className={cn(
-                "flex h-7 items-center gap-1.5 rounded-md border px-2 font-mono text-[11px] transition-colors focus-visible:outline-none",
-                copied === key
-                  ? "border-accent/60 bg-accent/10 text-accent"
-                  : "border-border bg-background text-muted-foreground hover:border-accent/40 hover:text-foreground focus-visible:border-accent/40",
+                "skeu skeu-press inline-flex h-7 items-center gap-1.5 rounded-md px-2 font-mono text-[11px]",
+                copied === key ? "text-foreground" : "text-muted-foreground",
               )}
             >
               {copied === key ? (

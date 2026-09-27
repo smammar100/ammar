@@ -23,13 +23,11 @@ export function NotFoundSection() {
       />
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--background)_72%)]" />
 
-      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Error &middot; 404</p>
-
       <PixelWaveText
         text="404"
         as="h1"
         wave="hero"
-        className="mt-4 text-[5rem] font-medium leading-none tracking-tight sm:text-[7rem] lg:text-[8.5rem]"
+        className="text-[5rem] font-medium leading-none tracking-tight sm:text-[7rem] lg:text-[8.5rem]"
       />
 
       <h2 className="mt-6 text-2xl font-medium tracking-tight sm:text-3xl">
@@ -42,13 +40,13 @@ export function NotFoundSection() {
       <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
         <Link
           href="/"
-          className="inline-flex h-10 items-center justify-center rounded-lg bg-foreground px-5 text-sm font-medium text-background transition-opacity hover:opacity-85"
+          className="skeu skeu-press skeu-button h-10 px-5"
         >
           Back to home
         </Link>
         <Link
           href="/work"
-          className="inline-flex h-10 items-center justify-center rounded-lg border border-border px-5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+          className="skeu skeu-press skeu-button h-10 px-5"
         >
           See the work
         </Link>

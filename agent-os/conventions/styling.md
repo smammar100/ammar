@@ -17,6 +17,9 @@ restrained, content-first design over decorative complexity.
 - Section labels use mono, uppercase, small text with wide tracking.
 - Markdown prose uses custom `.prose` styles in `global.css`, not
   `@tailwindcss/typography`.
+- Every button uses the skeuomorphic material (`skeu` classes,
+  `src/components/ui/skeu.tsx`), primary ones included. See
+  `agent-os/learnings/button-material.md`.
 - Keep visual work readable and consistent with the current portfolio aesthetic.
 
 ## Related Files

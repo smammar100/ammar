@@ -57,7 +57,7 @@ export function WritingIndexClient({ posts, filterThemes, themeCounts }: Props) 
           <div className="mt-8 flex flex-wrap gap-2" aria-label="Filter articles by theme">
             <button
               type="button"
-              className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground transition-colors duration-200 hover:border-foreground hover:text-foreground aria-pressed:bg-muted aria-pressed:text-foreground"
+              className="skeu skeu-press rounded-full px-3 py-1 text-xs font-medium text-muted-foreground aria-pressed:shadow-(--skeu-shadow-pressed) aria-pressed:text-foreground"
               aria-pressed={activeFilter === "all"}
               onClick={() => setActiveFilter("all")}
             >
@@ -67,7 +67,7 @@ export function WritingIndexClient({ posts, filterThemes, themeCounts }: Props) 
               <button
                 key={theme}
                 type="button"
-                className="rounded-full border border-border px-3 py-1 text-xs font-medium text-muted-foreground transition-colors duration-200 hover:border-foreground hover:text-foreground aria-pressed:bg-muted aria-pressed:text-foreground"
+                className="skeu skeu-press rounded-full px-3 py-1 text-xs font-medium text-muted-foreground aria-pressed:shadow-(--skeu-shadow-pressed) aria-pressed:text-foreground"
                 aria-pressed={activeFilter === theme}
                 onClick={() => setActiveFilter(theme)}
               >

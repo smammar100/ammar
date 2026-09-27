@@ -1,55 +1,49 @@
-import { siteConfig } from "@/data/site-config";
+"use client";
+
+import { DitherAMark } from "@/lab/pixel-mark/DitherMark";
+import { EmailPill, SocialButtons, StatusDot } from "@/components/ui/skeu";
+import { LeafGarden } from "@/components/ui/leaf-garden";
 import { LocalTime } from "./LocalTime";
 
-const socialLinks = [
-  { label: "LinkedIn", href: siteConfig.social.linkedin },
-  { label: "GitHub", href: siteConfig.social.github },
-  { label: "X", href: siteConfig.social.x },
-  { label: "CodePen", href: siteConfig.social.codepen },
-].filter((item) => item.href);
+// The site footer: one raised card holding the ask (availability, the email
+// with a copy button, the social buttons), sitting in a leaf garden that
+// grows up around it. The plants answer the pointer, and clicking the soil
+// plants another. Decided from /proto/footer; see
+// agent-os/learnings/footer.md for what was rejected.
 
 export function Footer() {
   return (
-    <footer className="py-8 sm:py-10">
-      <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-4 px-6 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-14">
-        <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60">
-          {socialLinks.map((item) => (
-            <li key={item.label}>
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-          {siteConfig.social.email && (
-            <li>
-              <a
-                href={`mailto:${siteConfig.social.email}`}
-                className="transition-colors hover:text-foreground"
-              >
-                Email
-              </a>
-            </li>
-          )}
-        </ul>
-        <div className="flex items-center gap-3 whitespace-nowrap font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
-          <a
-            href="/colophon"
-            className="text-muted-foreground/60 transition-colors hover:text-foreground"
-          >
-            SMAMMAR
-          </a>
-          <span>&copy; {new Date().getFullYear()}</span>
-          {/* Top nav already shows local time on desktop. */}
-          <span className="md:hidden">
-            <span className="font-mono text-xs text-muted-foreground tabular-nums whitespace-nowrap">
-              PK&nbsp;&middot;&nbsp;<LocalTime />
+    <footer id="contact" className="relative scroll-mt-16 overflow-hidden pt-20 pb-36 sm:pt-28 sm:pb-48">
+      <LeafGarden seed={41} density={11} reach={[0.5, 1]} interactive className="absolute inset-x-0 bottom-0 h-[78%]" />
+
+      <div className="relative mx-auto max-w-[36rem] px-4">
+        {/* Outer 28px corners with 8px padding, so the paper inside is 20px. */}
+        <div className="skeu rounded-[28px] p-2">
+          <div className="relative rounded-[20px] bg-card/70 p-6 sm:p-9">
+            <span aria-hidden="true" className="absolute top-5 right-5 block size-16 overflow-hidden rounded-xl sm:top-7 sm:right-7">
+              <DitherAMark size={64} />
             </span>
-          </span>
+
+            <p className="flex items-center gap-2.5 pr-20 text-sm text-muted-foreground">
+              <StatusDot />
+              Currently open to new projects
+            </p>
+            <h2 className="mt-5 max-w-[16ch] pr-16 text-3xl font-medium tracking-tight text-balance sm:pr-0 sm:text-4xl">
+              Let&apos;s build something worth shipping.
+            </h2>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-pretty text-muted-foreground">
+              Tell me about the product and where it&apos;s stuck.
+            </p>
+
+            <EmailPill className="mt-7 w-full justify-between" />
+
+            <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+              <SocialButtons />
+              <p className="font-mono text-[10px] tracking-widest text-muted-foreground/70 uppercase tabular-nums">
+                Karachi, PK&nbsp;&middot;&nbsp;<LocalTime />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

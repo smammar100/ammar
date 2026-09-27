@@ -23,7 +23,8 @@ export const siteConfig = {
   },
   social: {
     linkedin: "https://www.linkedin.com/in/syedmammar/",
-    github: "https://github.com/SMAmmar14",
+    github: "https://github.com/smammar100",
+    dribbble: "https://dribbble.com/smammar14",
     // TODO: add real X handle — UI must skip/hide empty links, never render them.
     x: "",
     // TODO: add real CodePen handle — UI must skip/hide empty links, never render them.

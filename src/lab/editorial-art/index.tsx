@@ -666,7 +666,7 @@ export default function EditorialArtTool() {
                 type="button"
                 onClick={handleRandomize}
                 title="Randomize everything"
-                className="mt-0.5 rounded border border-border p-1.5 text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
+                className="skeu skeu-press skeu-icon mt-0.5 size-8 rounded-lg [&_svg]:size-3.5"
               >
                 <RefreshCw className="size-3.5" strokeWidth={2} />
               </button>
@@ -674,7 +674,7 @@ export default function EditorialArtTool() {
                 type="button"
                 onClick={() => setMobileControlsOpen(false)}
                 title="Close controls"
-                className="mt-0.5 rounded border border-border p-1.5 text-muted-foreground transition-colors hover:border-foreground hover:text-foreground md:hidden"
+                className="skeu skeu-press skeu-icon mt-0.5 size-8 rounded-lg [&_svg]:size-3.5 md:hidden"
               >
                 <X className="size-3.5" strokeWidth={2} />
               </button>
@@ -753,7 +753,7 @@ export default function EditorialArtTool() {
                   type="button"
                   onClick={() => patchGenerator({ seed: ri(1, 999) })}
                   title="New seed"
-                  className="h-9 w-9 shrink-0 cursor-pointer rounded-md bg-muted text-muted-foreground transition-colors hover:text-foreground flex items-center justify-center"
+                  className="skeu skeu-press skeu-icon size-9 rounded-md"
                 >
                   <RefreshCw className="size-3.5" strokeWidth={2} />
                 </button>
@@ -948,7 +948,7 @@ export default function EditorialArtTool() {
                     type="button"
                     onClick={handleDownload}
                     disabled={downloading}
-                    className="w-full cursor-pointer rounded-md bg-foreground py-2 text-sm font-medium text-background transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
+                    className="skeu skeu-press skeu-button h-10 w-full rounded-md disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     {downloading ? 'Generating…' : 'Download PNG'}
                   </button>
@@ -1021,7 +1021,7 @@ export default function EditorialArtTool() {
           <button
             type="button"
             onClick={() => setMobileControlsOpen(true)}
-            className="inline-flex h-10 items-center gap-2 rounded-md border border-border bg-muted px-3 font-mono text-[11px] text-foreground"
+            className="skeu skeu-press skeu-button h-10 rounded-md px-3 font-mono text-[11px]"
           >
             <SlidersHorizontal className="size-3.5" strokeWidth={2} />
             Controls

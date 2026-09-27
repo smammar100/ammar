@@ -68,6 +68,14 @@
     /* Hairline used by the Intersection frame: the hatched gutters, the dashed
        rules, and the crosshairs where they meet. */
     --pattern-fg: oklch(0.15 0.01 60 / 0.20);
+    /* Perspective Highlight (components/ui/perspective-highlight.tsx): each
+       highlight's fill, and the RGB triple its lifted shadow is drawn in. */
+    --perspective-red-bg: #e89c9c;
+    --perspective-red-ring: 220, 130, 130;
+    --perspective-purple-bg: #b8a0db;
+    --perspective-purple-ring: 160, 120, 220;
+    --perspective-green-bg: #9fd68d;
+    --perspective-green-ring: 120, 200, 100;
 }
 
 .dark {
@@ -91,6 +99,12 @@
     --input: oklch(1 0 0 / 15%);
     --ring: oklch(0.75 0.10 75);
     --pattern-fg: oklch(0.92 0.01 80 / 0.24);
+    --perspective-red-bg: #d48989;
+    --perspective-red-ring: 200, 120, 120;
+    --perspective-purple-bg: #a78fcd;
+    --perspective-purple-ring: 145, 110, 200;
+    --perspective-green-bg: #8dc77b;
+    --perspective-green-ring: 115, 185, 95;
 }
 
 @theme inline {
@@ -121,6 +135,23 @@
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) * 1.4);
     --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+/* animate-perspective-blur-in: the Perspective card's entrance. */
+@theme {
+    --animate-perspective-blur-in: perspective-blur-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    @keyframes perspective-blur-in {
+        from {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(6px);
+        }
+        to {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+    }
 }
 
 @layer base {
@@ -277,6 +308,310 @@
     2px 2px;
   clip-path: path("M 5.657 0 L 11.314 5.657 L 5.657 11.314 L 0 5.657 Z M 28.971 0 L 34.628 5.657 L 28.971 11.314 L 23.314 5.657 Z M 52.285 0 L 57.942 5.657 L 52.285 11.314 L 46.628 5.657 Z");
 }
+/* ScrollReelTestimonials (components/ui/scroll-reel-testimonials.tsx): each
+   character rises in on its own inline delay; the outgoing block leaves as one
+   piece, with its characters pinned visible so in-flight rises don't flicker. */
+@keyframes scroll-reel-char-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes scroll-reel-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+.scroll-reel-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.35em);
+  animation: scroll-reel-char-rise 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.scroll-reel-exit {
+  animation: scroll-reel-exit 240ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+.scroll-reel-exit .scroll-reel-char {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+/* AntiMetalButton (components/ui/anti-metal-button.tsx): the chevron dots
+   ripple left to right on their own staggered delays. */
+@keyframes bd-dot-wave {
+  0%,
+  70%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.85);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.bd-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bd-dot-wave 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reel-char,
+  .scroll-reel-exit {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .bd-dot {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Lab canvas, grid view: pieces rise in with a short stagger (inline delay). */
+@keyframes lab-grid-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.lab-grid-in {
+  animation: lab-grid-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lab-grid-in {
+    animation: none;
+  }
+}
+
+/* ── Skeuomorphic buttons ────────────────────────────────────────────────────
+   The tactile material for secondary buttons across the site: social and
+   contact icon buttons, the email pill and its copy button, and other quiet
+   actions. After Daniel Sun's social buttons: a light top-to-bottom gradient,
+   a hairline ring, a soft layered drop, inset highlights top and bottom, and
+   icons at 60% until hover. Pressing sinks it in. Components live in
+   components/ui/skeu.tsx; these classes work on any element.
+   In the components layer, so utilities (sizes, radii) still override. */
+@layer components {
+  .skeu {
+    --skeu-top: oklch(1 0 0);
+    --skeu-bottom: oklch(0.955 0.005 80);
+    --skeu-shadow:
+      0 0 0 1px rgb(0 0 0 / 0.07),
+      0 1px 1px rgb(0 0 0 / 0.04),
+      0 2px 4px -1px rgb(0 0 0 / 0.06),
+      0 8px 14px -8px rgb(0 0 0 / 0.12),
+      inset 0 1px 0 rgb(255 255 255 / 0.95),
+      inset 0 -1.5px 0 rgb(0 0 0 / 0.05);
+    --skeu-shadow-hover:
+      0 0 0 1px rgb(0 0 0 / 0.09),
+      0 1px 1px rgb(0 0 0 / 0.05),
+      0 3px 6px -1px rgb(0 0 0 / 0.08),
+      0 10px 18px -8px rgb(0 0 0 / 0.16),
+      inset 0 1px 0 rgb(255 255 255 / 0.95),
+      inset 0 -1.5px 0 rgb(0 0 0 / 0.05);
+    --skeu-shadow-pressed:
+      0 0 0 1px rgb(0 0 0 / 0.09),
+      inset 0 1px 2px rgb(0 0 0 / 0.1),
+      inset 0 -1px 0 rgb(255 255 255 / 0.7);
+    background: linear-gradient(180deg, var(--skeu-top), var(--skeu-bottom));
+    box-shadow: var(--skeu-shadow);
+    color: var(--foreground);
+  }
+  .dark .skeu {
+    --skeu-top: oklch(0.26 0.008 60);
+    --skeu-bottom: oklch(0.205 0.008 60);
+    --skeu-shadow:
+      0 0 0 1px oklch(1 0 0 / 0.08),
+      0 2px 6px -2px rgb(0 0 0 / 0.5),
+      inset 0 1px 0 oklch(1 0 0 / 0.09),
+      inset 0 -1px 0 rgb(0 0 0 / 0.3);
+    --skeu-shadow-hover:
+      0 0 0 1px oklch(1 0 0 / 0.13),
+      0 3px 8px -2px rgb(0 0 0 / 0.55),
+      inset 0 1px 0 oklch(1 0 0 / 0.11),
+      inset 0 -1px 0 rgb(0 0 0 / 0.3);
+    --skeu-shadow-pressed:
+      0 0 0 1px oklch(1 0 0 / 0.1),
+      inset 0 1px 3px rgb(0 0 0 / 0.45);
+  }
+
+  /* Pressable: hover lifts the shadow and the icon, press sinks it. */
+  .skeu-press {
+    cursor: pointer;
+    transition:
+      box-shadow 150ms ease-out,
+      scale 150ms ease-out;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .skeu-press :where(svg) {
+    opacity: 0.6;
+    transition: opacity 150ms ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .skeu-press:hover {
+      box-shadow: var(--skeu-shadow-hover);
+    }
+    .skeu-press:hover :where(svg) {
+      opacity: 0.92;
+    }
+  }
+  .skeu-press:active {
+    scale: 0.96;
+    box-shadow: var(--skeu-shadow-pressed);
+  }
+  .skeu-press:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* Square icon button: 44px, 12px corners, 18px icon. */
+  .skeu-icon {
+    display: inline-grid;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    border-radius: 12px;
+  }
+  .skeu-icon :where(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Text button in the same material. */
+  .skeu-button {
+    display: inline-flex;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .skeu-button :where(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* The email pill: the address as a link, and a round copy button inside
+     (outer 48px, 4px inset, so the button is 40px). */
+  .skeu-pill {
+    display: inline-flex;
+    max-width: 100%;
+    height: 48px;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 4px 4px 18px;
+    border-radius: 999px;
+  }
+  .skeu-pill-link {
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: inherit;
+    text-decoration: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .skeu-pill-link:hover {
+      text-decoration: underline;
+      text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+      text-underline-offset: 4px;
+    }
+  }
+  .skeu-pill-link:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .skeu-copy {
+    display: grid;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border-radius: 999px;
+  }
+  /* Copy and check share one cell and swap with a quick fade, scale and blur. */
+  .skeu-copy .skeu-glyph {
+    grid-area: 1 / 1;
+    width: 16px;
+    height: 16px;
+    transition:
+      opacity 150ms ease-out,
+      scale 150ms ease-out,
+      filter 150ms ease-out;
+  }
+  .skeu-copy[data-copied] .skeu-glyph-copy,
+  .skeu-copy:not([data-copied]) .skeu-glyph-check {
+    opacity: 0;
+    scale: 0.6;
+    filter: blur(2px);
+  }
+  .skeu-copy[data-copied] .skeu-glyph-check {
+    opacity: 0.9;
+  }
+
+  /* Availability dot, with a slow ping. */
+  .status-dot {
+    position: relative;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: oklch(0.72 0.17 150);
+  }
+  .status-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    animation: status-dot-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeu-press,
+    .skeu-press :where(svg),
+    .skeu-copy .skeu-glyph {
+      transition: none;
+    }
+    .status-dot::after {
+      animation: none;
+    }
+  }
+}
+@keyframes status-dot-ping {
+  0% {
+    opacity: 0.55;
+    scale: 1;
+  }
+  70%,
+  100% {
+    opacity: 0;
+    scale: 2.6;
+  }
+}
+
 /* Build-up animations for the home page service illustrations. BuildIn
    (components/home/BuildIn.tsx) sets [data-build]: "armed" holds every piece at
    its first keyframe (paused + fill both), "play" releases them. Without the

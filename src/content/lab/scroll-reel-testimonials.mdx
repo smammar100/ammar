@@ -1,0 +1,14 @@
+---
+title: "Scroll Reel Testimonials"
+description: "A testimonial carousel where a reel of portraits counter-rotates and each quote rises in letter by letter."
+slug: "scroll-reel-testimonials"
+preview: "scroll-reel-testimonials"
+experience: "demo"
+draft: false
+---
+
+The reel is three columns of tiles. The middle one is a real list of portraits with blurred placeholder cells between them, and it slides by one "pitch" (three tiles) per step; the two outer columns slide the same distance the other way, so the whole reel seems to turn around its centre.
+
+The quote swaps in two beats. The old block leaves as one piece, lifting and fading in 240ms, and only then does the new one mount, with every character rising on its own delay. Words stay in no-wrap spans with plain spaces between them, so the text still wraps naturally mid-animation.
+
+An invisible copy of the current quote sits in the layout underneath, which is what gives the stage its height at any width, and a plain copy is what screen readers hear, rather than a quote spelled out one character at a time.
