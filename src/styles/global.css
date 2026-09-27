@@ -1,9 +1,42 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
-/* Marker handwriting, used only by the whiteboard-sketch case-study graphics. */
-@import "@fontsource-variable/caveat";
+
+/* Geist and Caveat (the handwriting) are served from /fonts, Latin and
+   Latin Extended only, so the root layout can preload the Latin files and
+   they usually land before first paint. */
+@font-face {
+  font-family: 'Geist Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/geist-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Geist Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/geist-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Caveat Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 700;
+  src: url('/fonts/caveat-latin-ext-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Caveat Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 700;
+  src: url('/fonts/caveat-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
 @font-face {
   font-family: 'Geist Pixel Square';
   src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
@@ -31,6 +64,17 @@
   size-adjust: 99.85%;
   ascent-override: 101.2%;
   descent-override: 30%;
+  line-gap-override: 0%;
+}
+/* Caveat is narrow: 74.6% of Arial's width, with a 0.96em ascent and 0.30em
+   descent (measured in Chrome). Without this, the handwritten caption under
+   the hero wraps differently until Caveat arrives and shifts the page. */
+@font-face {
+  font-family: 'Caveat Fallback';
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 74.6%;
+  ascent-override: 128.7%;
+  descent-override: 40.2%;
   line-gap-override: 0%;
 }
 @font-face {
@@ -111,7 +155,7 @@
     --font-sans: 'Geist Variable', 'Geist Fallback', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'Geist Mono Variable', 'Geist Mono Fallback', ui-monospace, 'SFMono-Regular', monospace;
     --font-pixel: 'Geist Pixel Square', ui-monospace, monospace;
-    --font-hand: 'Caveat Variable', 'Bradley Hand', 'Segoe Print', cursive;
+    --font-hand: 'Caveat Variable', 'Caveat Fallback', cursive;
     --color-ring: var(--ring);
     --color-input: var(--input);
     --color-border: var(--border);
@@ -521,6 +565,8 @@
   }
   .skeu-pill-link {
     min-width: 0;
+    /* The pill's full inner height, so the address is a 40px tap target. */
+    line-height: 40px;
     overflow: hidden;
     border-radius: 4px;
     font-size: 15px;

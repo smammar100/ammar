@@ -43,7 +43,13 @@ export default function PixelWaveText({
     const container = ref.current;
     if (!container) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Reduced motion, and phones: the entrance is dozens of per-letter
+    // timers and hundreds of repaints, which a phone pays for in load time,
+    // and there's no hover there to replay it. Show the settled text.
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      (wave !== "demo" && window.matchMedia("(max-width: 639.98px)").matches)
+    ) {
       resolveWave(container);
       return;
     }
@@ -66,14 +72,23 @@ export default function PixelWaveText({
       return () => anchor?.removeEventListener("pointerenter", onEnter);
     }
 
-    // Default / "demo": entrance flip then enable hover interaction.
+    // Default / "demo": entrance flip then enable hover interaction. The
+    // flip waits for the browser to go idle (at most 600ms), so dozens of
+    // per-letter timers don't compete with hydration and the first images.
     const delay = wave === "demo" ? 250 : 0;
     resetWave(container);
-    pixelWave(container, delay, by);
-    const timer = window.setTimeout(() => {
-      enablePixelHover(container);
-    }, delay + 5000);
-    return () => window.clearTimeout(timer);
+    let timer = 0;
+    const begin = () => {
+      pixelWave(container, delay, by);
+      timer = window.setTimeout(() => enablePixelHover(container), delay + 5000);
+    };
+    const hasIdle = "requestIdleCallback" in window;
+    const idle = hasIdle ? window.requestIdleCallback(begin, { timeout: 600 }) : window.setTimeout(begin, 200);
+    return () => {
+      if (hasIdle) window.cancelIdleCallback(idle);
+      else window.clearTimeout(idle);
+      window.clearTimeout(timer);
+    };
   }, [wave, text, by]);
 
   return (
@@ -95,10 +110,12 @@ export default function PixelWaveText({
           {word.split("").map((char, ci) => (
             <span key={ci} className="relative inline-block" data-pw-char>
               <span className="invisible">{char}</span>
-              <span className="absolute inset-0 font-pixel" data-pw-pixel>
+              {/* Starts as pixel glyphs; on phones (outside the Lab demo) it
+                  starts settled in sans, since the entrance is skipped there. */}
+              <span className={`absolute inset-0 font-pixel ${wave !== "demo" ? "max-sm:opacity-0" : ""}`} data-pw-pixel>
                 {char}
               </span>
-              <span className="absolute inset-0" data-pw-sans style={{ opacity: 0 }}>
+              <span className={`absolute inset-0 opacity-0 ${wave !== "demo" ? "max-sm:opacity-100" : ""}`} data-pw-sans>
                 {char}
               </span>
             </span>

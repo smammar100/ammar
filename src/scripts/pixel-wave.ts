@@ -12,7 +12,13 @@
  * The container element should have data-pixel-wave="<name>".
  */
 
-import { animate } from "motion";
+/** Cross-fade one layer. Web Animations rather than motion, so the headline
+ *  doesn't pull the motion library into the first load. The end value is set
+ *  inline first, so the hover code that writes opacity later still wins. */
+function fade(el: HTMLElement, from: number, to: number) {
+  el.style.opacity = String(to);
+  el.animate([{ opacity: from }, { opacity: to }], { duration: 300, easing: "ease-in-out" });
+}
 
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -58,8 +64,8 @@ export function pixelWave(container: HTMLElement, delay: number, by: "char" | "w
         if (flips >= flipCount) {
           clearInterval(interval);
           pixel.textContent = originalChar;
-          animate(pixel, { opacity: [1, 0] }, { duration: 0.3, easing: "ease-in-out" });
-          animate(sans, { opacity: [0, 1] }, { duration: 0.3, easing: "ease-in-out" });
+          fade(pixel, 1, 0);
+          fade(sans, 0, 1);
         }
       }, flipSpeed);
     }, resolveDelay);

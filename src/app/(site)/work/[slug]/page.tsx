@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             where people arrive from. */}
         <Link
           href="/"
-          className="project-load project-load-back mb-8 inline-flex items-center gap-1 font-mono text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="project-load project-load-back -my-2 mb-6 inline-flex items-center gap-1 py-2 font-mono text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />

@@ -1,10 +1,15 @@
 import PixelWaveText from "@/components/PixelWaveText";
 import { DitherAMark } from "@/lab/pixel-mark/DitherMark";
-import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
-import { PixelScatterButton } from "@/components/lab/PixelScatterButton";
+import dynamic from "next/dynamic";
+
+// The heavier previews load as their own chunks, when LazyMount first shows
+// them, rather than with every page that has a Lab card or the wall.
+const PatternSurfaceClient = dynamic(() => import("@/components/lab/PatternSurfaceClient").then((m) => m.PatternSurfaceClient));
+const PixelScatterButton = dynamic(() => import("@/components/lab/PixelScatterButton").then((m) => m.PixelScatterButton));
 import type { GeneratorConfig, MotionConfig } from "@/lab/editorial-art/themes";
 import { LAB_DEMOS } from "@/components/lab/demos/registry";
 import { ScaledFit } from "@/components/lab/demos/ScaledFit";
+import { LazyMount } from "@/components/lab/LazyMount";
 
 interface Props {
   preview: string;
@@ -46,6 +51,9 @@ export function LabPreview({ preview, title }: Props) {
     // Previews sit inside links (cards, canvas tiles) and in the canvas's
     // aria-hidden repeats, so nothing in them may take focus or clicks.
     <div inert className="relative aspect-[1200/630] overflow-hidden bg-card texture-bg">
+      {/* Live previews are heavy (canvases, demos); mount each only near the
+          screen. The card and its texture show until then. */}
+      <LazyMount>
       {preview === "pattern-engine" && (
         <div className="absolute inset-0" data-preview="pattern-engine">
           {/* One canvas for both themes: the surface swaps configs itself, so a
@@ -124,6 +132,7 @@ export function LabPreview({ preview, title }: Props) {
             </p>
           </div>
         )}
+      </LazyMount>
     </div>
   );
 }

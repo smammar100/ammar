@@ -68,7 +68,7 @@ export function MahaanaFoundationsToggle() {
               title={dark ? "Switch to light mode" : "Switch to dark mode"}
               onClick={() => setDark((d) => !d)}
               className={cn(
-                "relative h-7 w-12 rounded-full border shadow-sm backdrop-blur transition-colors duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "relative h-7 w-12 rounded-full border shadow-sm backdrop-blur transition-colors after:absolute after:-inset-2 duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                 dark
                   ? "border-white/15 bg-neutral-800/90"
                   : "border-black/10 bg-white/90",

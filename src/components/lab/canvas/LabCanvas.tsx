@@ -11,10 +11,24 @@ import {
   type PointerEvent,
 } from "react";
 import Link from "next/link";
-import { AnimatePresence, useReducedMotion } from "motion/react";
+import dynamic from "next/dynamic";
 import { Blocks, Move, Rows3 } from "lucide-react";
 import { BuildTile } from "./BuildTile";
-import { Lightbox } from "./Lightbox";
+// Loaded on the first shot opened, so the page doesn't carry motion up front.
+const LightboxLayer = dynamic(() => import("./LightboxLayer").then((m) => m.LightboxLayer), { ssr: false });
+
+/** prefers-reduced-motion, kept live. */
+function useReducedMotion() {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduce(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return reduce;
+}
 import { SEAM_X, SEAM_Y, TILE_H, TILE_W, itemHeight, type CanvasItem, type CanvasShot } from "./items";
 
 // The Lab as an endless table of work. A camera offset moves under drag (with
@@ -75,6 +89,42 @@ function ssrCamera(items: CanvasItem[], embedded: boolean) {
     y: view.h / 2 - (note.y + itemHeight(note) / 2) * s,
     scale: s,
   };
+}
+
+// Pieces that land on screen in the opening view of a phone (the smallest
+// view, so also on screen anywhere larger). Their images load eagerly and
+// first; everything else stays lazy.
+function openingView(items: CanvasItem[]) {
+  const view = { w: 412, h: 823, s: 0.55 };
+  const note = items.find((i) => i.kind === "note");
+  const keys = new Set<string>();
+  if (!note) return keys;
+  const cam = {
+    x: view.w / 2 - (note.x + note.w / 2) * view.s,
+    y: view.h / 2 - (note.y + itemHeight(note) / 2) * view.s,
+  };
+  for (let r = 0; r < SSR_GRID.rows; r++)
+    for (let c = 0; c < SSR_GRID.cols; c++)
+      for (const item of items) {
+        const p = { item, key: `${item.id}:${c}:${r}`, c, r, primary: c === 0 && r === 0 };
+        const { x, y } = place(p, cam, view.s, SSR_GRID);
+        if (x < view.w && y < view.h && x + item.w * view.s > 0 && y + itemHeight(item) * view.s > 0) keys.add(p.key);
+      }
+  return keys;
+}
+
+// On phones (under 640px) the Lab page is laid out by CSS from the first
+// paint: each piece sits at its offset from the note's centre (world units,
+// wrapped as place() wraps them for a phone-sized view), scaled by the phone
+// scale around the middle of the screen. So the wall shows before any script
+// runs, and the script, taking over, lands every piece on the same spot.
+const PHONE = { s: 0.55, halfW: 375, halfH: 748 }; // a 412×823 phone at 0.55
+
+function phoneOffset(p: Placed, note: CanvasItem | undefined) {
+  if (!note) return { wx: 0, wy: 0 };
+  const cam = { x: PHONE.halfW - (note.x + note.w / 2), y: PHONE.halfH - (note.y + itemHeight(note) / 2) };
+  const { x, y } = place(p, cam, 1, SSR_GRID);
+  return { wx: Math.round(x - PHONE.halfW), wy: Math.round(y - PHONE.halfH) };
 }
 
 // The deal: each piece takes INTRO_MS to fly out, starting up to INTRO_SPREAD
@@ -138,6 +188,8 @@ export function LabCanvas({
   const scaleVar = useRef(0);
   const itemRefs = useRef(new Map<string, HTMLDivElement>());
   const ssr = useMemo(() => ssrCamera(items, embedded), [items, embedded]);
+  const eager = useMemo(() => (embedded ? new Set<string>() : openingView(items)), [items, embedded]);
+  const noteItem = useMemo(() => items.find((i) => i.kind === "note"), [items]);
   const cam = useRef({ x: ssr.x, y: ssr.y, vx: 0, vy: 0, scale: ssr.scale });
   const [grid, setGrid] = useState<Grid>(SSR_GRID);
   const gridRef = useRef(grid);
@@ -175,13 +227,15 @@ export function LabCanvas({
   // Camera motion (glides and tweens) and the intro run on separate frames, so
   // stopping one never freezes the other halfway.
   const raf = useRef(0);
-  const introRaf = useRef(0);
+  const introAnims = useRef<Animation[]>([]);
   // Where the page was when Tab was last pressed (see onFocus).
   const tabScroll = useRef<{ x: number; y: number; t: number } | null>(null);
   const reduce = useReducedMotion();
 
   const shots = items.filter((i): i is CanvasShot => i.kind === "shot");
   const [lightbox, setLightbox] = useState<{ index: number; origin: DOMRect | null } | null>(null);
+  // Mounted from the first open on, so later closes still animate out.
+  const [lightboxUsed, setLightboxUsed] = useState(false);
   const lightboxOpen = useRef(false);
   lightboxOpen.current = lightbox !== null;
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -205,51 +259,23 @@ export function LabCanvas({
   };
 
   /**
-   * Writes every piece's transform. During the intro, each piece is somewhere
-   * between the middle of the screen and its place; returns whether any piece
-   * is still on its way.
+   * Writes every piece's resting transform. The deal-out runs as compositor
+   * animations on top of these (startIntro), so this never animates.
    */
   const apply = useCallback(() => {
     const c = cam.current;
     const s = c.scale;
-    const deal = intro.current;
     const vp = viewportRef.current;
     // Lets things on the wall cancel its zoom (the note's link stays 14px).
     if (vp && scaleVar.current !== s) {
       vp.style.setProperty("--wall-scale", String(s));
       scaleVar.current = s;
     }
-    const cx = (vp?.clientWidth ?? 0) / 2;
-    const cy = (vp?.clientHeight ?? 0) / 2;
-    const reach = Math.hypot(cx, cy) * 2 || 1;
-    const now = performance.now();
-    let running = false;
-
     for (const p of placedRef.current) {
       const el = itemRefs.current.get(p.key);
       if (!el) continue;
-      if (!deal || p.item.kind === "note") {
-        el.style.transform = position(p, c, s, gridRef.current);
-        el.style.opacity = "";
-        continue;
-      }
-      const { x, y } = place(p, c, s, gridRef.current);
-      const w = p.item.w * s;
-      const h = itemHeight(p.item) * s;
-      // The piece's centre travels from the middle of the screen to its own.
-      const dx = x + w / 2 - cx;
-      const dy = y + h / 2 - cy;
-      const delay = (Math.hypot(dx, dy) / reach) * INTRO_SPREAD;
-      const t = Math.min(1, Math.max(0, (now - deal.start - delay) / INTRO_MS));
-      if (t < 1) running = true;
-      const e = 1 - Math.pow(1 - t, 4);
-      const k = 0.55 + 0.45 * e;
-      const px = cx + dx * e - (p.item.w * s * k) / 2;
-      const py = cy + dy * e - (itemHeight(p.item) * s * k) / 2;
-      el.style.transform = `translate3d(${px}px, ${py}px, 0) rotate(${(1 - e) * tilt(p.key)}deg) scale(${s * k})`;
-      el.style.opacity = String(Math.min(1, t * 3.5));
+      el.style.transform = position(p, c, s, gridRef.current);
     }
-    return running;
   }, []);
 
   const showLayer = () => {
@@ -259,27 +285,73 @@ export function LabCanvas({
   /** Skip whatever is left of the intro and put everything in its place. */
   const endIntro = useCallback(() => {
     if (!intro.current) return;
-    cancelAnimationFrame(introRaf.current);
     intro.current = null;
+    for (const a of introAnims.current) a.cancel();
+    introAnims.current = [];
     apply();
   }, [apply]);
 
-  /** Deal the table out (once), or just show it for reduced motion. */
+  /**
+   * Deal the table out (once), or just show it for reduced motion. Each piece
+   * that lands on screen flies from the middle of the screen to its place,
+   * nearer ones first. These are Web Animations of transform and opacity, so
+   * the compositor runs them and heavy tiles mounting meanwhile can't stutter
+   * the motion. Pieces that land off screen just sit in place.
+   */
   const startIntro = useCallback(() => {
     if (introStarted.current) return;
     introStarted.current = true;
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      intro.current = { start: performance.now() + INTRO_PAUSE };
-      const tick = () => {
-        if (!intro.current) return;
-        if (apply()) introRaf.current = requestAnimationFrame(tick);
-        else endIntro();
-      };
-      introRaf.current = requestAnimationFrame(tick);
-    }
     apply();
     showLayer();
-  }, [apply, endIntro]);
+    const vp = viewportRef.current;
+    if (!vp || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // The Lab page on a phone is on screen from the first paint (see
+    // phoneOffset); dealing it out now would snatch it away and back.
+    if (!embedded && window.matchMedia("(max-width: 639.98px)").matches) return;
+    const c = cam.current;
+    const s = c.scale;
+    const vw = vp.clientWidth;
+    const vh = vp.clientHeight;
+    const cx = vw / 2;
+    const cy = vh / 2;
+    const reach = Math.hypot(cx, cy) * 2 || 1;
+    const anims: Animation[] = [];
+    for (const p of placedRef.current) {
+      if (p.item.kind === "note") continue;
+      const el = itemRefs.current.get(p.key);
+      if (!el) continue;
+      const { x, y } = place(p, c, s, gridRef.current);
+      const w = p.item.w * s;
+      const h = itemHeight(p.item) * s;
+      if (x > vw || y > vh || x + w < 0 || y + h < 0) continue;
+      const delay = INTRO_PAUSE + (Math.hypot(x + w / 2 - cx, y + h / 2 - cy) / reach) * INTRO_SPREAD;
+      // Starts at 55% size, centred on the screen, tilted.
+      const from = `translate3d(${cx - (w * 0.55) / 2}px, ${cy - (h * 0.55) / 2}px, 0) rotate(${tilt(p.key)}deg) scale(${s * 0.55})`;
+      const to = `translate3d(${x}px, ${y}px, 0) rotate(0deg) scale(${s})`;
+      anims.push(
+        el.animate([{ transform: from }, { transform: to }], {
+          duration: INTRO_MS,
+          delay,
+          easing: "cubic-bezier(0.25, 1, 0.5, 1)", // ease-out quart
+          fill: "backwards",
+        }),
+        el.animate([{ opacity: 0 }, { opacity: 1, offset: 0.28 }, { opacity: 1 }], {
+          duration: INTRO_MS,
+          delay,
+          fill: "backwards",
+        }),
+      );
+    }
+    if (!anims.length) return;
+    intro.current = { start: performance.now() };
+    introAnims.current = anims;
+    Promise.all(anims.map((a) => a.finished)).then(
+      () => {
+        if (introAnims.current === anims) endIntro();
+      },
+      () => {}, // cancelled by endIntro
+    );
+  }, [apply, embedded, endIntro]);
 
   // Fit to the screen: pick the scale, repeat the tile enough times that the
   // block (less its seams) covers the screen, and on first fit, centre the
@@ -311,9 +383,15 @@ export function LabCanvas({
       apply();
     };
     fit();
-    window.addEventListener("resize", fit);
-    return () => window.removeEventListener("resize", fit);
-  }, [apply, embedded, items, startIntro]);
+    // A resize moves every resting place, so finish the deal rather than let
+    // it land on the old ones.
+    const onResize = () => {
+      endIntro();
+      fit();
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [apply, embedded, endIntro, items, startIntro]);
 
   // Embedded: mount the pieces as the wall approaches, deal them out once
   // most of it is on screen.
@@ -435,7 +513,7 @@ export function LabCanvas({
   useEffect(
     () => () => {
       cancelAnimationFrame(raf.current);
-      cancelAnimationFrame(introRaf.current);
+      for (const a of introAnims.current) a.cancel();
     },
     [],
   );
@@ -566,6 +644,7 @@ export function LabCanvas({
     cancelAnimationFrame(raf.current);
     endIntro();
     returnFocus.current = el;
+    setLightboxUsed(true);
     setLightbox({ index: shots.indexOf(item), origin: el.querySelector("img")?.getBoundingClientRect() ?? null });
   };
 
@@ -624,7 +703,15 @@ export function LabCanvas({
       >
         {isWall ? (
           <>
-            <div ref={layerRef} className="lab-canvas-layer absolute inset-0" style={{ visibility: "hidden" }}>
+            <div
+              ref={layerRef}
+              // Hidden until fitted and dealt; the Lab page on a phone is laid
+              // out by CSS and shows at once.
+              // A size container, so the phone layout can centre pieces with cq
+              // units inside their transforms (never left/top: moving those
+              // when the script takes over counts as a layout shift).
+              className={`lab-canvas-layer invisible absolute inset-0 [container-type:size] ${embedded ? "" : "max-sm:visible"}`}
+            >
               {placed.map((p) => (
                 <div
                   key={p.key}
@@ -633,19 +720,28 @@ export function LabCanvas({
                     else itemRefs.current.delete(p.key);
                   }}
                   aria-hidden={p.primary ? undefined : true}
-                  className="absolute top-0 left-0 origin-top-left will-change-transform"
-                  // The server renders the desktop layout, so the first paint is
-                  // already arranged; the layout effect corrects it for the screen.
+                  className={`absolute top-0 left-0 origin-top-left will-change-transform [transform:var(--ssr)] ${
+                    embedded
+                      ? ""
+                      : "max-sm:[transform:translate3d(calc(50cqw_+_var(--wx)*0.55px),calc(50cqh_+_var(--wy)*0.55px),0)_scale(0.55)]"
+                  }`}
+                  // The server renders the desktop layout (and, for the Lab page,
+                  // the phone one in CSS), so the first paint is already
+                  // arranged; the layout effect corrects it for the screen.
                   style={{
                     width: p.item.w,
-                    transform: position(p, ssr, ssr.scale, SSR_GRID),
+                    ...({
+                      "--ssr": position(p, ssr, ssr.scale, SSR_GRID),
+                      "--wx": phoneOffset(p, noteItem).wx,
+                      "--wy": phoneOffset(p, noteItem).wy,
+                    } as React.CSSProperties),
                     // The note is the deck the rest is dealt from: it sits on
                     // top, and it's showing from the start (the layer isn't).
                     zIndex: p.item.kind === "note" ? 10 : undefined,
                     visibility: p.item.kind === "note" ? "visible" : undefined,
                   }}
                 >
-                  <Piece item={p.item} focusable={p.primary} note={note} onOpenShot={openShot} />
+                  <Piece item={p.item} focusable={p.primary} note={note} onOpenShot={openShot} eager={eager.has(p.key)} />
                 </div>
               ))}
             </div>
@@ -699,7 +795,7 @@ export function LabCanvas({
                     aria-pressed={view === key}
                     title={label}
                     onClick={() => chooseView(key)}
-                    className="skeu skeu-press skeu-icon size-7 rounded-full text-muted-foreground aria-pressed:text-foreground aria-pressed:shadow-(--skeu-shadow-pressed) [&_svg]:size-3.5"
+                    className="skeu skeu-press skeu-icon size-9 rounded-full sm:size-7 text-muted-foreground aria-pressed:text-foreground aria-pressed:shadow-(--skeu-shadow-pressed) [&_svg]:size-3.5"
                   >
                     <Icon strokeWidth={1.75} />
                   </button>
@@ -717,18 +813,15 @@ export function LabCanvas({
         </div>
       </div>
 
-      <AnimatePresence onExitComplete={() => returnFocus.current?.focus({ preventScroll: true })}>
-        {lightbox && (
-          <Lightbox
-            key="lightbox"
-            shots={shots}
-            index={lightbox.index}
-            origin={lightbox.origin}
-            onIndex={(index) => setLightbox({ index, origin: null })}
-            onClose={() => setLightbox(null)}
-          />
-        )}
-      </AnimatePresence>
+      {lightboxUsed && (
+        <LightboxLayer
+          open={lightbox}
+          shots={shots}
+          onIndex={(index) => setLightbox({ index, origin: null })}
+          onClose={() => setLightbox(null)}
+          onExitComplete={() => returnFocus.current?.focus({ preventScroll: true })}
+        />
+      )}
     </>
   );
 }
@@ -739,11 +832,14 @@ function Piece({
   focusable,
   note,
   onOpenShot,
+  eager = false,
 }: {
   item: CanvasItem;
   focusable: boolean;
   note?: NoteContent;
   onOpenShot: (item: CanvasShot, el: HTMLElement) => void;
+  /** On screen in the opening view: load the image straight away, first. */
+  eager?: boolean;
 }) {
   return (
     <>
@@ -757,11 +853,15 @@ function Piece({
         >
           <img
             src={item.src}
+            // Tiles show at most ~400px wide; the full file is for the lightbox.
+            srcSet={`${item.src.replace(/\.webp$/, "-w480.webp")} 480w, ${item.src.replace(/\.webp$/, "-w800.webp")} 800w, ${item.src} ${item.width}w`}
+            sizes={`${Math.round(item.w * 0.85)}px`}
             alt=""
             width={item.width}
             height={item.height}
             draggable={false}
-            loading="lazy"
+            loading={eager ? "eager" : "lazy"}
+            fetchPriority={eager ? "high" : undefined}
             decoding="async"
             className="block h-auto w-full transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
           />
@@ -809,7 +909,7 @@ function HeadingNote({ content, primary }: { content: NoteContent; primary: bool
           // points the way. The title above carries the handwriting.
           // Sized against the wall's zoom so it reads at 14px on screen, the
           // same as the case study cards' "Read case study".
-          className="group mt-5 inline-flex items-center gap-1.5 rounded-sm text-[calc(0.875rem/var(--wall-scale,1))] font-medium text-foreground underline decoration-foreground/25 decoration-1 underline-offset-[calc(4px/var(--wall-scale,1))] transition-[text-decoration-color] duration-150 ease-out hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+          className="group relative mt-5 inline-flex items-center gap-1.5 rounded-sm after:absolute after:-inset-x-[calc(8px/var(--wall-scale,1))] after:-inset-y-[calc(12px/var(--wall-scale,1))] text-[calc(0.875rem/var(--wall-scale,1))] font-medium text-foreground underline decoration-foreground/25 decoration-1 underline-offset-[calc(4px/var(--wall-scale,1))] transition-[text-decoration-color] duration-150 ease-out hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
         >
           {content.cta.label}
           <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">

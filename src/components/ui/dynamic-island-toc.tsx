@@ -335,7 +335,7 @@ export function DynamicIslandTOC({
                   setIsExpanded(false);
                 }}
                 aria-label="Close table of contents"
-                className="text-background/55 transition-colors hover:text-background"
+                className="relative text-background/55 transition-colors after:absolute after:-inset-3 hover:text-background"
               >
                 <X className="h-5 w-5" />
               </button>

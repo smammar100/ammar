@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preload } from "react-dom";
 import "@/styles/global.css";
 import { siteConfig } from "@/data/site-config";
 
@@ -44,6 +45,10 @@ const themeScript = `
 `;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // Geist, the body face (see global.css): fetched with the HTML rather than
+  // after the CSS. Caveat isn't preloaded (73KB would hold up the first image);
+  // its size-matched fallback keeps the swap from shifting the page.
+  preload("/fonts/geist-latin-wght-normal.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   return (
     <html lang="en" suppressHydrationWarning>
       <body>

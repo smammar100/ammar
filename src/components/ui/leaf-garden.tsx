@@ -319,16 +319,20 @@ export const LeafGarden = forwardRef<LeafGardenHandle, LeafGardenProps>(function
     let disposed = false;
     let teardown = () => {};
 
-    // Fetch three.js a little before the garden scrolls in.
+    // Fetch three.js as the garden reaches the screen, and set it up when
+    // the browser is idle, so it never competes with the page loading.
     const near = new IntersectionObserver(
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         near.disconnect();
         import("three").then((THREE) => {
-          if (!disposed) teardown = start(THREE, host);
+          const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 50));
+          idle(() => {
+            if (!disposed) teardown = start(THREE, host);
+          }, { timeout: 500 });
         });
       },
-      { rootMargin: "400px 0px" },
+      { rootMargin: "100px 0px" },
     );
     near.observe(host);
 

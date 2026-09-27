@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 // Caldera-style page frame: the content column sits between two diagonally
-// hatched gutters, with dashed rules closing it top and bottom. The crosshairs
+// hatched gutters, with a dashed rule across the top. The crosshairs
 // are not drawn — they fall out of the gutter borders crossing the rules, and
 // the masks fade both toward the edges so nothing terminates in a hard stub.
 //
@@ -83,14 +83,11 @@ export function Intersection({
         <StillHatch />
       </div>
 
-      {/* Dashed rules. */}
+      {/* Dashed rule on top. There's none at the bottom: the footer card
+          follows straight on, and a rule there read as a stray line. */}
       <div
         aria-hidden="true"
         className="relative -bottom-px col-span-full col-start-1 row-start-2 border-t border-dashed border-(--pattern-fg) mask-x-from-60%"
-      />
-      <div
-        aria-hidden="true"
-        className="relative -top-px col-span-full col-start-1 row-start-4 border-b border-dashed border-(--pattern-fg) mask-x-from-60%"
       />
     </div>
   );

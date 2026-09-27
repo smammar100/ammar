@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useReducedMotion } from "motion/react";
-import { useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { LabPreview } from "@/components/lab/LabPreview";
 import type { CanvasBuild } from "./items";
 
@@ -13,6 +12,19 @@ import type { CanvasBuild } from "./items";
 // to the build; on touch the first tap only reveals, the second follows.
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+/** prefers-reduced-motion, kept live (motion's hook, without loading motion). */
+function useReducedMotion() {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduce(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return reduce;
+}
 
 export function BuildTile({ item, focusable = true }: { item: CanvasBuild; focusable?: boolean }) {
   const [open, setOpen] = useState(false);
@@ -96,6 +108,10 @@ export function BuildTile({ item, focusable = true }: { item: CanvasBuild; focus
       ) : item.image ? (
         <img
           src={item.image.src}
+          // Project WebPs ship a -w640 copy; a tile is at most ~375px wide.
+          {...(item.image.src.startsWith("/images/projects/") && item.image.src.endsWith(".webp")
+            ? { srcSet: `${item.image.src.replace(/[.]webp$/, "-w640.webp")} 640w, ${item.image.src} ${item.image.width}w`, sizes: "375px" }
+            : {})}
           alt=""
           width={item.image.width}
           height={item.image.height}

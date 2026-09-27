@@ -50,6 +50,14 @@ export function FeaturedWorkCard({
           {thumbnail && (
             <img
               src={thumbnail}
+              // WebP thumbnails ship -w640 and -w960 copies (the card is at
+              // most ~430px wide), so phones don't fetch the full file.
+              {...(thumbnail.endsWith(".webp")
+                ? {
+                    srcSet: `${thumbnail.replace(/\.webp$/, "-w640.webp")} 640w, ${thumbnail.replace(/\.webp$/, "-w960.webp")} 960w`,
+                    sizes: "(min-width: 640px) 430px, calc(100vw - 72px)",
+                  }
+                : {})}
               alt=""
               width={thumbnailSize?.[0]}
               height={thumbnailSize?.[1]}

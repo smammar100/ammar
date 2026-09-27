@@ -34,7 +34,8 @@ export function MobileChrome() {
       {/* Mobile top bar */}
       <header className="md:hidden sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="flex h-14 items-center justify-between px-4">
-          <Link href="/" className="block no-underline" aria-label="Home">
+          {/* Padded out to a 40px tap target without moving the logo. */}
+          <Link href="/" className="-m-1.5 block p-1.5 no-underline" aria-label="Home">
             <Logo className="h-7 w-7" />
           </Link>
           <div className="flex items-center gap-2">
