@@ -1,77 +1,108 @@
 ---
-title: "Iconimate"
+title: "Small icons. A lot of decisions."
 client: "Iconimate"
-statement: "186 animated React icons that earn their motion."
-subtext: "Drawn on the Phosphor 256 grid and tuned for 24px, with one set of springs and curves so the whole family moves alike. Designed, built and published solo."
-kpis: ["186 icons", "MIT licensed", "Install one, not the set"]
+statement: "Small icons. A lot of decisions."
+subtext: "An open-source library of animated React icons built on Phosphor. I designed the motion, built the components and published the website."
+kpis: ["216 Animated Icons", "45 GitHub Stars", "MIT Licensed"]
 liveUrl: "https://iconimate.app"
 type: "personal"
-description: "A hand-built set of 186 animated React icons where every glyph carries its own small performance, and none of them are allowed to move for the sake of moving."
-skills: ["Design Engineering", "Motion Design", "Open Source"]
+description: "How I designed and built Iconimate, an open-source library of 216 animated React icons on Phosphor: motion that suits each object, resting states that match the original glyphs, and components developers can install one at a time."
+skills: ["Motion Design", "Design Engineering", "Open Source"]
 thumbnail: "/images/projects/iconimate/thumbnail-iconimate-light.png"
 thumbnailWide: "/images/projects/iconimate/iconimate-landing.webp"
 thumbnailWideSize: [1600, 1000]
 heroImage: "/images/projects/iconimate/iconimate-landing.webp"
 heroImageSize: [1600, 1000]
-# TODO(ammar): add dark-mode thumbnails, then add these frontmatter keys back:
-#   thumbnailDark: "/images/projects/iconimate/thumbnail-iconimate-dark.png" (2400x2400)
-#   thumbnailWideDark: "/images/projects/iconimate/thumbnail-iconimate-dark-wide.png" (1920x1080)
 sortOrder: 5
 draft: false
+
+# Structured case-study header
+tagline: "Iconimate is an open-source library of animated React icons built on Phosphor. I designed the motion, built the components and published the website, turning a personal experiment into a tool other people can use."
+tags: ["Motion Design", "Design Engineering", "Open Source"]
+pills: ["2026 – Present", "Independent project"]
+role: "Motion Design & Front-end Development"
+services: ["motion design", "front-end development", "component api", "website"]
+tools: ["phosphor", "react", "motion", "shadcn cli"]
+# "My role" in the header: what I owned, then what Iconimate is.
+summary:
+  - "An independent project, 2026 to present. I designed the motion for every icon, built the React components and published the website, where developers can search the set, preview each animation and install the icons they need."
+  - "Iconimate is an MIT-licensed library of 216 animated icons built on Phosphor’s glyphs. It has 45 GitHub stars and was featured on DEV.to’s social media. Figures as of September 2026."
 ---
 
-> How do you make 186 icons move like they came from the same hand?
+---
 
-An open-source animated React icon set, designed, built, and published end to end.
+<TocGroup label="Problem" />
 
-**Role** Designer & Front-end Developer · **Duration** 2026–Present (ongoing) · **Links** [iconimate.app](https://iconimate.app) · [GitHub](https://github.com/smammar100/Iconimate)
+## Making one icon move is easy. Making a whole set feel consistent takes work.
 
-## Context
+An animation can look good on its own and feel out of place in an interface. Different timings make icons feel unrelated. Too much movement makes them distracting. Details that read clearly in a large preview can disappear inside a small button.
 
-Icon sets ship static SVGs. The moment a team wants motion, every icon turns into a small bespoke project: easing copied from whichever snippet was closest, timing invented per component, animation tuned at 64px in a design file and then shipped at 24px in a toolbar where the movement is a smear.
+I wanted each icon to move in a way that suited its meaning, while keeping the collection consistent. Developers also needed a simple way to preview an animation, add it to a project and adapt it.
 
-I wanted the opposite. A set where the motion is drawn at the same time as the shape, and where you install one icon rather than a library.
+---
+
+<TocGroup label="Solution" />
+
+## Start with the object
+
+I used Phosphor’s existing glyphs as the foundation. My contribution was the motion and its implementation: deciding which parts should move, where they should pivot and how they should settle.
+
+A bell swings from its crown. An anchor sways from its ring. Each animation follows the shape and behaviour of the object. Shared timing and easing rules help those different movements belong together.
 
 <IconimateHoverGrid />
 
-## The Problem
+## Protect the resting state
 
-Motion in icon libraries fails for structural reasons, not aesthetic ones.
+Every icon had to match its original Phosphor glyph at rest. This let it sit alongside static icons without changing the visual style of an interface.
 
-- Motion lives in the consuming app rather than the icon, so nobody can reuse it and the next team starts over.
-- Every icon invents its own easing, so the set never reads as a family.
-- Animations get judged at display size and fall apart at the 24px they actually ship at.
-- Taking one icon usually means taking a package, a version, and a breaking change someday.
-
-## What I Built
-
-186 icons drawn on the Phosphor 256 grid, animated with one shared vocabulary, and published so you take a component instead of a dependency.
-
-- **A motion dialect**: named springs (`springPop`, `springSwing`, `springSettle`) and curves (`SWEEP`, `ARRIVE`, `RETURN`), plus one shared glide home. A bell swinging and an anchor swaying decelerate the same way, so they read as siblings.
-- **Two states per icon**: `normal` and `animate`. There is no third state to reason about across 186 files.
-- **A rest-state rule**: a resting icon stays pixel-identical to the original Phosphor glyph. Splitting a path to animate one part requires a pixel diff against the original, or the animation doesn't ship.
-- **24px calibration**: every motion tuned at ship size and rejected if it only works big.
-- **A lab**: 59 pages of side-by-side candidates, kept permanently as the argument for each pick.
+That rule also helped me choose between ideas. For the beer stein, I explored a lid-flip animation but shipped a version that moved the whole mark, preserving the original path. The more elaborate version stayed in the experiments.
 
 <IconimateRestStateGrid />
 
-The beer stein's winning candidate moves the whole mark rigidly, so the shipped icon carries the original path untouched. The lid-flip version stayed in the lab.
+## Build enough variations to make a considered choice
 
-<IconimateSizeScale />
+For the baby carriage, I built seven candidates, exploring a simple pop, rolling, rocking and canopy movement.
+
+The final version used a suspension bounce: the body dropped, the canopy followed and the tyres stayed planted. It gave the movement a clear physical relationship between the parts.
 
 <IconimateLabCandidates />
 
-## Impact
+Comparing the candidates side by side helped me judge where the motion started, how much movement was enough and how the icon returned to rest.
 
-- 186 animated icons, free and open source under MIT.
-- Each icon installs on its own through a shadcn-style registry, as raw `.tsx` source, or as an AI prompt that regenerates it from the glyph paths and motion spec.
-- Every icon exposes `startAnimation` / `stopAnimation`, so taps, parent cards, and keyboard focus can drive motion where `:hover` never fires.
-- A generator, a closed import allow-list, and one `verify` command keep the set consistent as it grows.
+## Test at the size that matters
+
+I compared animations at 16, 20, 24, 32 and 48 pixels, using 24px as the main reference. If a movement only worked in the larger preview, it needed another pass.
+
+<IconimateSizeScale />
+
+At that size, small decisions become obvious. A rotation can obscure the shape. A delay can make the movement feel disconnected. I adjusted the animations around those details so the icons remained recognisable throughout.
+
+## Make the work usable
+
+I built a searchable gallery where people can preview the animations before choosing an icon. Individual components can be installed through the shadcn CLI, giving developers the source code to adapt within their own projects.
 
 <IconimateCardDemo />
 
-## Lessons
+The components also expose animation controls, allowing motion to respond to a parent button, card or touch interaction. That makes the animation useful beyond the gallery’s hover previews.
 
-Motion is a design decision, not a finishing effect. The icons that work are the ones where the movement says something about the object, and the only way to get there is to draw the shape and the behaviour together.
+---
 
-The parts I'm most pleased with aren't the animations that shipped. They're the constraints that stopped the wrong ones: the rest-state rule, the 24px test, and the discipline of building seven candidates when one would have been faster.
+<TocGroup label="Result" />
+
+## Put it out into the world
+
+<IconimateImpact />
+
+The collection has grown to 216 icons and received 45 GitHub stars. It was also featured on DEV.to’s social media, giving the project recognition beyond my own channels.
+
+These are early signs of interest. Understanding how people use the icons in their products is the next step.
+
+## Reflection
+
+Iconimate became a practical way to improve at design engineering. I had to take responsibility for the whole experience: how an icon moved, how the component behaved and how someone would find and install it.
+
+The strongest decisions came from comparing alternatives. Building seven versions of an icon gave me a clearer reason for choosing one. Constraints such as preserving the original glyph and checking movement at 24px helped me decide when an animation was ready.
+
+Next, I want to gather feedback from developers using Iconimate in real interfaces. That will help me decide which icons to add, which behaviours to refine and where the installation experience needs work.
+
+<IconimateLinks />
