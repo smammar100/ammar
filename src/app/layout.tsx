@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: siteConfig.url,
+    url: siteUrl(),
     title: siteConfig.title,
     description: siteConfig.description,
     // TODO: replace with a photo of Ammar — current file is the scaffold's placeholder (also used by the twitter card below).
