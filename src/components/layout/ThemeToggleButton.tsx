@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import { useEffect, useId, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface ThemeToggleButtonProps {
@@ -9,7 +8,34 @@ interface ThemeToggleButtonProps {
   size?: number;
 }
 
-/** Theme toggle with View-Transitions cross-fade; persists to localStorage. */
+/**
+ * Sun and moon as one drawing, so switching theme morphs one into the other:
+ * in light mode it's a moon (a disc with a shadow circle cutting the
+ * crescent), in dark mode the sun (the shadow slides off, the disc shrinks to
+ * the core and the rays spin out). The `.dark` class drives it in CSS
+ * (`.theme-icon` in styles/global.css), so it's right from the first paint.
+ */
+function SunMoon({ size }: { size: number }) {
+  // Two toggles can be on the page (phone and desktop bars), so each needs
+  // its own mask id; useId's punctuation isn't safe inside url(#…).
+  const mask = `theme-icon-${useId().replace(/[^\w-]/g, "")}`;
+  return (
+    <svg className="theme-icon" width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <mask id={mask}>
+        <rect width="24" height="24" fill="white" />
+        <circle className="theme-icon-shadow" cx="16.5" cy="7.5" r="6.4" fill="black" />
+      </mask>
+      <circle className="theme-icon-disc" cx="12" cy="12" r="9" fill="currentColor" mask={`url(#${mask})`} />
+      <g className="theme-icon-rays" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+          <line key={a} x1="12" y1="1.5" x2="12" y2="3.5" transform={`rotate(${a} 12 12)`} />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+/** Theme toggle with a View Transitions cross-fade; persists to localStorage. */
 export function ThemeToggleButton({ className, size = 18 }: ThemeToggleButtonProps) {
   const [dark, setDark] = useState(false);
 
@@ -43,7 +69,7 @@ export function ThemeToggleButton({ className, size = 18 }: ThemeToggleButtonPro
       // The skeuomorphic icon button (styles/global.css); callers size it.
       className={cn("skeu skeu-press skeu-icon", className)}
     >
-      {dark ? <Sun size={size} /> : <Moon size={size} />}
+      <SunMoon size={size} />
     </button>
   );
 }

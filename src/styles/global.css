@@ -260,6 +260,63 @@
   to   { opacity: 1; }
 }
 
+/* The theme toggle's sun/moon (components/layout/ThemeToggleButton.tsx).
+   Light mode draws a moon: a big disc with a shadow circle cutting the
+   crescent. Dark mode draws the sun: the shadow slides off to the top right,
+   the disc shrinks to the core and the rays spin out. Scales overshoot a
+   touch on the way in. */
+.theme-icon {
+  /* Its own layer in the theme cross-fade (below), so the morph isn't
+     blurred by the old snapshot fading out over it. The name must be unique
+     on screen: the phone and desktop bars each have a toggle, but only one
+     bar shows at a time. Two visible at once would abort the transition. */
+  view-transition-name: theme-icon;
+}
+.theme-icon-disc {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: scale 500ms cubic-bezier(0.5, 1.25, 0.75, 1.25);
+}
+.theme-icon-shadow {
+  transition: transform 350ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.theme-icon-rays {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  rotate: -90deg;
+  scale: 0.4;
+  opacity: 0;
+  transition:
+    rotate 500ms cubic-bezier(0.5, 1.25, 0.75, 1.25),
+    scale 500ms cubic-bezier(0.5, 1.25, 0.75, 1.25),
+    opacity 200ms ease-out;
+}
+.dark .theme-icon-disc {
+  scale: 0.5;
+}
+.dark .theme-icon-shadow {
+  transform: translate(9px, -9px);
+}
+.dark .theme-icon-rays {
+  rotate: 0deg;
+  scale: 1;
+  opacity: 1;
+  transition-delay: 100ms, 100ms, 100ms;
+}
+::view-transition-old(theme-icon) {
+  display: none;
+}
+::view-transition-new(theme-icon) {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon-disc,
+  .theme-icon-shadow,
+  .theme-icon-rays {
+    transition: none !important;
+  }
+}
+
 /* Prose styles for markdown content */
 .prose {
   @apply text-foreground leading-relaxed;
