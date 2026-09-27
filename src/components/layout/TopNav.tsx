@@ -8,7 +8,8 @@ import { ThemeToggleButton } from "./ThemeToggleButton";
 
 const navItems = siteConfig.nav;
 
-function isActive(pathname: string, href: string) {
+/** Whether a nav item is the current page (or a page under it). Shared with the phone menu. */
+export function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(href + "/");
 }
@@ -22,7 +23,11 @@ export function TopNav() {
 
         {/* Left: brand */}
         <div className="flex items-center justify-start">
-          <Link href="/" className="group flex items-center gap-2.5 no-underline" aria-label="Home">
+          <Link
+            href="/"
+            className="group flex items-center gap-2.5 no-underline"
+            aria-label="Syed Mohammad Ammar, Product Designer: home"
+          >
             <span className="block h-8 w-8 shrink-0 overflow-hidden rounded-md">
               <DitherAMark size={32} />
             </span>

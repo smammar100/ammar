@@ -658,6 +658,94 @@
   }
 }
 
+/* ── Phone menu ──────────────────────────────────────────────────────────────
+   The menu button's icon: three bars that become an X. Opening slides the
+   outer bars onto the middle one, then turns them; closing turns them back,
+   then slides them apart. Each state's rule times the move into that state,
+   so the steps run in the right order both ways. */
+.menu-icon line {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    rotate 150ms cubic-bezier(0.65, 0, 0.35, 1),
+    translate 150ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
+    opacity 0ms linear 150ms;
+}
+[aria-expanded="true"] > .menu-icon line {
+  transition:
+    translate 150ms cubic-bezier(0.65, 0, 0.35, 1),
+    rotate 150ms cubic-bezier(0.65, 0, 0.35, 1) 150ms,
+    opacity 0ms linear 150ms;
+}
+[aria-expanded="true"] > .menu-icon line:nth-child(1) {
+  translate: 0 6px;
+  rotate: 45deg;
+}
+[aria-expanded="true"] > .menu-icon line:nth-child(2) {
+  opacity: 0;
+}
+[aria-expanded="true"] > .menu-icon line:nth-child(3) {
+  translate: 0 -6px;
+  rotate: -45deg;
+}
+
+/* The folding panels (components/layout/FoldMenu.tsx, after Makisu). Every
+   level keeps 3D so the chain folds as one object. Folded is the resting
+   state; the script sets each panel's angle when it opens or closes. The
+   faces sit a fraction of a pixel apart so they don't z-fight: the shade in
+   front of the content, the back face behind it, covering the mirrored
+   content when a panel is seen from behind. */
+.fold-scene {
+  transform: perspective(1200px);
+  transform-style: preserve-3d;
+}
+.fold-root,
+.fold-node {
+  position: relative;
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+}
+.fold-node {
+  transform: rotateX(180deg);
+}
+.fold-node[data-first] {
+  transform: rotateX(-180deg);
+}
+.fold-panel {
+  position: relative;
+  transform: translateZ(-0.1px);
+  transform-style: preserve-3d;
+  background: var(--background);
+}
+.fold-panel[data-last] {
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 18px 32px -20px rgb(0 0 0 / 0.35);
+}
+.fold-shade,
+.fold-back {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.fold-shade {
+  transform: translateZ(0.1px);
+  background: rgb(0 0 0 / 0.12);
+}
+.dark .fold-shade {
+  background: rgb(0 0 0 / 0.45);
+}
+.fold-back {
+  transform: translateZ(-0.1px);
+  background: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-icon line {
+    transition: none !important;
+  }
+}
+
 /* Build-up animations for the home page service illustrations. BuildIn
    (components/home/BuildIn.tsx) sets [data-build]: "armed" holds every piece at
    its first keyframe (paused + fill both), "play" releases them. Without the
