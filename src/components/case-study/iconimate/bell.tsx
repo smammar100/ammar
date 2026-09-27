@@ -1,13 +1,13 @@
 "use client";
 
 /**
- * Airplane Takeoff — Iconimate
+ * Bell — Iconimate
  *
- * Installed from https://iconimate.app/r/airplane-takeoff.json
- * Version 457df95908ef · icon last changed 2026-08-12
+ * Installed from https://iconimate.app/r/bell.json
+ * Version e0143de39082 · icon last changed 2026-08-12
  *
  * This file is a COPY and does not update itself. To pull the current version:
- *   npx shadcn@latest add https://iconimate.app/r/airplane-takeoff.json
+ *   npx shadcn@latest add https://iconimate.app/r/bell.json
  * To check whether yours is behind, compare the version above against
  * https://iconimate.app/r/registry.json.
  *
@@ -167,43 +167,101 @@ export function useHover(): HoverController {
   };
 }
 
-// DEPARTURE — wheels up and gone: from rest the plane accelerates up its heading
-// and climbs clean out of frame, shrinking and fading into the distance. The
-// mirror of the landing arrival — here the plane leaves the bounding box. The
-// wrapper uses overflow:visible so the climb-out is seen beyond the icon box.
-// Filled Phosphor airplane-takeoff glyph (currentColor).
-const PLANE =
-  "M247.86,93.15a8,8,0,0,1-3.76,5.39l-147.41,88a40.18,40.18,0,0,1-20.26,5.52,39.78,39.78,0,0,1-27.28-10.87l-.12-.12L13,145.8a16,16,0,0,1,4.49-26.21l3-1.47a8,8,0,0,1,6.08-.4l28.26,9.54L75,115.06,53.17,93.87A16,16,0,0,1,57.7,67.4l.32-.13,7.15-2.71a8,8,0,0,1,5.59,0L124.7,84.38,176.27,53.6a39.82,39.82,0,0,1,51.28,9.12l.12.15,18.64,23.89A8,8,0,0,1,247.86,93.15ZM228.12,89.45l-13-16.67a23.88,23.88,0,0,0-30.68-5.42l-54.8,32.72a8.06,8.06,0,0,1-6.87.64L68,80.58l-4,1.53.21.2L93.57,110.8a8,8,0,0,1-1.43,12.58L59.93,142.87a8,8,0,0,1-6.7.73l-28.67-9.67-.19.1-.37.17a.71.71,0,0,1,.13.12l36,35.26a23.85,23.85,0,0,0,28.42,3.18Z";
-const RUNWAY = "M176,216a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16H168A8,8,0,0,1,176,216Z";
+// RING — the bell rocks and the clapper swings inside it, trailing the shell and travelling
+// the full width of its housing before the whole thing rings down.
+//
+// Traced off a reference recording rather than authored: 208 frames at 30fps, measured per
+// frame as the horizontal offset between the glyph's upper third and its collar band. Over
+// six consistent repetitions that trace shows the shell and clapper always moving in
+// opposition, the clapper's amplitude about 1.9x the shell's, and a decaying oscillation
+// that builds to the second swing before ringing down — shell peaks at t = .20 .44 .64 .80
+// .92 with relative amplitudes .92 1.0 .79 .61 .21.
+//
+// THE GLYPH IS SPLIT INTO TWO OUTLINES, AND GETTING THAT WRONG IS THE TRAP HERE.
+//
+// The source draws the clapper as NEGATIVE SPACE: subpath 2 sits inside the collar's dip
+// lobe wound the opposite way, so under nonzero they cancel. Filling it as its own shape
+// adds 528px of ink (0.81% of the box), all in y192..223 — a solid blob under the bell.
+// Masking it out fixes the rest state but not the motion: slide the hole more than a few
+// units and the crescent goes lopsided, one side thickening into a mass that reads as
+// filled. So the dip lobe is taken OUT of the shell and the clapper becomes its own
+// outline — an annular segment between the collar's r=40 dip and the clapper's r=24 arc,
+// both about (128,192), a U of uniform 16-unit thickness, which is the icon's stroke
+// weight. Its white middle is its own hollowness. There is no mask.
+// Verified: SHELL + CLAPPER against the source glyph is 40 differing pixels, max alpha gap
+// 63 — antialiasing where two fills abut, not geometry.
+//
+// EVERY NUMBER IS READ OFF THE PATH.
+//   · the shell hangs from its crown (128,24) — the dome is r=80 about (128,104);
+//   · the glyph's box is x32..224, y24..232, and the largest rotation about the crown that
+//     keeps every sampled point on the artboard is 12.20°, so the shell swings 12°;
+//   · the clapper TRANSLATES rather than rotates. It and the collar are concentric, so
+//     turning it about their shared centre only slides it along a wall it is already
+//     parallel to — 3.32 units of travel before its edge binds, invisible at icon size.
+//     Sliding it horizontally gives 16.57 units, five times further, with every extreme
+//     point provably still inside the lobe. It runs 16, just inside that cap.
+const SHELL =
+  "M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H208a16,16,0,0,0,13.8-24.06Z" +
+  "M48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z";
+const CLAPPER = "M88.81,200a40,40,0,0,0,78.38,0L150.62,200A24,24,0,0,1,105.38,200Z";
+// Full original glyph, for the reduced-motion static render.
+const BELL =
+  "M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z";
 
-const departure: Variants = {
-  normal: { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1, transition: RETURN_TRANSITION },
+const CROWN = { transformBox: "view-box" as const, originX: 0.5, originY: 24 / 256 };
+
+const shell: Variants = {
+  normal: { rotate: 0, transition: RETURN_TRANSITION },
   animate: {
-    // Anticipation: a brief crouch (rock back & nose-down) before the plane lunges up
-    // its heading and climbs clean out of frame, shrinking and fading into the distance.
-    x: [0, -10, 230],
-    y: [0, 4, -160],
-    rotate: [0, 3, -5],
-    scale: [1, 0.97, 0.78],
-    opacity: [1, 1, 0],
+    rotate: [0, -11, 12, -9.5, 7.4, -2.5, 0],
     transition: {
-      duration: 1.22,
-      times: [0, 0.12, 1],
-      ease: [0.5, 0, 0.85, 0.4], // accelerate away
-      opacity: { duration: 1.22, times: [0, 0.55, 1], ease: "easeIn" },
+      duration: 0.85,
+      times: [0, 0.2, 0.44, 0.64, 0.8, 0.92, 1],
+      ease: "easeInOut",
     },
   },
 };
 
-export const AirplaneTakeoffIcon = forwardRef<IconHandle, IconProps>(function AirplaneTakeoffIcon(
+const clapper: Variants = {
+  normal: { x: 0, transition: RETURN_TRANSITION },
+  animate: {
+    // Same sign as the shell's rotation — a shell leaning bottom-right leaves its clapper
+    // trailing left — and peaking ~0.04 of the timeline later, which is what makes it read
+    // as a heavy arm being carried rather than a part glued to the bell.
+    x: [0, -16, 16, -13, 9, -3.5, 0],
+    transition: {
+      duration: 0.85,
+      times: [0, 0.24, 0.48, 0.68, 0.84, 0.94, 1],
+      ease: "easeInOut",
+    },
+  },
+};
+
+export const BellIcon = forwardRef<IconHandle, IconProps>(function BellIcon(
   { size = 28, style, ...props },
   ref,
 ) {
   const { controls, reduced, start, stop, bind } = useHover();
   useImperativeHandle(ref, () => ({ startAnimation: start, stopAnimation: stop }), [start, stop]);
 
+  if (reduced) {
+    return (
+      <div {...props} {...bind} style={{ display: "inline-flex", overflow: "hidden", ...style }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={size}
+          height={size}
+          viewBox="0 0 256 256"
+          fill="currentColor"
+        >
+          <path d={BELL} />
+        </svg>
+      </div>
+    );
+  }
+
   return (
-    <div {...props} {...bind} style={{ display: "inline-flex", overflow: "visible", ...style }}>
+    <div {...props} {...bind} style={{ display: "inline-flex", overflow: "hidden", ...style }}>
       <motion.svg
         xmlns="http://www.w3.org/2000/svg"
         width={size}
@@ -214,12 +272,12 @@ export const AirplaneTakeoffIcon = forwardRef<IconHandle, IconProps>(function Ai
         animate={controls}
         style={{ overflow: "visible" }}
       >
-        <path d={RUNWAY} />
-        <motion.path
-          variants={reduced ? undefined : departure}
-          style={{ transformBox: "view-box", originX: 0.5, originY: 0.47 }}
-          d={PLANE}
-        />
+        {/* The clapper rides inside the shell's group, so its travel is measured relative to
+            the shell — the double-pendulum relationship a real bell has, for free. */}
+        <motion.g variants={shell} style={CROWN}>
+          <path d={SHELL} />
+          <motion.path d={CLAPPER} variants={clapper} />
+        </motion.g>
       </motion.svg>
     </div>
   );

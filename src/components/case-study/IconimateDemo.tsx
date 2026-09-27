@@ -9,12 +9,13 @@ import { AlienIcon } from "./iconimate/alien";
 import { AmbulanceIcon } from "./iconimate/ambulance";
 import { AnchorIcon } from "./iconimate/anchor";
 import { AndroidLogoIcon } from "./iconimate/android-logo";
-import { ArrowsClockwiseIcon } from "./iconimate/arrows-clockwise";
 import { BeerSteinIcon } from "./iconimate/beer-stein";
 import { BehanceLogoIcon } from "./iconimate/behance-logo";
+import { BellIcon } from "./iconimate/bell";
 
-// Live Iconimate icons, pulled unmodified from the project's own shadcn registry
-// (https://iconimate.app/r/<name>.json) into ./iconimate. Each one is
+// Live Iconimate icons, the current versions from the project's own shadcn
+// registry (https://iconimate.app/r/<name>.json), copied unmodified into
+// ./iconimate; each file's header names its version. Each one is
 // self-contained with `motion` as its only runtime dependency, which is exactly
 // the "install an icon, not a dependency" claim the case study makes.
 
@@ -73,16 +74,16 @@ function IconGrid({ icons, caption }: { icons: IconSpec[]; caption: string }) {
   );
 }
 
-/** The four icons the case study names when introducing the shared motion dialect. */
+/** "Start with the object": the bell and anchor the copy names, plus two more. */
 export function IconimateHoverGrid() {
   return (
     <IconGrid
-      caption="Live components from the set. Hover, tap, or tab to any of them."
+      caption="Live icons from the library, current versions. Hover, tap or tab to any of them."
       icons={[
-        { name: "Alien", motion: "glow eyes", Icon: AlienIcon },
-        { name: "Acorn", motion: "rock", Icon: AcornIcon },
+        { name: "Bell", motion: "ring", Icon: BellIcon },
         { name: "Anchor", motion: "sway", Icon: AnchorIcon },
-        { name: "Arrows Clockwise", motion: "pulse", Icon: ArrowsClockwiseIcon },
+        { name: "Acorn", motion: "rock", Icon: AcornIcon },
+        { name: "Alien", motion: "glow eyes", Icon: AlienIcon },
       ]}
     />
   );

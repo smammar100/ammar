@@ -1,5 +1,21 @@
 "use client";
 
+/**
+ * Beer Stein — Iconimate
+ *
+ * Installed from https://iconimate.app/r/beer-stein.json
+ * Version 6974108c14e6 · icon last changed 2026-08-12
+ *
+ * This file is a COPY and does not update itself. To pull the current version:
+ *   npx shadcn@latest add https://iconimate.app/r/beer-stein.json
+ * To check whether yours is behind, compare the version above against
+ * https://iconimate.app/r/registry.json.
+ *
+ * Animation code: copyright (c) 2026 Muhammad Ammar (smammar100), MIT.
+ * Glyph geometry: Phosphor Icons, copyright (c) 2023 Phosphor Icons, MIT.
+ *                 https://phosphoricons.com
+ */
+
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from "react";
 import type { DOMAttributes, HTMLAttributes } from "react";
 import { motion, useAnimation, useReducedMotion } from "motion/react";
@@ -43,8 +59,26 @@ type AnimationControls = ReturnType<typeof useAnimation>;
 export interface HoverController {
   /** The single controls instance every animated element in the icon is gated through. */
   controls: AnimationControls;
-  /** True when the user prefers reduced motion — icons swap to a static/opacity fallback. */
+  /**
+   * True when the icon should render its static fallback instead of animating.
+   *
+   * Deliberately **not** the OS `prefers-reduced-motion` value. Taking the static
+   * path leaves a reduced-motion visitor unable to preview an icon at all, which
+   * defeats a gallery whose entire content is motion. The preference is honoured
+   * on `ambient` instead: an explicit hover/tap still performs the gesture once,
+   * but nothing repeats unattended. Kept as a field so the per-icon static
+   * fallbacks stay wired and a product decision can switch them on in one place.
+   */
   reduced: boolean;
+  /**
+   * True when motion may repeat on its own — the replay loop below, and any
+   * icon transition carrying `repeat: Infinity`.
+   *
+   * False when the user prefers reduced motion. Icons with ambient/looping
+   * tracks must gate `repeat` on this; one-shot gestures ignore it, because a
+   * gesture the user asked for by hovering is not unattended motion.
+   */
+  ambient: boolean;
   /** Play the "animate" variant. */
   start: () => void;
   /** Glide back to the "normal" variant. */
@@ -63,13 +97,20 @@ export interface HoverController {
  */
 export function useHover(): HoverController {
   const controls = useAnimation();
-  // Icons animate for everyone: we intentionally do not gate on the OS
-  // reduced-motion preference (the motions are small, hover/focus-triggered).
+  // Icons still animate for everyone — see `reduced` on HoverController for why
+  // the static fallback is not wired to the OS preference.
   const reduced = false;
+  // `useReducedMotion()` reads the media query directly and does NOT consult
+  // <MotionConfig>, so app/providers.tsx's `reducedMotion="never"` cannot mask
+  // this. That is intentional: this is the one place the real preference is read.
+  const ambient = !(useReducedMotion() ?? false);
 
   // True while the pointer (or focus) is on the icon — the loop below keys off
   // it so the "animate" variant replays end-to-end until the user leaves.
   const looping = useRef(false);
+  // The pending replay timer, tracked so stop()/unmount can clear it outright
+  // rather than relying on a late fire noticing `looping` went false.
+  const replayTimer = useRef<number | undefined>(undefined);
 
   const start = useCallback(() => {
     if (looping.current) return; // already looping — don't stack replays
@@ -83,26 +124,35 @@ export function useHover(): HoverController {
         // invisible) so the next start("animate") actually replays — starting
         // a variant the elements are already at resolves immediately.
         controls.set("normal");
+        // Reduced motion: the hover gets its one full pass — an explicit
+        // preview the visitor asked for — and then stops. Nothing replays
+        // unattended.
+        if (!ambient) {
+          looping.current = false;
+          return;
+        }
         // If the cycle resolved instantly (no animatable elements mounted),
         // pause before retrying instead of spinning a tight loop. Otherwise
         // breathe for 30% of the cycle before replaying, so the loop reads
         // as a rhythm rather than a frantic back-to-back repeat.
         const elapsed = performance.now() - t0;
-        window.setTimeout(run, elapsed < 100 ? 300 : elapsed * 0.3);
+        replayTimer.current = window.setTimeout(run, elapsed < 100 ? 300 : elapsed * 0.3);
       });
     };
     run();
-  }, [controls]);
+  }, [controls, ambient]);
 
   const stop = useCallback(() => {
     looping.current = false;
+    window.clearTimeout(replayTimer.current);
     void controls.start("normal");
   }, [controls]);
 
-  // Never leave a loop running after unmount.
+  // Never leave a loop or a pending replay running after unmount.
   useEffect(
     () => () => {
       looping.current = false;
+      window.clearTimeout(replayTimer.current);
     },
     [],
   );
@@ -110,6 +160,7 @@ export function useHover(): HoverController {
   return {
     controls,
     reduced,
+    ambient,
     start,
     stop,
     bind: { onMouseEnter: start, onMouseLeave: stop, onFocus: start, onBlur: stop },
@@ -159,7 +210,9 @@ const cheers: Variants = {
 // One rising bubble: `rise` is how far up the glass it gets before it fades.
 const fizz = (rise: number, delay: number, duration: number): Variants => ({
   normal: { opacity: 0, y: 0, scale: 0.35, transition: { duration: 0.2 } },
-  animate: {
+  // The carbonation is ambient — `repeat` is gated on `ambient` from useHover(), threaded in
+  // as motion's `custom`. Under reduced motion each column sends up one bubble, then rests.
+  animate: (ambient: boolean) => ({
     opacity: [0, 0.9, 0.75, 0],
     y: [0, -rise * 0.35, -rise * 0.72, -rise],
     scale: [0.35, 0.8, 1, 0.95],
@@ -167,11 +220,11 @@ const fizz = (rise: number, delay: number, duration: number): Variants => ({
       duration,
       ease: "easeOut",
       times: [0, 0.3, 0.65, 1],
-      repeat: Infinity,
+      repeat: ambient ? Infinity : 0,
       repeatDelay: 0.15,
       delay,
     },
-  },
+  }),
 });
 const fizzA = fizz(96, 0, 1.25);
 const fizzB = fizz(88, 0.42, 1.4);
@@ -180,7 +233,7 @@ const fizzD = fizz(92, 1.05, 1.35);
 
 export const BeerSteinIcon = forwardRef<IconHandle, IconProps>(
   function BeerSteinIcon({ size = 28, style, ...props }, ref) {
-    const { controls, reduced, start, stop, bind } = useHover();
+    const { controls, reduced, ambient, start, stop, bind } = useHover();
     useImperativeHandle(ref, () => ({ startAnimation: start, stopAnimation: stop }), [start, stop]);
 
     if (reduced) {
@@ -209,16 +262,16 @@ export const BeerSteinIcon = forwardRef<IconHandle, IconProps>(
             <path d={STEIN} />
             {/* Bubbles: left column (56..88), the gap between the ridge bars
                 (104..136), then the right column (152..184). */}
-            <motion.g variants={fizzA}>
+            <motion.g variants={fizzA} custom={ambient}>
               <circle cx={72} cy={196} r={8} />
             </motion.g>
-            <motion.g variants={fizzB}>
+            <motion.g variants={fizzB} custom={ambient}>
               <circle cx={120} cy={198} r={10} />
             </motion.g>
-            <motion.g variants={fizzC}>
+            <motion.g variants={fizzC} custom={ambient}>
               <circle cx={168} cy={196} r={7} />
             </motion.g>
-            <motion.g variants={fizzD}>
+            <motion.g variants={fizzD} custom={ambient}>
               <circle cx={119} cy={200} r={6} />
             </motion.g>
           </motion.g>

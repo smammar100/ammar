@@ -9,11 +9,13 @@ import { Bc3 } from "./iconimate/lab/bc3";
 import { Bc4 } from "./iconimate/lab/bc4";
 import { Bc5 } from "./iconimate/lab/bc5";
 import { Bc6 } from "./iconimate/lab/bc6";
-import { Bc7 } from "./iconimate/lab/bc7";
+import { BabyCarriageIcon } from "./iconimate/baby-carriage";
 
-// The seven baby-carriage candidates, ported unmodified from the Iconimate repo
-// (app/lab/variants/bc1..bc7.tsx) alongside the shared hook and motion tokens they
-// import. v7 is the one that shipped; the other six are the argument for it.
+// The baby-carriage candidates, ported unmodified from the Iconimate repo
+// (app/lab/variants/bc1..bc6.tsx) alongside the shared hook and motion tokens they
+// import. v7 is the one that shipped, so its tile is the live library icon
+// (iconimate.app/r/baby-carriage.json, current version); the other six are the
+// argument for it.
 
 interface IconHandle {
   startAnimation: () => void;
@@ -37,7 +39,7 @@ const CANDIDATES: Candidate[] = [
   { version: "v4", motion: "Bump ride", note: "Lurches over a bump and bounces out the decay.", Icon: Bc4 },
   { version: "v5", motion: "Hood unfurl", note: "The showpiece: crouch, furl, spring, unfurl.", Icon: Bc5 },
   { version: "v6", motion: "Hood breathe", note: "Body dead still; only the canopy pulses.", Icon: Bc6 },
-  { version: "v7", motion: "Suspension bounce", note: "Body drops to its limit, canopy trails, tyres stay planted.", Icon: Bc7, shipped: true },
+  { version: "v7", motion: "Suspension bounce", note: "Body drops to its limit, canopy trails, tyres stay planted.", Icon: BabyCarriageIcon, shipped: true },
 ];
 
 function CandidateTile({ version, motion, note, Icon, shipped }: Candidate) {
@@ -84,7 +86,7 @@ export function IconimateLabCandidates() {
         ))}
       </div>
       <figcaption className="mt-3 text-center text-sm text-muted-foreground">
-        Baby carriage: seven candidates, built as an escalation. The seventh shipped.
+        Baby carriage: seven candidates, built as an escalation. The seventh shipped, shown here as the live icon from the library.
       </figcaption>
     </figure>
   );

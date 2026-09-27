@@ -1,13 +1,13 @@
 "use client";
 
 /**
- * Airplane Takeoff — Iconimate
+ * Baby Carriage — Iconimate
  *
- * Installed from https://iconimate.app/r/airplane-takeoff.json
- * Version 457df95908ef · icon last changed 2026-08-12
+ * Installed from https://iconimate.app/r/baby-carriage.json
+ * Version de870fac7429 · icon last changed 2026-08-12
  *
  * This file is a COPY and does not update itself. To pull the current version:
- *   npx shadcn@latest add https://iconimate.app/r/airplane-takeoff.json
+ *   npx shadcn@latest add https://iconimate.app/r/baby-carriage.json
  * To check whether yours is behind, compare the version above against
  * https://iconimate.app/r/registry.json.
  *
@@ -16,7 +16,7 @@
  *                 https://phosphoricons.com
  */
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from "react";
+import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useRef } from "react";
 import type { DOMAttributes, HTMLAttributes } from "react";
 import { motion, useAnimation, useReducedMotion } from "motion/react";
 import type { Transition, Variants } from "motion/react";
@@ -31,27 +31,6 @@ export interface IconProps extends HTMLAttributes<HTMLDivElement> {
   /** Rendered width & height in px. Defaults to 28; the set is calibrated to read at 24 (ship size). */
   size?: number;
 }
-
-/** A cubic-bezier easing curve. */
-export type Bezier = [number, number, number, number];
-
-/** Gentle standard glide — used by every "normal" variant for hover-out. */
-export const RETURN: Bezier = [0.4, 0, 0.2, 1];
-
-/** Duration scale in seconds, calibrated for legibility at the 24px ship size. */
-export const DUR = { instant: 0.12, fast: 0.2, base: 0.32, slow: 0.5 } as const;
-
-/**
- * The canonical hover-out transition. Spread into every "normal" variant so that
- * interrupting a hover glides the icon home instead of snapping.
- */
-export const RETURN_TRANSITION: Transition = { duration: DUR.base, ease: RETURN };
-
-/* ─────────────────────────────────────────────────────────────────────────────
- * Principle helpers — shared vocabulary for Disney's 12 principles. See MOTION.md.
- * Additive only; pure data/factories (server-safe). Reach for these instead of
- * inlining magic numbers so the whole set speaks one language.
- * ───────────────────────────────────────────────────────────────────────────── */
 
 /** The controls object returned by `useAnimation()` — derived to stay resilient to motion's type renames. */
 type AnimationControls = ReturnType<typeof useAnimation>;
@@ -167,43 +146,73 @@ export function useHover(): HoverController {
   };
 }
 
-// DEPARTURE — wheels up and gone: from rest the plane accelerates up its heading
-// and climbs clean out of frame, shrinking and fading into the distance. The
-// mirror of the landing arrival — here the plane leaves the bounding box. The
-// wrapper uses overflow:visible so the climb-out is seen beyond the icon box.
-// Filled Phosphor airplane-takeoff glyph (currentColor).
-const PLANE =
-  "M247.86,93.15a8,8,0,0,1-3.76,5.39l-147.41,88a40.18,40.18,0,0,1-20.26,5.52,39.78,39.78,0,0,1-27.28-10.87l-.12-.12L13,145.8a16,16,0,0,1,4.49-26.21l3-1.47a8,8,0,0,1,6.08-.4l28.26,9.54L75,115.06,53.17,93.87A16,16,0,0,1,57.7,67.4l.32-.13,7.15-2.71a8,8,0,0,1,5.59,0L124.7,84.38,176.27,53.6a39.82,39.82,0,0,1,51.28,9.12l.12.15,18.64,23.89A8,8,0,0,1,247.86,93.15ZM228.12,89.45l-13-16.67a23.88,23.88,0,0,0-30.68-5.42l-54.8,32.72a8.06,8.06,0,0,1-6.87.64L68,80.58l-4,1.53.21.2L93.57,110.8a8,8,0,0,1-1.43,12.58L59.93,142.87a8,8,0,0,1-6.7.73l-28.67-9.67-.19.1-.37.17a.71.71,0,0,1,.13.12l36,35.26a23.85,23.85,0,0,0,28.42,3.18Z";
-const RUNWAY = "M176,216a8,8,0,0,1-8,8H24a8,8,0,0,1,0-16H168A8,8,0,0,1,176,216Z";
+// SUSPENSION BOUNCE — the pram bounces on its suspension: the body (handle + basket +
+// canopy) drops to a limit and back while the canopy pivots forward as secondary momentum;
+// the two tyres stay planted. 0.85s ease-in-out, looping while hovered.
+//
+// The Phosphor "baby-carriage" glyph is one compound path, so we draw it three times and
+// split it with SVG clip paths (which mask rendered pixels, never the path data — so all the
+// line-art holds). The hood sits above the basket rim (a solid band at y[104,118]); the body
+// keeps drawing the rim + hood base band behind the pivoting canopy, so the seam never opens
+// a gap, and the canopy is clipped at the rim top so it can't protrude below the basket. The
+// tyres (rings at y[208,238]) are wrapped whole in their own static layer.
+const BABY_CARRIAGE =
+  "M160,32h-8a16,16,0,0,0-16,16v56H55.2A40.07,40.07,0,0,0,16,72a8,8,0,0,0,0,16,24,24,0,0,1,24,24,80.09,80.09,0,0,0,80,80h40a80,80,0,0,0,0-160Zm63.48,72H166.81l41.86-33.49A63.73,63.73,0,0,1,223.48,104ZM160,48a63.59,63.59,0,0,1,36.69,11.61L152,95.35V48Zm0,128H120a64.09,64.09,0,0,1-63.5-56h167A64.09,64.09,0,0,1,160,176Zm-56,48a16,16,0,1,1-16-16A16,16,0,0,1,104,224Zm104,0a16,16,0,1,1-16-16A16,16,0,0,1,208,224Z";
 
-const departure: Variants = {
-  normal: { x: 0, y: 0, rotate: 0, scale: 1, opacity: 1, transition: RETURN_TRANSITION },
-  animate: {
-    // Anticipation: a brief crouch (rock back & nose-down) before the plane lunges up
-    // its heading and climbs clean out of frame, shrinking and fading into the distance.
-    x: [0, -10, 230],
-    y: [0, 4, -160],
-    rotate: [0, 3, -5],
-    scale: [1, 0.97, 0.78],
-    opacity: [1, 1, 0],
-    transition: {
-      duration: 1.22,
-      times: [0, 0.12, 1],
-      ease: [0.5, 0, 0.85, 0.4], // accelerate away
-      opacity: { duration: 1.22, times: [0, 0.55, 1], ease: "easeIn" },
-    },
-  },
+const CANOPY_CLIP = { x: 132, y: 12, w: 120, h: 92 }; // hood, clipped at rim top   y[12,104]
+const BODY_HOLE = { x: 132, y: 12, w: 120, h: 86 }; //  punched above the base band y[12,98]
+const WHEEL_L = { x: 66, y: 204, w: 42, h: 40 }; // left tyre  x[66,108] y[204,244]
+const WHEEL_R = { x: 172, y: 204, w: 42, h: 40 }; // right tyre x[172,214] y[204,244]
+const CANOPY_HINGE = { transformBox: "view-box" as const, transformOrigin: "152px 104px" };
+
+// The suspension bounce is ambient, so `repeat` is gated on `ambient` from useHover() and
+// threaded in as motion's `custom`. Body and canopy must stay on ONE shared transition —
+// the canopy's forward pivot only reads as secondary momentum if it is locked to the same
+// clock as the drop — so the loop stays a single factory both variants call.
+const LOOP = (ambient: boolean): Transition => ({
+  duration: 0.85,
+  times: [0, 0.5, 1],
+  ease: "easeInOut",
+  repeat: ambient ? Infinity : 0,
+});
+
+// Body drops to the suspension limit and back.
+const bodyBounce: Variants = {
+  normal: { y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  animate: (ambient: boolean) => ({ y: [0, 8, 0], transition: LOOP(ambient) }),
+};
+// Canopy pivots forward as the body drops (secondary momentum).
+const canopyPivot: Variants = {
+  normal: { rotate: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  animate: (ambient: boolean) => ({ rotate: [0, 6, 0], transition: LOOP(ambient) }),
 };
 
-export const AirplaneTakeoffIcon = forwardRef<IconHandle, IconProps>(function AirplaneTakeoffIcon(
+const rect = (b: { x: number; y: number; w: number; h: number }) =>
+  `M${b.x},${b.y}H${b.x + b.w}V${b.y + b.h}H${b.x}Z`;
+
+export const BabyCarriageIcon = forwardRef<IconHandle, IconProps>(function BabyCarriageIcon(
   { size = 28, style, ...props },
   ref,
 ) {
-  const { controls, reduced, start, stop, bind } = useHover();
+  const { controls, reduced, ambient, start, stop, bind } = useHover();
   useImperativeHandle(ref, () => ({ startAnimation: start, stopAnimation: stop }), [start, stop]);
+  const uid = useId();
+  const bodyClip = `bcg-body-${uid}`;
+  const canopyClip = `bcg-canopy-${uid}`;
+  const wheelClip = `bcg-wheel-${uid}`;
+
+  if (reduced) {
+    return (
+      <div {...props} {...bind} style={{ display: "inline-flex", overflow: "hidden", ...style }}>
+        <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 256 256" fill="currentColor">
+          <path d={BABY_CARRIAGE} />
+        </svg>
+      </div>
+    );
+  }
 
   return (
-    <div {...props} {...bind} style={{ display: "inline-flex", overflow: "visible", ...style }}>
+    <div {...props} {...bind} style={{ display: "inline-flex", overflow: "hidden", ...style }}>
       <motion.svg
         xmlns="http://www.w3.org/2000/svg"
         width={size}
@@ -212,14 +221,37 @@ export const AirplaneTakeoffIcon = forwardRef<IconHandle, IconProps>(function Ai
         fill="currentColor"
         initial="normal"
         animate={controls}
-        style={{ overflow: "visible" }}
       >
-        <path d={RUNWAY} />
-        <motion.path
-          variants={reduced ? undefined : departure}
-          style={{ transformBox: "view-box", originX: 0.5, originY: 0.47 }}
-          d={PLANE}
-        />
+        <defs>
+          {/* Body: everything except the hood (above the rim) and the two tyres. The basket
+              rim stays in the body so it backs the pivoting canopy. */}
+          <clipPath id={bodyClip} clipPathUnits="userSpaceOnUse">
+            <path clipRule="evenodd" d={`M0,0H256V256H0Z ${rect(BODY_HOLE)} ${rect(WHEEL_L)} ${rect(WHEEL_R)}`} />
+          </clipPath>
+          <clipPath id={canopyClip} clipPathUnits="userSpaceOnUse">
+            <path d={rect(CANOPY_CLIP)} />
+          </clipPath>
+          <clipPath id={wheelClip} clipPathUnits="userSpaceOnUse">
+            <path d={`${rect(WHEEL_L)} ${rect(WHEEL_R)}`} />
+          </clipPath>
+        </defs>
+
+        {/* Body (handle + basket + canopy) bounces down; canopy adds its pivot. */}
+        <motion.g variants={reduced ? undefined : bodyBounce} custom={ambient}>
+          <g clipPath={`url(#${bodyClip})`}>
+            <path d={BABY_CARRIAGE} />
+          </g>
+          <motion.g variants={reduced ? undefined : canopyPivot} custom={ambient} style={CANOPY_HINGE}>
+            <g clipPath={`url(#${canopyClip})`}>
+              <path d={BABY_CARRIAGE} />
+            </g>
+          </motion.g>
+        </motion.g>
+
+        {/* Wheels — static, drawn on top so the body settles behind them. */}
+        <g clipPath={`url(#${wheelClip})`}>
+          <path d={BABY_CARRIAGE} />
+        </g>
       </motion.svg>
     </div>
   );
