@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { HATCH, IntersectionRule } from "@/components/layout/Intersection";
 import { BuildIn } from "./BuildIn";
+import { SERVICES as SERVICE_COPY } from "@/data/services";
 
 // What I do, below the featured work: a centred heading on the margin hatch, then
 // one ruled cell per service. Lives inside the home page's Intersection frame,
@@ -173,18 +174,13 @@ function DevIcon() {
   );
 }
 
-const SERVICES: { title: string; body: string; icon: ReactNode }[] = [
-  {
-    title: "Product Design",
-    body: "I turn complex requirements into clear web and app experiences. From the first user flow to the design system, I make each step easier to understand and each screen part of a consistent whole.",
-    icon: <DesignIcon />,
-  },
-  {
-    title: "Web Development",
-    body: "I bring designs to life in React and Next.js, with responsive layouts and carefully considered interactions. When your team needs to manage content, I build in the tools to keep updates simple.",
-    icon: <DevIcon />,
-  },
-];
+// Copy lives in data/services.ts (shared with the agent-facing files); the
+// icons are matched to it here.
+const ICONS: Record<(typeof SERVICE_COPY)[number]["title"], ReactNode> = {
+  "Product Design": <DesignIcon />,
+  "Web Development": <DevIcon />,
+};
+const SERVICES = SERVICE_COPY.map((service) => ({ ...service, icon: ICONS[service.title] }));
 
 export function Services({ padding }: { padding: string }) {
   return (

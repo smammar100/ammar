@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Agentic Resource Discovery: the agent catalog lives at the well-known
+  // paths (ai-catalog.json is what Lighthouse checks, ard.json what the spec
+  // names), served by one route handler.
+  async rewrites() {
+    return [
+      { source: "/.well-known/ai-catalog.json", destination: "/agent/ai-catalog.json" },
+      { source: "/.well-known/ard.json", destination: "/agent/ai-catalog.json" },
+    ];
+  },
   images: {
     dangerouslyAllowSVG: true,
   },
