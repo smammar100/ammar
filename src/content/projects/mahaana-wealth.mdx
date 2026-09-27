@@ -1,5 +1,5 @@
 ---
-title: "An investment account in under five minutes"
+title: "Investing starts with questions, not money."
 client: "Mahaana"
 statement: "Where saving becomes investing."
 subtext: "I designed the journey from familiar financial habits to mutual funds, retirement, gold and trading, with onboarding in under five minutes and Discover to make investing easy to understand."
@@ -17,7 +17,7 @@ sortOrder: 1
 draft: false
 
 # Structured case-study header
-tagline: "A digital wealth platform bringing mutual funds, retirement, gold and stock trading into one simple investment experience."
+tagline: "Is it halal? Can I withdraw it? Where does my money actually go? Designing Mahaana meant helping people answer those questions and feel ready to make their first investment."
 tags: ["Product Design", "Design Systems", "Mobile"]
 pills: ["2024 – 2025", "iOS · Android"]
 role: "Senior Product Designer"
@@ -34,159 +34,112 @@ team:
   - name: "Minhaj"
     role: "VP Engineering"
   - name: "Shamoon"
-    role: "Founder"
+    role: "CEO"
     avatar: "/images/team/shamoon.jpg"
 services: ["product design", "design systems", "ios & android design", "design tokens"]
-# "Long story short" in the header: what Mahaana is, then what I owned.
+# "My role" in the header: what I owned, then what Mahaana is.
 summary:
-  - "Mahaana is Pakistan's first digital-only asset management company, licensed by the SECP and backed by IGI Holdings, Vostok Emerging Finance and Y Combinator. Everything it offers is Shariah-compliant, with client money held by the Central Depository Company."
-  - "As senior product designer I led design across iOS and Android, alongside a product manager, a mobile engineer, a junior designer I mentored, and the founder."
-  - "The funds, compliance and backend were other people's work. Mine was everything a customer touches, and the design system that holds it together."
+  - "I led product design for Mahaana’s iOS and Android apps, covering onboarding, investment selection, portfolio tracking and the design system. I worked with the founder, a product manager and a mobile engineer, and mentored a junior designer."
+  - "Mahaana is Pakistan’s first digital-only asset management company, licensed by the SECP and backed by Y Combinator, IGI Holdings and Vostok Emerging Finance. It brings Shariah-compliant financial products into one app, with client money held by the Central Depository Company."
 ---
 
-{/* Structure: Freytag's five-part arc from the IxDF case-study template -
-    exposition, rising action, climax, falling action, resolution. Headings stay
-    narrative; the arc orders the story rather than labelling it for the reader.
-    Research sourcing, open gaps and fact-check flags for this draft live in
-    /mahaana-case-study-notes.md, kept outside src/content so it never ships.
-    DRAFT-GAP markers below are the places only Ammar can fill. Strip every one
-    of these comments before publishing - MDX source is serialised into the page
-    payload, so anything written here is readable from view-source. */}
+{/* Strip every comment before publishing - MDX source is serialised into the
+    page payload, so anything written here is readable from view-source. */}
 
-{/* ===== 1. EXPOSITION ===== */}
+---
 
 <TocGroup label="Problem" />
 
-## Pakistan saves. It just doesn't invest.
+## No branch. Plenty of questions.
 
-The licence was real and the funds were already trading; what was missing was everything between a licence and a customer. It was a trust problem, not an investing one: Pakistanis already save, in gold at home and idle bank accounts, but moving that into an app meant trusting unfamiliar products, language and decisions with no branch to walk into. The work was to make it seamless enough that nobody would need one.
+For someone used to keeping savings in gold or a bank account, an investment app asks for a change in behaviour. Before entering their CNIC or choosing a fund, they need to understand who holds their money, what risk they are taking and how to withdraw it.
 
-{/* TODO(ammar): the four quotes in <MahaanaVoices /> are illustrative, written
-    to stand in for the confusion the product had to answer. Replace them with
-    things real people actually said and this becomes a research artefact rather
-    than a drawing - which is most of what DRAFT-GAP 1 is asking for. Edit them
-    in MahaanaSections.tsx; the underline positions are measured, so re-run the
-    measurement if the wording changes length. */}
+{/* TODO(ammar): the quotes in <MahaanaVoices /> are illustrative, written to
+    stand in for the confusion the product had to answer. Replace them with
+    things real people actually said. Edit them in MahaanaSections.tsx; the
+    underline positions are measured, so re-run the measurement if the wording
+    changes length. */}
 
 <MahaanaVoices />
 
-Three constraints were non-negotiable. It is regulated, so risk profiling, identity checks and CDC account creation had to happen, in that order. It is digital-only, so nothing could fall back on a branch. And it is Shariah-compliant, so every product had to carry its ruling in plain language.
-
-<HowMightWe>
-
-- get someone onboarded and invested in under five minutes, with compliance and the destination of their money visible throughout?
-- start from the products people already understand, and earn the unfamiliar ones later?
-- and teach the language of investing along the way?
-
-</HowMightWe>
-
-
-{/* ===== 2. RISING ACTION ===== */}
-
-
-
-{/* DRAFT-GAP 1 of 3 - research and process. The template wants this beat to
-    carry how the strategies were arrived at, with something to show for it:
-    who was talked to, what came back, and the personas, journey maps or early
-    sketches that came out of it. Right now the three strategies arrive as
-    assertions. Two or three sentences plus one artefact closes it. See the
-    notes file for the exact prompts. */}
+The app had to make those answers accessible throughout the journey. Risk profiling, identity verification and CDC account creation were required. My job was to make those steps understandable and manageable, while keeping customers clear about what they were signing up for.
 
 ---
 
 <TocGroup label="Solution" />
 
-## The Design System
+## Making onboarding easier to finish
 
-The design system is what made Mahaana work at scale. Four platforms and a roadmap of products not yet built all pulled on the same interface, so it needed one set of foundations, components and patterns rather than a fresh take per product. Every colour is a token with a light and a dark value, so one change lands on every product, platform and theme at once.
-
-<MahaanaFoundations />
-
-Gold and trading didn't exist yet when this was built. The product-tile pattern came first, so new products arrived into a shape already decided instead of arguing for their own. It also cut design-to-development handoff by 35%, by ending the back-and-forth over what a spacing value or a state should be.
-
----
-
-{/* ===== 3. CLIMAX ===== */}
-
-{/* DRAFT-GAP 2 of 3 - THE BIG ONE. The template asks this beat for one or two
-    moments a hirer remembers: a tough decision, a research insight that changed
-    direction, a time-sensitive challenge solved, or a genuinely novel solution.
-    What follows is the strongest thing available in the existing material, and
-    it is a real design problem, but it is written as a standing difficulty
-    rather than a decision with a before and an after. If there was a specific
-    call - a product cut, a compliance ruling that forced a late redesign, an
-    onboarding step the regulator would not let you drop - it replaces this and
-    the case study gets twice as strong. */}
-
-## Five minutes, and nothing skipped
-
-The goal was to make onboarding easier and faster. Before redesigning anything, I ran usability tests on the staging app and mapped how each stage felt.
+I started by testing the onboarding on the staging app with **eight users**. Feedback pointed to the length of the journey, with bugs adding further friction. The required checks had to stay, so I focused on reducing the effort within each step and explaining why we were asking.
 
 <MahaanaJourneyMap />
 
-Onboarding averaged a UX score of 78. The look was fine; the complaint was length, made worse by bugs. The regulated steps couldn't go, so the question became how to make each one feel worth finishing.
+Product introductions gave customers context before a choice. Save+ connected to everyday saving; Retirement connected to planning ahead and potential tax savings. These explanations helped establish what each product was for before asking someone to commit to it.
 
 <MahaanaOnboarding />
 
-Some steps now explain before they ask: the first screen sets Save+ against a bank account and Retirement against the income tax it saves. Others ask for less: one risk question per screen, the ID card photographed instead of typed, and answers turned straight into an allocation people can see and change.
+Risk profiling presented one question at a time, and ID card capture reduced manual entry. Once customers had answered the questions, they could see the recommended investment allocation and adjust it. That made the outcome of the questionnaire visible.
 
-The five-minute target was to invested, not submitted, so the first investment is chosen inside onboarding. An account that never gets funded is still a drop-off, just harder to see.
+I also brought the first investment choice into onboarding. Opening an account was one milestone; helping someone use it was the larger goal. Choosing an investment during setup gave the journey a clear next step.
 
-## Everything they own, on one screen
+Account onboarding was reported at under five minutes. That figure covers account setup, rather than a completed, funded investment.
 
-Once the money was in, the question became how it was going, so the home screen answers in the order people ask. How much do I have: total value and return, over a chart from one month to all time. Where is it: one card per product, with its value, return and risk level.
+## Put the money first
 
-Below that sit the day's market data, a Wealth Advisor one tap away, and short reads for people new to investing. Someone who only came to check gets their answer before they scroll; the rest is there when they want more.
+Once someone had invested, the home screen needed to answer the obvious question.
+
+<Question>
+
+“How is my money doing?”
+
+</Question>
+
+I placed total portfolio value and returns first, followed by a performance chart. Product cards showed where the money was invested, with the value, return and risk level of each holding. Customers could check the overall picture, then look more closely at a particular investment.
+
+Market information, educational content and access to a Wealth Advisor followed below. The order reflected the task: check your money first, explore or ask for help when you need to.
 
 <MahaanaHomeAnnotated />
 
-## Making Pakistan financially literate
+## Give people a way to learn
 
-Only 26% of adults in Pakistan are financially literate, and nobody invests in what they can't explain. So a core part of Mahaana's vision was to make investing easy for an ordinary saver to follow.
+Onboarding could introduce the products, but customers would continue to encounter unfamiliar terms and market movements after investing.
 
 <MahaanaDawnArticle />
 
-That became Discover, one tab from home: a snapshot of the Pakistani market, an AI chatbot that answers questions in plain language, videos and articles from Mahaana's YouTube channel, and the latest news. The aim was never to turn savers into analysts, just to give them enough of the language to trust the number on their screen.
+Discover brought market snapshots, educational videos, articles, news and a plain-language chatbot into the app. It gave customers a place to build their understanding alongside managing their investments.
 
 <MahaanaDiscover />
 
-## The whole product
+## Build the pattern before the next product
 
-Put together, one app covers saving, investing, retirement, gold, trading and insurance, and every part reads as one product, whichever door someone came in through.
+Mahaana’s product range was expanding. I built shared components, tokens and interaction patterns so each addition could fit into an experience customers already knew.
 
-<MahaanaScreenWall />
+<MahaanaFoundations />
 
-{/* DRAFT-GAP 3 of 3 - iteration and testing. The template wants sketches
-    becoming wireframes becoming shipped screens, what testing sent back, and
-    what changed because of it. The build side is covered; the evidence side is
-    not. Even one before-and-after on a screen that tested badly would do it. */}
+The product-card pattern was established before gold and trading were introduced. It gave the team an existing structure for presenting new offerings, including their value, returns and risk. Light and dark colour tokens, defined spacing and documented component states also made implementation more consistent.
+
+The team reported a 35% reduction in design-to-development handoff time. Shared specifications helped reduce repeated questions about how components should look and behave.
+
+<MahaanaScreenRow />
 
 ---
 
-{/* ===== 5. RESOLUTION ===== */}
-
 <TocGroup label="Result" />
 
-## The Impact
+## What the work supported
 
 <MahaanaImpact />
 
-Under five minutes to open an account is the difference between someone who invests and someone who only meant to. It answers the question this case study opened with: whether a screen can carry enough trust to make people act.
+Mahaana reached 50K+ registered users, 10K+ app downloads and 20K+ active clients. Those figures reflect the work of the wider company. My contribution was the mobile experience and design foundations supporting those customers as the platform grew.
 
-{/* TODO(ammar): real endorsement goes here. The quote in the Figma file was
-    placeholder copy, not a statement from anyone at Mahaana. Once you have one
-    you're cleared to publish, the block below just needs uncommenting.
-
-> "..."
->
-> **Name**, Title, Mahaana
-
-*/}
+The reported delivery outcomes were account onboarding in under five minutes and a 35% reduction in design-to-development handoff time.
 
 ## Reflection
 
-**What worked.** The design system is what let the work survive four platforms. Simplifying a pension once, in a design file, is easy. Making it hold its meaning in every component, built by someone else months later, is the hard part.
+Working on Mahaana taught me to treat customer questions as part of the interface. Explaining why we needed an answer, what a recommendation meant and where someone’s money would go deserved as much attention as the transaction itself.
 
-**What I'd do differently.** Start the compliance conversation earlier. We treated the Shariah ruling as something to explain once the product existed; it would have been better as an input from the first sketch.
+I’d bring compliance into the first sketches next time. Some Shariah explanations came after the product had taken shape; discussing them earlier would have helped us resolve the flow and language together.
 
-**What I'm taking forward.** In finance, trust has to be designed for, not claimed. Every claim on screen should be one the licence, the custodian and the compliance ruling can back.
+The design system was another lasting lesson. As the product range grew, shared patterns helped the team build on existing decisions and gave customers a familiar way to navigate new offerings.
+
+<MahaanaTestimonial />

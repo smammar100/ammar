@@ -79,6 +79,11 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
       {/* Name + framing paragraph */}
       <div className="pb-8">
         <h1 className="mb-5 text-5xl font-medium tracking-tight sm:text-6xl">{display}</h1>
+        {client && title && (
+          <p className="mb-3 max-w-2xl text-xl leading-snug font-medium tracking-tight text-foreground sm:text-2xl">
+            {title}
+          </p>
+        )}
         {tagline && (
           <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">{tagline}</p>
         )}
@@ -103,7 +108,7 @@ export function CaseStudyHeader({ data }: { data: ProjectData }) {
       {/* Write-up against the delivery pills */}
       <div className="grid gap-10 pt-10 md:grid-cols-3 md:gap-12">
         <div className="md:col-span-2">
-          <h2 className="heading-section mb-4">Long story short</h2>
+          <h2 className="heading-section mb-4">My role</h2>
           {story.map((paragraph, i) => (
             <p key={i} className="mb-4 text-base leading-relaxed text-muted-foreground last:mb-0">
               {paragraph}

@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, MessageCircleQuestion, type LucideIcon } from "lucide-react";
 
 // Body building blocks for the structured case-study layout, used from MDX.
-// String props and children only — next-mdx-remote doesn't reliably pass
+// String props and children only: next-mdx-remote doesn't reliably pass
 // array/object expression props (see Mdx.tsx).
 
 /**
@@ -82,6 +82,35 @@ export function Feature({ title, children }: { title?: string; children?: ReactN
  */
 export function HowMightWe({ children }: { children?: ReactNode }) {
   return (
+    <CalloutCard icon={Lightbulb} label="How might we">
+      {children}
+    </CalloutCard>
+  );
+}
+
+/**
+ * The question a section's design has to answer, in the same card as
+ * <HowMightWe> so it reads as the thing the screens that follow respond to.
+ * <Question label="...">question</Question>
+ */
+export function Question({ label = "The question", children }: { label?: string; children?: ReactNode }) {
+  return (
+    <CalloutCard icon={MessageCircleQuestion} label={label}>
+      {children}
+    </CalloutCard>
+  );
+}
+
+function CalloutCard({
+  icon: Icon,
+  label,
+  children,
+}: {
+  icon: LucideIcon;
+  label: string;
+  children?: ReactNode;
+}) {
+  return (
     <div className="case-hmw relative my-8 overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm sm:p-5">
       {/* The card's only colour. Blurred well past its own box so it reads as
           light falling across the corner rather than as a shape sitting in it. */}
@@ -91,8 +120,8 @@ export function HowMightWe({ children }: { children?: ReactNode }) {
       />
       {/* Positioned, so the content paints above the absolute bloom. */}
       <div className="relative flex flex-row items-center gap-2 text-sm font-semibold text-foreground">
-        <Lightbulb className="h-4 w-4 shrink-0" aria-hidden="true" />
-        <span>How might we</span>
+        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+        <span>{label}</span>
       </div>
       <div className="case-hmw-body relative mt-2">{children}</div>
     </div>

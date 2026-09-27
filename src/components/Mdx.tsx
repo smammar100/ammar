@@ -11,9 +11,8 @@ import {
 } from "@/components/case-study/IconimateDemo";
 import { IconimateLabCandidates } from "@/components/case-study/IconimateLab";
 import { IconimateCardDemo } from "@/components/case-study/IconimateCard";
-import { Goals, Goal, Feature, HowMightWe, TocGroup } from "@/components/case-study/CaseStudySections";
+import { Goals, Goal, Feature, HowMightWe, Question, TocGroup } from "@/components/case-study/CaseStudySections";
 import {
-  MahaanaScreenWall,
   MahaanaFoundations,
   MahaanaHomeAnnotated,
   MahaanaDawnArticle,
@@ -21,8 +20,10 @@ import {
   MahaanaImpact,
   MahaanaVoices,
   MahaanaJourneyMap,
+  MahaanaTestimonial,
 } from "@/components/case-study/MahaanaSections";
 import { MahaanaOnboarding } from "@/components/case-study/MahaanaOnboarding";
+import { MahaanaScreenRow } from "@/components/case-study/MahaanaScreenRow";
 
 // Components available to MDX content. `YouTube` matches the old astro-embed
 // component name used in the project files (<YouTube id="..." />).
@@ -41,8 +42,9 @@ const components = {
   Goal,
   Feature,
   HowMightWe,
+  Question,
   TocGroup,
-  MahaanaScreenWall,
+  MahaanaScreenRow,
   MahaanaFoundations,
   MahaanaHomeAnnotated,
   MahaanaDawnArticle,
@@ -50,6 +52,7 @@ const components = {
   MahaanaImpact,
   MahaanaVoices,
   MahaanaJourneyMap,
+  MahaanaTestimonial,
   MahaanaOnboarding,
 };
 

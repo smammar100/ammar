@@ -1,32 +1,12 @@
 import { Coins, Download, Timer, Users, type LucideIcon } from "lucide-react";
 import { MahaanaFoundationsToggle } from "./MahaanaFoundationsToggle";
+import { SwipeHint } from "./SwipeHint";
+import { TestimonialsSection } from "@/components/ui/testimonials-2";
 export { MahaanaHomeAnnotated } from "./MahaanaHomeAnnotated";
 
 // Mahaana case-study graphics. Zero-prop presets, same as the other
-// case-study components — next-mdx-remote doesn't reliably pass array/object
+// case-study components: next-mdx-remote doesn't reliably pass array/object
 // expression props through MDX (see Mdx.tsx).
-
-/** The product wall, composed in Figma and exported as one piece. */
-export function MahaanaScreenWall() {
-  return (
-    <figure className="case-figure my-10">
-      {/* No negative-margin breakout: the article sits inside the Intersection
-          frame now, and pulling wider would push the image through the vertical
-          rules into the hatched margin. */}
-      <div className="overflow-hidden rounded-xl border border-border bg-[#FAFAFA]">
-        <img
-          src="/images/projects/mahaana-wealth/screen-wall.webp"
-          loading="lazy"
-          decoding="async"
-          alt="Ten Mahaana screens: AI financial guidance over a sector heatmap, the portfolio dashboard at PKR 124,235, an FPJM order detail, a savings-pot promo, the risk level selector, the Mahaana X IGI life insurance plan, the investment account picker, onboarding, explore market, and pending orders"
-          width={2248}
-          height={1742}
-          className="block w-full"
-        />
-      </div>
-    </figure>
-  );
-}
 
 /** The FigJam journey map from usability testing the staging onboarding. */
 export function MahaanaJourneyMap() {
@@ -35,7 +15,9 @@ export function MahaanaJourneyMap() {
       {/* A screenshot of the board, not an export: the curve, stage names and
           sticky note carry at article width, the per-stage notes do not. A
           2x export from FigJam would make those legible. */}
-      <div className="overflow-hidden rounded-xl border border-border bg-card">
+      {/* Below sm the board would shrink to ~300px and lose every label, so it
+          keeps a 640px floor and scrolls sideways instead. */}
+      <div className="overflow-x-auto rounded-xl border border-border bg-card sm:overflow-hidden">
         <img
           src="/images/projects/mahaana-wealth/onboarding-journey-map.webp"
           alt="Onboarding journey map from usability testing on the staging app. An emotion curve runs across seven stages - splash, sign-up and login, welcome, account selection, playground, risk profile and additional screens - dipping to its lowest at the playground screen. Screenshots of each stage sit below, and a sticky note sums up: the process felt quite lengthy, bugs made it longer, the look and feel is good, and most of it was easy apart from a few screens. Average UX score: 78."
@@ -43,9 +25,10 @@ export function MahaanaJourneyMap() {
           height={847}
           loading="lazy"
           decoding="async"
-          className="block w-full"
+          className="block w-full min-w-[640px] sm:min-w-0"
         />
       </div>
+      <SwipeHint />
     </figure>
   );
 }
@@ -76,20 +59,26 @@ export function MahaanaImpact() {
           border colour. Keep STATS at an even number. */}
       <div className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border">
         {STATS.map(({ value, label, Icon, tint }) => (
+          // overflow-clip, not -hidden: a hidden box is still a scroll container,
+          // so find-in-page or scrollIntoView on a label could scroll the cell
+          // and eat its top padding. clip crops the icon the same way but can't
+          // be scrolled.
           <div
             key={label}
-            className="relative flex flex-col overflow-hidden bg-card px-5 py-6"
+            className="relative flex flex-col overflow-clip bg-card px-4 py-5 sm:px-5 sm:py-6"
           >
-            {/* Oversized, tinted icon in the corner: texture, not content. */}
+            {/* Oversized, tinted icon in the corner: texture, not content. On
+                phones the cell is ~150px wide, so the icon shrinks and sinks
+                further into the corner to stay clear of the label. */}
             <Icon
               aria-hidden="true"
               strokeWidth={1.25}
-              className={`pointer-events-none absolute -right-5 -bottom-6 h-28 w-28 sm:h-32 sm:w-32 ${tint}`}
+              className={`pointer-events-none absolute -right-4 -bottom-7 h-20 w-20 sm:-right-5 sm:-bottom-6 sm:h-32 sm:w-32 ${tint}`}
             />
             <span className="relative text-3xl font-semibold tabular-nums tracking-tight text-foreground sm:text-4xl">
               {value}
             </span>
-            <span className="relative mt-1 text-sm leading-snug text-muted-foreground">{label}</span>
+            <span className="relative mt-1 pr-8 text-sm leading-snug text-muted-foreground sm:pr-0">{label}</span>
           </div>
         ))}
       </div>
@@ -186,13 +175,14 @@ const MARK_STROKE =
 export function MahaanaVoices() {
   return (
     <figure className="case-figure my-10">
-      {/* Scrolls rather than shrinks: squeezed into a phone width the whole board
-          lands at illegible handwriting, and the quotes are the content here, not
-          decoration. */}
-      <div className="overflow-x-auto rounded-xl border border-border bg-card px-4 py-5 sm:px-8 sm:py-6">
+      <MahaanaVoicesStacked />
+      {/* From sm up the board is at least ~570px wide, which keeps the
+          handwriting around 16px; below that it would be illegible, so phones
+          get the stacked version above instead. */}
+      <div className="hidden rounded-xl border border-border bg-card px-8 py-6 sm:block">
         <svg
           viewBox="0 0 1320 600"
-          className="block h-auto w-full min-w-[660px] text-foreground"
+          className="block h-auto w-full text-foreground"
           fill="none"
           role="img"
           aria-label={
@@ -252,6 +242,62 @@ export function MahaanaVoices() {
         </svg>
       </div>
     </figure>
+  );
+}
+
+/** The same face as the board, drawn on its own for the phone layout. */
+function VoicesFace({ className }: { className?: string }) {
+  return (
+    <svg viewBox="560 200 200 200" className={className} fill="none" aria-hidden="true">
+      <g stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M 656 213 C 706 210, 749 252, 748 302 C 747 352, 707 390, 658 389 C 609 388, 572 350, 572 300 C 572 250, 608 215, 663 214" />
+        <path d="M 618 262 C 625 256, 636 256, 643 261" />
+        <path d="M 677 261 C 684 256, 695 256, 702 262" />
+        <path d="M 622 351 C 637 343, 651 356, 665 348 C 676 342, 686 348, 696 345" />
+      </g>
+      <g fill="currentColor">
+        <ellipse cx="632" cy="283" rx="6.5" ry="9.5" />
+        <ellipse cx="688" cy="283" rx="6.5" ry="9.5" />
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Phone layout of the whiteboard: the face, then the six quotes as real
+ * handwritten text, alternating sides at a slight tilt like notes stuck up
+ * around it. The underline is text-decoration rather than a measured path, so
+ * it follows the words wherever they wrap.
+ */
+function MahaanaVoicesStacked() {
+  return (
+    <div className="rounded-xl border border-border bg-card px-5 py-6 sm:hidden">
+      <VoicesFace className="mx-auto mb-5 block h-auto w-20 text-foreground" />
+      <ul className="m-0! flex list-none! flex-col gap-4 p-0! text-foreground" style={{ fontFamily: "var(--font-hand)" }}>
+        {QUOTES.map((q, i) => (
+          <li
+            key={q.x + ":" + q.y}
+            className={`m-0! max-w-[88%] p-0! text-[21px]! leading-tight text-balance text-foreground! ${i % 2 ? "self-end text-right" : "self-start"}`}
+            style={{ transform: `rotate(${i % 2 ? 2 : -2}deg)` }}
+          >
+            {"“"}
+            {q.lines.map(([before, mark, after], li) => (
+              <span key={li}>
+                {li > 0 ? " " : ""}
+                {before}
+                {mark ? (
+                  <span className="underline decoration-[#007AFF] decoration-[2.5px] underline-offset-[5px] dark:decoration-[#4da3ff]">
+                    {mark}
+                  </span>
+                ) : null}
+                {after}
+              </span>
+            ))}
+            {"”"}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -319,7 +365,9 @@ export function MahaanaDiscover() {
     <figure className="case-figure my-10">
       {/* The export's canvas is #FAF8F5, the light --background, so the frame
           uses that token rather than --card to sit flush with it. */}
-      <div className="overflow-hidden rounded-xl border border-border bg-background">
+      {/* Eight screens in a 4x2 grid: at phone width each would be ~70px, so
+          below sm the grid keeps a 640px floor and scrolls sideways. */}
+      <div className="overflow-x-auto rounded-xl border border-border bg-background sm:overflow-hidden">
         <img
           src="/images/projects/mahaana-wealth/discover.webp"
           alt="Eight Mahaana Discover screens. Top row: the Discover tab with an 'Ask any question about finance' prompt over Market today, shown on its Indices, Trending and Sectors views, and a Grow with Mahaana list of plain-language articles such as What are ETFs and What are Mutual Funds. Bottom row: the Mahaana AI Chat welcome screen, a new chat with suggested prompts, an answer comparing retirement returns with a portfolio projection chart, and Videos and podcasts with Mahaana Explained and Market Wrap episodes."
@@ -327,9 +375,32 @@ export function MahaanaDiscover() {
           height={1753}
           loading="lazy"
           decoding="async"
-          className="block w-full"
+          className="block w-full min-w-[640px] sm:min-w-0"
         />
       </div>
+      <SwipeHint />
     </figure>
+  );
+}
+
+/** Shamoon's endorsement, closing the case study. */
+export function MahaanaTestimonial() {
+  return (
+    <TestimonialsSection
+      className="case-figure my-16! md:my-24!"
+      quote={
+        <>
+          <strong>Ammar understood the questions first-time investors needed answered</strong>{" "}
+          and made them central to the mobile experience. He also built a design system that
+          helped our team introduce new products while keeping the app consistent and easy to
+          follow.
+        </>
+      }
+      name="Shamoon"
+      title="CEO, Mahaana Wealth (YC W22)"
+      image="/images/team/shamoon.jpg"
+      imageAlt="Portrait of Shamoon, CEO of Mahaana"
+      initials="S"
+    />
   );
 }

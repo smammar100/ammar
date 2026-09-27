@@ -38,12 +38,19 @@ const NOTES = [
   },
 ] as const;
 
-/** A loose hand-drawn arrow pointing right; flipped for right-hand notes. */
-function Arrow({ flip }: { flip?: boolean }) {
+/**
+ * A loose hand-drawn arrow pointing right. Flipped to point left for
+ * right-hand notes, and for every note below sm, where they all sit right of
+ * the screen.
+ */
+function Arrow({ side }: { side: "left" | "right" }) {
   return (
     <svg
       viewBox="0 0 64 28"
-      className={cn("h-5 w-12 shrink-0 lg:h-6 lg:w-14", flip && "-scale-x-100")}
+      className={cn(
+        "h-4 w-8 shrink-0 -scale-x-100 sm:h-5 sm:w-12 lg:h-6 lg:w-14",
+        side === "left" && "sm:scale-x-100",
+      )}
       fill="none"
       stroke="currentColor"
       strokeWidth={1.6}
@@ -62,7 +69,10 @@ export function MahaanaHomeAnnotated() {
   return (
     <figure className="case-figure my-10">
       <div className="overflow-hidden rounded-xl border border-border bg-background px-4 py-8 sm:px-6">
-        <div className="relative mx-auto grid max-w-[300px] grid-cols-1 sm:max-w-none sm:grid-cols-[1fr_280px_1fr]">
+        {/* Below sm the notes can't flank the screen, so they share one column
+            to its right: [screen | notes]. From sm up the screen is centred
+            with a note margin either side. */}
+        <div className="relative mx-auto grid grid-cols-[minmax(0,1fr)_7rem] gap-2 sm:grid-cols-[1fr_280px_1fr] sm:gap-0">
           <div aria-hidden className="hidden sm:block" />
           <img
             src="/images/projects/mahaana-wealth/home-screen-full.webp"
@@ -73,10 +83,9 @@ export function MahaanaHomeAnnotated() {
             decoding="async"
             className="block w-full"
           />
-          <div aria-hidden className="hidden sm:block" />
+          <div aria-hidden />
 
-          {/* Notes are decorative (the alt text covers the same ground), and
-              drop out below sm where the margins can't hold them. */}
+          {/* Notes are decorative: the alt text covers the same ground. */}
           {NOTES.map((n) => (
             <div
               key={n.title}
@@ -86,19 +95,23 @@ export function MahaanaHomeAnnotated() {
                 // Caveat is already loaded site-wide (global.css); a second
                 // next/font copy downloaded the same face twice.
                 "font-hand font-medium",
-                "absolute hidden -translate-y-1/2 items-center gap-1 text-base leading-[1.1] text-muted-foreground sm:flex lg:text-lg",
+                "absolute flex -translate-y-1/2 items-center gap-1 text-sm leading-[1.1] text-muted-foreground sm:text-base lg:text-lg",
+                // Phone: every note in the right-hand column, arrow first.
+                "right-0 left-[calc(100%-7rem)] flex-row-reverse justify-end text-left",
                 n.side === "left"
-                  ? "left-0 right-[calc(50%+148px)] flex-row justify-end text-right"
-                  : "left-[calc(50%+148px)] right-0 flex-row-reverse justify-end text-left",
+                  ? "sm:right-[calc(50%+148px)] sm:left-0 sm:flex-row sm:text-right"
+                  : "sm:right-0 sm:left-[calc(50%+148px)]",
               )}
             >
               <span className="max-w-[13rem]">
-                <span className="block text-xl text-foreground lg:text-2xl">
+                <span className="block text-base text-foreground sm:text-xl lg:text-2xl">
                   {n.title}
                 </span>
-                <span className="mt-1 block">{n.body}</span>
+                {/* Phones get the question only: at that width the screen is ~760px
+                    tall, and with the answer too, neighbouring notes collide. */}
+                <span className="mt-1 hidden sm:block">{n.body}</span>
               </span>
-              <Arrow flip={n.side === "right"} />
+              <Arrow side={n.side} />
             </div>
           ))}
         </div>

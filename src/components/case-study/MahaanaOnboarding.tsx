@@ -151,6 +151,10 @@ export function MahaanaOnboarding() {
             aria-label={`${i + 1} of ${SLIDES.length}: ${slide.caption}`}
             className="w-full shrink-0 snap-start snap-always"
           >
+            {/* From sm up, the full six-screen strip. Below it the strip would
+                shrink each screen to ~50px, so the phone gets the same strip cut
+                into two rows of three. Lazy images inside display:none are never
+                fetched, so each size downloads only its own files. */}
             <img
               src={slide.src}
               alt={slide.alt}
@@ -159,8 +163,23 @@ export function MahaanaOnboarding() {
               loading="lazy"
               decoding="async"
               draggable={false}
-              className="block h-auto w-full"
+              className="hidden h-auto w-full sm:block"
             />
+            <div className="sm:hidden">
+              {[1, 2].map((half) => (
+                <img
+                  key={half}
+                  src={slide.src.replace(".webp", `-m${half}.webp`)}
+                  alt={half === 1 ? slide.alt : ""}
+                  width={1302}
+                  height={931}
+                  loading="lazy"
+                  decoding="async"
+                  draggable={false}
+                  className="block h-auto w-full"
+                />
+              ))}
+            </div>
           </div>
         ))}
       </div>
