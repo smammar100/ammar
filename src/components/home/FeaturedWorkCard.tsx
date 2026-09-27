@@ -2,14 +2,17 @@ import Link from "next/link";
 
 // Featured work as a card in the home page's two-column grid: the artwork with
 // the product and its disciplines chipped over the bottom-left corner, then
-// the statement, supporting line and KPIs under it. The whole card is one
-// link; the "Read case study" label is part of it rather than a second target.
+// the statement, supporting line and KPIs, then the buttons: "Visit project"
+// (only when the project sets `liveUrl`) and "Read case study". The title's link is stretched over the whole card, so
+// anywhere outside the buttons still opens the case study. It lives on the
+// title rather than the "Read case study" button because that button sinks
+// when pressed (scale), which would shrink the stretched area mid-click.
 
 interface FeaturedWorkCardProps {
   slug: string;
   /** Product name, shown above the statement (as the logo, when there is one). */
   client?: string;
-  /** Wordmark shown above the statement, as [src, width, height]. */
+  /** Wordmark shown above the statement, as [src, width, height] at the size it's shown (up to 36px tall). */
   clientLogo?: [string, number, number];
   clientLogoDark?: string;
   title: string;
@@ -20,6 +23,8 @@ interface FeaturedWorkCardProps {
   thumbnailDark?: string;
   /** Intrinsic [width, height] of the thumbnail. */
   thumbnailSize?: [number, number];
+  /** The shipped work, for the "Visit project" button. */
+  liveUrl?: string;
   index: number;
 }
 
@@ -35,14 +40,12 @@ export function FeaturedWorkCard({
   thumbnail,
   thumbnailDark,
   thumbnailSize,
+  liveUrl,
   index,
 }: FeaturedWorkCardProps) {
+  const href = `/work/${slug}`;
   return (
-    <Link
-      href={`/work/${slug}`}
-      className="group flex flex-col rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-      aria-label={`Read case study: ${client ? `${client}, ` : ""}${title}`}
-    >
+    <article className="group relative flex flex-col">
       {/* Artwork. A fixed 4:3 frame so cards with differently shaped
           thumbnails still line up across the row. */}
       <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-sm">
@@ -100,14 +103,18 @@ export function FeaturedWorkCard({
 
       {/* Copy */}
       <div className="flex flex-1 flex-col px-1 pt-6">
+        {/* Each logo at its own display size, sat on the bottom of one
+            fixed-height slot, so logos can be sized to look alike and the
+            titles still line up across the row. */}
         {client && clientLogo && (
-          <span className="mb-3 block">
+          <span className="mb-3 flex h-9 items-end">
             <img
               src={clientLogo[0]}
               alt=""
               width={clientLogo[1]}
               height={clientLogo[2]}
-              className={`block h-6 w-auto ${clientLogoDark ? "dark:hidden" : ""}`}
+              style={{ height: clientLogo[2] }}
+              className={`block w-auto ${clientLogoDark ? "dark:hidden" : ""}`}
             />
             {clientLogoDark && (
               <img
@@ -115,7 +122,8 @@ export function FeaturedWorkCard({
                 alt=""
                 width={clientLogo[1]}
                 height={clientLogo[2]}
-                className="hidden h-6 w-auto dark:block"
+                style={{ height: clientLogo[2] }}
+                className="hidden w-auto dark:block"
               />
             )}
           </span>
@@ -124,7 +132,24 @@ export function FeaturedWorkCard({
           <span className="mb-2 block text-sm font-medium text-muted-foreground">{client}</span>
         )}
 
-        <h3 className="text-balance text-xl font-semibold leading-snug tracking-tight sm:text-2xl">{title}</h3>
+        {/* One sentence per line, so a two-sentence statement breaks between
+            them rather than wherever the width runs out. The link's ::after
+            covers the card, and carries the focus ring around all of it. */}
+        <h3 className="text-balance text-xl font-semibold leading-snug tracking-tight sm:text-2xl">
+          <Link
+            href={href}
+            className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring focus-visible:after:ring-offset-4 focus-visible:after:ring-offset-background"
+          >
+            {client && <span className="sr-only">{client}: </span>}
+            {/* The space keeps the sentences apart in the link's name. */}
+            {title.split(/(?<=\.)\s+/).map((sentence, i) => (
+              <span key={sentence} className="block">
+                {i > 0 && " "}
+                {sentence}
+              </span>
+            ))}
+          </Link>
+        </h3>
 
         {/* Never clamped: keep `subtext` to about 180 characters so it sits in
             three lines at card width. */}
@@ -143,14 +168,43 @@ export function FeaturedWorkCard({
           </ul>
         )}
 
-        {/* Pushed to the bottom so both cards' labels sit on one line. */}
-        <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium text-foreground">
-          Read case study
-          <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">
-            →
-          </span>
-        </span>
+        {/* Pushed to the bottom so both cards' buttons sit on one line, and
+            raised above the stretched title link so the buttons take their
+            own clicks (the gaps between them still open the case study).
+            On phones a pair shares the row, or stacks full width if it's too
+            narrow for both; a lone button keeps its own width. */}
+        <div className="pointer-events-none relative z-10 mt-auto flex flex-wrap gap-2 pt-7 sm:gap-2.5">
+          {liveUrl && (
+            <a
+              href={liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/visit skeu skeu-press skeu-button pointer-events-auto max-sm:flex-1 max-sm:px-3.5"
+            >
+              Visit project
+              <span className="sr-only">
+                {client ? `: ${client}` : ""} (opens in a new tab)
+              </span>
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-200 group-hover/visit:translate-x-0.5 group-hover/visit:-translate-y-0.5"
+              >
+                ↗
+              </span>
+            </a>
+          )}
+          <Link
+            href={href}
+            className={`group/read skeu skeu-press skeu-button pointer-events-auto ${liveUrl ? "max-sm:flex-1 max-sm:px-3.5" : ""}`}
+          >
+            Read case study
+            {client && <span className="sr-only">: {client}</span>}
+            <span aria-hidden="true" className="transition-transform duration-200 group-hover/read:translate-x-0.5">
+              →
+            </span>
+          </Link>
+        </div>
       </div>
-    </Link>
+    </article>
   );
 }

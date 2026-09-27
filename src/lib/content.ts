@@ -47,7 +47,9 @@ export interface ProjectData {
   client?: string;
   /**
    * Wordmark shown in place of `client` at the start of the featured row, as
-   * [src, width, height]. `client` stays the alt text and the accessible name.
+   * [src, width, height] at the size it's shown, up to 36px tall. Size logos
+   * by eye so they read alike: a thin script wordmark needs more height than
+   * a bold one. `client` stays the alt text and the accessible name.
    */
   clientLogo?: [string, number, number];
   /** The same wordmark recoloured for the dark theme. */
