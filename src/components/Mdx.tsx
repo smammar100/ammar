@@ -11,7 +11,7 @@ import {
 } from "@/components/case-study/IconimateDemo";
 import { IconimateLabCandidates } from "@/components/case-study/IconimateLab";
 import { IconimateCardDemo } from "@/components/case-study/IconimateCard";
-import { IconimateImpact, IconimateLinks } from "@/components/case-study/IconimateSections";
+import { IconimateDevPost, IconimateImpact, IconimateLinks } from "@/components/case-study/IconimateSections";
 import { Goals, Goal, Feature, HowMightWe, Question, TocGroup } from "@/components/case-study/CaseStudySections";
 import {
   MahaanaFoundations,
@@ -40,6 +40,7 @@ const components = {
   IconimateLabCandidates,
   IconimateCardDemo,
   IconimateImpact,
+  IconimateDevPost,
   IconimateLinks,
   Goals,
   Goal,

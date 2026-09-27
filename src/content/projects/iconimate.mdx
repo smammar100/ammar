@@ -1,6 +1,8 @@
 ---
 title: "Small icons. A lot of decisions."
 client: "Iconimate"
+clientLogo: ["/images/logos/iconimate.svg", 109, 28]
+clientLogoDark: "/images/logos/iconimate-dark.svg"
 statement: "Small icons. A lot of decisions."
 subtext: "An open-source library of animated React icons built on Phosphor. I designed the motion, built the components and published the website."
 kpis: ["216 Animated Icons", "45 GitHub Stars", "MIT Licensed"]
@@ -8,7 +10,7 @@ liveUrl: "https://iconimate.app"
 type: "personal"
 description: "How I designed and built Iconimate, an open-source library of 216 animated React icons on Phosphor: motion that suits each object, resting states that match the original glyphs, and components developers can install one at a time."
 skills: ["Motion Design", "Design Engineering", "Open Source"]
-thumbnail: "/images/projects/iconimate/thumbnail-iconimate-light.png"
+thumbnail: "/images/projects/iconimate/iconimate-landing.webp"
 thumbnailWide: "/images/projects/iconimate/iconimate-landing.webp"
 thumbnailWideSize: [1600, 1000]
 heroImage: "/images/projects/iconimate/iconimate-landing.webp"
@@ -33,57 +35,58 @@ summary:
 
 <TocGroup label="Problem" />
 
-## Making one icon move is easy. Making a whole set feel consistent takes work.
+## I kept rebuilding the same icon
 
-An animation can look good on its own and feel out of place in an interface. Different timings make icons feel unrelated. Too much movement makes them distracting. Details that read clearly in a large preview can disappear inside a small button.
+Iconimate started as a small annoyance in my own work. I’d need one animated icon, so I’d build it by hand in Motion, and it never quite matched the rest of my icon set. The stroke weight was slightly off, the optical size a little different, and the timing judged by eye every time. One icon was fine. Ten, and I’d lost a day to something that should have taken five minutes.
 
-I wanted each icon to move in a way that suited its meaning, while keeping the collection consistent. Developers also needed a simple way to preview an animation, add it to a project and adapt it.
+The ready-made options didn’t fix it. The good animated sets were paid, and the free ones were small, so I’d find the few icons I needed and none of the rest. Most were also drawn on their own grid, so next to the icons I already used they looked almost right, which is harder to live with than clearly different.
+
+Consistency was only half of it. An animation can look good on its own and still feel out of place in an interface. Different timings make icons feel unrelated. Too much movement makes them distracting. Details that read clearly in a large preview can disappear inside a small button. And even a good icon only helps if it’s quick to add to a project and easy to adapt.
+
+<HowMightWe>
+
+- build one consistent library of animated icons, instead of relying on paid sets or the few limited free ones?
+- make adding an animated icon to a project as easy as copying one line?
+
+</HowMightWe>
 
 ---
 
 <TocGroup label="Solution" />
 
-## Start with the object
+## One library that moves like a family
 
-I used Phosphor’s existing glyphs as the foundation. My contribution was the motion and its implementation: deciding which parts should move, where they should pivot and how they should settle.
+### Start with the object
 
-A bell swings from its crown. An anchor sways from its ring. Each animation follows the shape and behaviour of the object. Shared timing and easing rules help those different movements belong together.
+Every icon starts from Phosphor’s glyphs on its 256 grid, so Iconimate sits beside an existing Phosphor set with the same stroke weight, optical alignment and density. My work was the motion: which parts move, where they pivot and how they settle. A bell swings from its crown and an anchor sways from its ring, while shared timing and easing keep those different movements feeling like one set.
 
 <IconimateHoverGrid />
 
-## Protect the resting state
+### Protect the resting state
 
-Every icon had to match its original Phosphor glyph at rest. This let it sit alongside static icons without changing the visual style of an interface.
-
-That rule also helped me choose between ideas. For the beer stein, I explored a lid-flip animation but shipped a version that moved the whole mark, preserving the original path. The more elaborate version stayed in the experiments.
+At rest, every icon had to match its original Phosphor glyph, so it could sit beside static icons without changing an interface. That rule also settled choices: for the beer stein, I shipped a version that moves the whole mark instead of the lid-flip I explored, keeping the original path intact.
 
 <IconimateRestStateGrid />
 
-## Build enough variations to make a considered choice
+### Build variations, then choose
 
-For the baby carriage, I built seven candidates, exploring a simple pop, rolling, rocking and canopy movement.
-
-The final version used a suspension bounce: the body dropped, the canopy followed and the tyres stayed planted. It gave the movement a clear physical relationship between the parts.
+For the baby carriage, I built seven candidates, from a simple pop to rolling, rocking and canopy movements. Side by side, it was clear where the motion should start, how much was enough and how it should return to rest. The suspension bounce won: the body drops, the canopy follows and the tyres stay planted.
 
 <IconimateLabCandidates />
 
-Comparing the candidates side by side helped me judge where the motion started, how much movement was enough and how the icon returned to rest.
+### Test at the size that matters
 
-## Test at the size that matters
-
-I compared animations at 16, 20, 24, 32 and 48 pixels, using 24px as the main reference. If a movement only worked in the larger preview, it needed another pass.
+I compared every animation at 16, 20, 24, 32 and 48 pixels, with 24px as the reference. At that size a rotation can hide the shape and a delay can make the movement feel disconnected, so anything that only worked in the larger preview went back for another pass.
 
 <IconimateSizeScale />
 
-At that size, small decisions become obvious. A rotation can obscure the shape. A delay can make the movement feel disconnected. I adjusted the animations around those details so the icons remained recognisable throughout.
+## Easy to add to any project
 
-## Make the work usable
+### Preview, install and control each icon
 
-I built a searchable gallery where people can preview the animations before choosing an icon. Individual components can be installed through the shadcn CLI, giving developers the source code to adapt within their own projects.
+A consistent set only helps if it’s quick to use. In the searchable gallery, people preview each animation, then install just that icon through the shadcn CLI, with its source in their project to adapt and no package to add. They can also copy the code, or a prompt that has an AI tool rebuild it. Each component exposes animation controls too, so the motion can follow a parent button, a card or a tap on a touch screen, where hover never fires.
 
 <IconimateCardDemo />
-
-The components also expose animation controls, allowing motion to respond to a parent button, card or touch interaction. That makes the animation useful beyond the gallery’s hover previews.
 
 ---
 
@@ -93,9 +96,9 @@ The components also expose animation controls, allowing motion to respond to a p
 
 <IconimateImpact />
 
-The collection has grown to 216 icons and received 45 GitHub stars. It was also featured on DEV.to’s social media, giving the project recognition beyond my own channels.
+The collection has grown to 216 icons and received 45 GitHub stars. It was also featured on DEV.to’s social media, giving the project recognition beyond my own channels. These are early signs of interest. Understanding how people use the icons in their products is the next step.
 
-These are early signs of interest. Understanding how people use the icons in their products is the next step.
+<IconimateDevPost />
 
 ## Reflection
 
