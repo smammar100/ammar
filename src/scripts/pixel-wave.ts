@@ -21,10 +21,19 @@ const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
  * glyphs in pixel font, then settles onto the correct letter in sans.
  * Kept subtle — only 3 flips per character at a relaxed pace.
  */
-export function pixelWave(container: HTMLElement, delay: number) {
+export function pixelWave(container: HTMLElement, delay: number, by: "char" | "word" = "char") {
   const chars = container.querySelectorAll(
     "[data-pw-char]"
   ) as NodeListOf<HTMLElement>;
+
+  // Stagger step: every character in turn, or whole words at once (all the
+  // characters of a word flip together; the next word follows a beat later).
+  const words = Array.from(container.querySelectorAll("[data-pw-word]"));
+  const step = (wrapper: HTMLElement, i: number) => {
+    if (by === "char") return i * 80;
+    const word = wrapper.closest("[data-pw-word]");
+    return (word ? words.indexOf(word) : i) * 110;
+  };
 
   chars.forEach((wrapper, i) => {
     const pixel = wrapper.querySelector("[data-pw-pixel]") as HTMLElement | null;
@@ -41,7 +50,7 @@ export function pixelWave(container: HTMLElement, delay: number) {
     const flipSpeed = 80; // ms per flip
     let flips = 0;
 
-    const resolveDelay = delay + i * 80;
+    const resolveDelay = delay + step(wrapper, i);
     setTimeout(() => {
       const interval = setInterval(() => {
         pixel.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];

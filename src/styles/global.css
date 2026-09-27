@@ -277,6 +277,77 @@
     2px 2px;
   clip-path: path("M 5.657 0 L 11.314 5.657 L 5.657 11.314 L 0 5.657 Z M 28.971 0 L 34.628 5.657 L 28.971 11.314 L 23.314 5.657 Z M 52.285 0 L 57.942 5.657 L 52.285 11.314 L 46.628 5.657 Z");
 }
+/* Build-up animations for the home page service illustrations. BuildIn
+   (components/home/BuildIn.tsx) sets [data-build]: "armed" holds every piece at
+   its first keyframe (paused + fill both), "play" releases them. Without the
+   attribute nothing animates, so no-JS and reduced motion render the finished
+   illustration. Keyframes animate `transform`; the tiles' tilt and hover use
+   the separate `rotate`/`translate` properties, so the two compose. */
+[data-build] .b-rise,
+[data-build] .b-slide,
+[data-build] .b-pop,
+[data-build] .b-grow,
+[data-build] .b-draw,
+[data-build] .b-fly {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+  animation-delay: var(--d, 0ms);
+  animation-play-state: paused;
+}
+[data-build="play"] :is(.b-rise, .b-slide, .b-pop, .b-grow, .b-draw, .b-fly) {
+  animation-play-state: running;
+}
+[data-build] .b-rise { animation-name: b-rise; }
+[data-build] .b-slide { animation-name: b-slide; }
+[data-build] .b-pop {
+  animation-name: b-pop;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+[data-build] .b-grow {
+  animation-name: b-grow;
+  animation-duration: 380ms;
+  transform-origin: left center;
+}
+[data-build] .b-draw {
+  animation-name: b-draw;
+  animation-duration: 480ms;
+}
+[data-build] .b-fly {
+  animation-name: b-fly;
+  animation-duration: 820ms;
+}
+@keyframes b-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes b-slide {
+  from { opacity: 0; transform: translateX(22px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes b-pop {
+  from { opacity: 0; transform: scale(0.4); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes b-grow {
+  from { transform: scaleX(0); }
+  to { transform: none; }
+}
+/* The selection box draws out from its top-left corner. The inset stays
+   negative so the handles, which sit outside the box, are never cut off. */
+@keyframes b-draw {
+  from { opacity: 0; clip-path: inset(-8px 100% 100% -8px); }
+  20% { opacity: 1; }
+  to { opacity: 1; clip-path: inset(-8px -8px -8px -8px); }
+}
+/* The cursor flies in to the corner, then clicks. */
+@keyframes b-fly {
+  0% { opacity: 0; transform: translate(34px, 26px); }
+  65% { opacity: 1; transform: none; }
+  78% { transform: scale(0.82); }
+  100% { opacity: 1; transform: none; }
+}
+
 .prose code {
   @apply rounded bg-secondary px-1.5 py-0.5 font-mono text-sm;
 }

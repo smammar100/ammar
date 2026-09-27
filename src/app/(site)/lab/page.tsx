@@ -1,50 +1,59 @@
 import type { Metadata } from "next";
-import { getLab } from "@/lib/content";
-import { LabCard } from "@/components/lab/LabCard";
+import { getLab, getProject } from "@/lib/content";
+import { LabCanvas } from "@/components/lab/canvas/LabCanvas";
+import { BUILD_SPOTS, NOTE, SHOTS, type CanvasItem } from "@/components/lab/canvas/items";
 
 export const metadata: Metadata = {
   title: "Lab | Syed Mohammad Ammar",
-  description: "Tools, experiments, and interaction showcases.",
+  description: "Design-engineering experiments and static shots, on one endless canvas.",
   robots: { index: false, follow: false },
 };
 
-const preferredOrder = ["pixel-mark", "pattern-engine", "pixel-wave", "pixel-scatter"];
-
 export default async function Page() {
-  const entries = getLab().sort((a, b) => {
-    const aIndex = preferredOrder.indexOf(a.data.slug);
-    const bIndex = preferredOrder.indexOf(b.data.slug);
-    if (aIndex !== -1 || bIndex !== -1) {
-      return (
-        (aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex) -
-        (bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex)
-      );
-    }
-    return a.data.title.localeCompare(b.data.title);
+  // Live builds: every Lab entry, plus Iconimate from the projects. Positions
+  // come from BUILD_SPOTS; an entry without a spot isn't placed.
+  const builds: CanvasItem[] = getLab().flatMap((entry) => {
+    const spot = BUILD_SPOTS[entry.data.slug];
+    if (!spot) return [];
+    return [
+      {
+        kind: "build" as const,
+        id: entry.data.slug,
+        title: entry.data.title,
+        label: "Design engineering",
+        description: entry.data.description,
+        href: `/lab/${entry.data.slug}`,
+        preview: entry.data.preview,
+        ...spot,
+      },
+    ];
   });
+
+  const iconimate = getProject("iconimate");
+  if (iconimate?.data.thumbnailWide && iconimate.data.thumbnailWideSize) {
+    const [width, height] = iconimate.data.thumbnailWideSize;
+    builds.push({
+      kind: "build",
+      id: "iconimate",
+      title: iconimate.data.title,
+      label: "Open source",
+      description: iconimate.data.statement ?? iconimate.data.description,
+      href: "/work/iconimate",
+      image: { src: iconimate.data.thumbnailWide, width, height },
+      ...BUILD_SPOTS.iconimate,
+    });
+  }
+
+  const items: CanvasItem[] = [NOTE, ...builds, ...SHOTS.map((shot) => ({ kind: "shot" as const, ...shot }))];
 
   return (
     <>
-      <section className="mx-auto max-w-3xl px-6 pt-12 pb-16 sm:pt-24 sm:pb-12">
-        <h1 className="mb-4 text-4xl font-medium tracking-tight sm:text-5xl">Lab</h1>
-        <p className="max-w-xl text-lg text-muted-foreground">
-          A gallery of tools, experiments, and interactions I&rsquo;ve built.
-        </p>
-      </section>
-
-      <section className="mx-auto max-w-3xl px-6 pb-24">
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {entries.map((entry) => (
-            <LabCard
-              key={entry.data.slug}
-              title={entry.data.title}
-              description={entry.data.description}
-              href={`/lab/${entry.data.slug}`}
-              preview={entry.data.preview}
-            />
-          ))}
-        </div>
-      </section>
+      <h1 className="sr-only">Lab</h1>
+      <p className="sr-only">
+        Design-engineering experiments and static shots. Each live build links to its page; each shot opens in a
+        lightbox.
+      </p>
+      <LabCanvas items={items} />
     </>
   );
 }

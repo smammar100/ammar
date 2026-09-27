@@ -1,26 +1,23 @@
 import Link from "next/link";
-import { FeaturedWorkRow } from "@/components/home/FeaturedWorkRow";
+import { FeaturedWorkCard } from "@/components/home/FeaturedWorkCard";
+import { Curiosity } from "@/components/home/Curiosity";
+import { Services } from "@/components/home/Services";
+import { Intersection, IntersectionRule } from "@/components/layout/Intersection";
 import PixelWaveText from "@/components/PixelWaveText";
-import { LabCard } from "@/components/lab/LabCard";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
-import { BuilderPhoto } from "@/components/home/BuilderPhoto";
 import { siteConfig } from "@/data/site-config";
 import { getProjects, getLab, getWriting } from "@/lib/content";
 
 const preferredLabOrder = ["pattern-engine", "pixel-wave", "pixel-mark"];
 
 // Home sections switched off for now. Flip to true to bring them back; the
-// routes they link to (/lab, /writing, /work/design-engineering-100) are untouched.
-const showLabSection = false;
+// routes they link to (/writing, /work/design-engineering-100) are untouched.
 const showNowShippingCard = false;
 const showWritingSection = false;
 
-const heroHeadline = "Ammar designs it, builds it, ships it.";
-const heroIntro = "I'm a Senior Product Designer at Mahaana (YC W22) with 10,000+ downloads, and I build what I design.";
-const heroIntroDetail = "Currently #1 Top Author on 21st.dev and shipping 100 built projects in public. Receipts, not adjectives.";
-// The Mahaana facts match the case study's "My role" block.
-const heroCurrentWorkLead = "Right now, I'm leading product design for the iOS and Android apps at";
-const heroCurrentWorkTail = ", Pakistan's first digital-only asset management company, and shipping my way through 100 design-engineering projects in public.";
+const heroHeadline = "Hey, I'm Ammar, a product designer who makes complex products easy to use, and builds them too.";
+const heroSupport = "From investment apps to open-source tools, I work across product design, design systems and code.";
+const heroCta = "Start a project with me";
 
 const nowShippingPattern = {
   type: "isoline", seed: 211, levels: 9, scale: 340, strokeWidth: 0.9, opacity: 66, color: "copper",
@@ -30,11 +27,31 @@ const nowShippingLightPattern = {
 } as const;
 const nowShippingMotion = { mode: "ambient", speed: 20, intensity: 28 } as const;
 
-const homeShell = "mx-auto w-full max-w-[1400px] px-6 sm:px-8 lg:px-14";
-const homeSection = `${homeShell} py-12 sm:py-14 lg:py-16`;
-const homeFirstSection = `${homeShell} pt-5 pb-12 sm:pt-10 sm:pb-14 lg:pt-10 lg:pb-16`;
+// The page sits in the same Intersection frame as the case studies: hatched
+// margins, and dashed rules between sections that run out into them. Sections
+// pad themselves inside the frame's content column; rules sit between them
+// unpadded so they can reach the gutters.
+const frameSection = "px-6 sm:px-10";
+const homeSection = `${frameSection} py-12 sm:py-14`;
 const homeSectionHeader = "mb-7 flex items-center justify-between";
-const homeCardGrid = "grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 lg:gap-6";
+
+/**
+ * The hero's call to action, styled like the featured row's "Read case study".
+ * There is no contact page, so it opens an email with the subject filled in.
+ */
+function HeroCta({ className }: { className?: string }) {
+  return (
+    <a
+      href={`mailto:${siteConfig.social.email}?subject=${encodeURIComponent("New project")}`}
+      className={`group inline-flex h-10 items-center gap-1.5 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-90 focus-visible:opacity-90 focus-visible:outline-none ${className ?? ""}`}
+    >
+      {heroCta}
+      <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+        ↗
+      </span>
+    </a>
+  );
+}
 
 export default function HomePage() {
   const allProjects = getProjects();
@@ -59,44 +76,33 @@ export default function HomePage() {
   const writingPosts = getWriting();
 
   return (
-    <>
+    <Intersection>
       {/* ── Hero ── */}
-      <section className={`${homeShell} pt-0 pb-4 sm:pb-10 md:pt-16 lg:pt-16 lg:pb-14`}>
-        {/* Mobile */}
-        <div className="hero-mobile md:hidden">
-          <div className="hero-mobile-photo-field mb-8">
-            <div className="hero-mobile-photo inline-block rotate-2 bg-white p-2 pb-5 shadow-xl shadow-black/15 transition-transform duration-300 hover:rotate-0 hover:scale-[1.02] dark:bg-[#20201e] dark:shadow-black/40">
-              <div className="h-36 w-36 overflow-hidden">
-                {/* Same photo the desktop hero (BuilderPhoto) uses, so the two match. */}
-                <img src="/images/brand/profile-living-room.jpg" alt="Syed Mohammad Ammar" className="block h-full w-full object-cover" />
-              </div>
-            </div>
-          </div>
-          <PixelWaveText text={heroHeadline} as="h1" wave="hero" className="mb-7 max-w-[20rem] text-[2.05rem] font-medium leading-[1.08] tracking-tight" />
-          <div className="mb-4 space-y-3 text-[15px] leading-relaxed">
-            <p className="text-foreground/80">{heroIntro}</p>
-            <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 hover:text-accent">Mahaana (YC W22)</a>{heroCurrentWorkTail}</p>
-          </div>
-        </div>
-
-        {/* Desktop */}
-        <div className="hero-desktop hidden md:flex md:items-center md:gap-10 lg:gap-14">
-          <div className="flex-1 min-w-0">
-            <PixelWaveText text={heroHeadline} as="h1" wave="headline" className="mb-8 text-4xl font-medium leading-[1.2] tracking-tight lg:text-[2.6rem] xl:text-5xl" />
-            <div className="max-w-xl space-y-4 text-base leading-relaxed xl:max-w-2xl">
-              <p className="text-foreground/80">{heroIntro} {heroIntroDetail}</p>
-              <p className="text-muted-foreground">{heroCurrentWorkLead} <a href={siteConfig.links.mahaana} target="_blank" rel="noopener noreferrer" className="text-foreground underline underline-offset-4 transition-colors hover:text-accent">Mahaana (YC W22)</a>{heroCurrentWorkTail}</p>
-            </div>
-          </div>
-          <BuilderPhoto />
-        </div>
+      <section className={`${frameSection} pt-14 pb-12 md:pt-20 md:pb-16`}>
+        {/* One headline for every width; it wraps to fit rather than
+            switching layouts. */}
+        <PixelWaveText
+          text={heroHeadline}
+          by="word"
+          as="h1"
+          wave="headline"
+          className="mb-8 max-w-3xl text-[1.85rem] font-medium leading-[1.12] tracking-tight md:mb-9 md:text-[2.4rem] md:leading-[1.15] lg:text-[2.75rem]"
+        />
+        <HeroCta />
       </section>
 
+      {/* ── Caption band ── */}
+      <IntersectionRule />
+      {/* Handwritten, like the reference's italic caption band. Caveat is
+          already loaded site-wide (the case-study notes use it). */}
+      <p className={`${frameSection} font-hand py-5 text-[1.35rem] leading-snug text-muted-foreground sm:text-2xl`}>{heroSupport}</p>
+      <IntersectionRule />
+
       {/* ── Work ── */}
-      <section className={homeFirstSection}>
-        <div>
+      <section className={`${frameSection} py-10 sm:py-12`} aria-label="Selected work">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2">
           {featuredProjects.slice(0, 4).map((project, i) => (
-            <FeaturedWorkRow
+            <FeaturedWorkCard
               key={project.slug}
               slug={project.slug}
               client={project.data.client}
@@ -105,6 +111,7 @@ export default function HomePage() {
               title={project.data.statement ?? project.data.title}
               subtext={project.data.subtext}
               kpis={project.data.kpis}
+              skills={project.data.tags ?? project.data.skills}
               thumbnail={project.data.thumbnailWide ?? project.data.thumbnail}
               thumbnailDark={project.data.thumbnailWideDark ?? project.data.thumbnailDark}
               thumbnailSize={project.data.thumbnailWide ? project.data.thumbnailWideSize : undefined}
@@ -114,25 +121,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Lab ── */}
-      {showLabSection && (
-      <section className={homeSection}>
-        <div className={homeSectionHeader}>
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Lab</p>
-          <Link href="/lab" className="text-xs text-muted-foreground transition-colors hover:text-foreground">View all →</Link>
-        </div>
-        <div className={homeCardGrid}>
-          {labEntries.slice(0, 3).map((entry) => (
-            <div key={entry.data.slug} className="flex">
-              <LabCard title={entry.data.title} description={entry.data.description} href={`/lab/${entry.data.slug}`} preview={entry.data.preview} headingLevel="h3" />
-            </div>
-          ))}
-        </div>
-      </section>
-      )}
+      {/* ── Services ── */}
+      <IntersectionRule />
+      <Services padding={frameSection} />
+
+      {/* ── Curiosity: the Lab experiments ── */}
+      <IntersectionRule />
+      <Curiosity
+        padding={frameSection}
+        entries={labEntries.map((entry) => ({
+          slug: entry.data.slug,
+          title: entry.data.title,
+          description: entry.data.description,
+          preview: entry.data.preview,
+        }))}
+      />
 
       {/* ── Writing ── */}
       {showWritingSection && (
+      <>
+      <IntersectionRule />
       <section className={homeSection}>
         <div className={homeSectionHeader}>
           <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Writing</p>
@@ -178,72 +186,45 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </>
       )}
 
       {/* ── Closing ── */}
-      <section className={`${homeShell} pb-20 pt-2 text-center sm:pb-24 lg:pb-28`}>
+      <IntersectionRule />
+      <section className={`${frameSection} py-16 text-center sm:py-20`}>
         <PixelWaveText text="Let's build something worth shipping." as="p" wave="cta" className="text-3xl font-medium tracking-tight sm:text-4xl" />
-        <p className="mt-6 text-sm text-muted-foreground">
-          <a href={`mailto:${siteConfig.social.email}`} className="underline underline-offset-4 transition-colors hover:text-foreground">{siteConfig.social.email}</a>, or find me on{" "}
-          <a href={siteConfig.social.linkedin} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 transition-colors hover:text-foreground">LinkedIn</a>.
-        </p>
+      </section>
+      <IntersectionRule />
+      {/* Two cells, like a footer: stacked with a rule between on phones,
+          side by side with a dashed divider from sm up. */}
+      <section className="grid grid-cols-1 sm:grid-cols-2">
+        <div className={`${frameSection} py-10`}>
+          <p className="mb-4 text-sm text-muted-foreground">Currently open to new projects</p>
+          <HeroCta />
+        </div>
+        <div className={`${frameSection} border-t border-dashed border-(--pattern-fg) py-10 sm:border-t-0 sm:border-l`}>
+          <p className="mb-4 text-sm text-muted-foreground">Connect on socials</p>
+          <ul className="flex flex-wrap gap-2">
+            {[
+              { label: "LinkedIn", href: siteConfig.social.linkedin },
+              { label: "GitHub", href: siteConfig.social.github },
+              { label: "Email", href: `mailto:${siteConfig.social.email}` },
+            ].map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border bg-card px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {link.label}
+                  <span aria-hidden="true" className="text-muted-foreground">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
-      <style>{`
-        .hero-mobile { position: relative; isolation: isolate; }
-        .hero-mobile::before {
-          content: ""; position: absolute; width: calc(100% + 3rem); height: 15.5rem;
-          left: -1.5rem; top: -0.75rem; z-index: 0;
-          background-image: radial-gradient(currentColor 1px, transparent 1.5px);
-          background-size: 14px 14px; color: var(--foreground); opacity: 0.095;
-          mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 88%);
-        }
-        .hero-mobile > * { position: relative; z-index: 1; }
-        .hero-mobile-photo-field { position: relative; min-height: 12rem; padding-top: 2.25rem; }
-        .hero-mobile-photo { position: relative; z-index: 1; }
-        html.dark .hero-mobile::before { opacity: 0.1; }
-        .hero-desktop { position: relative; isolation: isolate; }
-        .hero-desktop > * { position: relative; z-index: 1; }
-        .hero-desktop::before { content: ""; display: none; }
-        @media (min-width: 48rem) {
-          .hero-desktop::before {
-            position: absolute; display: block; width: min(34rem, 40vw); height: 26rem;
-            left: 80%; top: 53%; z-index: 0; transform: translate(-50%, -50%) rotate(1deg);
-            background-image: radial-gradient(currentColor 1px, transparent 1.5px);
-            background-size: 14px 14px; color: var(--foreground); opacity: 0.105;
-            mask-image: radial-gradient(ellipse at 55% 54%, black 0%, black 52%, transparent 82%);
-          }
-        }
-        html.dark .hero-desktop::before { opacity: 0.11; }
-        .builder-grid {
-          background-image:
-            linear-gradient(rgba(244, 238, 231, 0.12) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(244, 238, 231, 0.08) 1px, transparent 1px);
-          background-size: 14px 14px;
-        }
-        .builder-scanlines {
-          background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.22) 0, rgba(0,0,0,0.22) 1px, transparent 1px, transparent 4px);
-          background-size: 100% 4px;
-        }
-        .builder-sweep {
-          background: linear-gradient(90deg, transparent, rgba(244,238,231,0.12), rgba(129,230,217,0.18), transparent);
-          mix-blend-mode: screen;
-        }
-        [data-builder-photo][aria-pressed="true"] .builder-grid { animation: builderGridDrift 3s linear both; }
-        [data-builder-photo][aria-pressed="true"] .builder-scanlines { animation: builderScanDrift 1s linear 3; }
-        [data-builder-photo][aria-pressed="true"] .builder-sweep { animation: builderSweep 3s ease-in-out both; }
-        [data-builder-photo][aria-pressed="true"] .builder-readout { animation: builderPulse 1s ease-in-out 3; }
-        @keyframes builderGridDrift { to { background-position: 56px 28px, 56px 28px; } }
-        @keyframes builderScanDrift { to { background-position: 0 16px; } }
-        @keyframes builderSweep { 0%, 20% { transform: translateX(0); } 70%, 100% { transform: translateX(320%); } }
-        @keyframes builderPulse { 0%, 100% { opacity: 0.72; } 50% { opacity: 1; } }
-        @media (prefers-reduced-motion: reduce) {
-          [data-builder-photo][aria-pressed="true"] .builder-grid,
-          [data-builder-photo][aria-pressed="true"] .builder-scanlines,
-          [data-builder-photo][aria-pressed="true"] .builder-sweep,
-          [data-builder-photo][aria-pressed="true"] .builder-readout { animation: none; }
-        }
-      `}</style>
-    </>
+    </Intersection>
   );
 }

@@ -13,7 +13,8 @@ import { cn } from "@/lib/utils";
 
 // 0.5px stroke on a 7px repeat: finer and denser than the snippet's 1px/10px,
 // which is what lets the alpha go up without the texture turning heavy.
-const HATCH =
+// Exported so sections inside the frame can reuse the margin texture.
+export const HATCH =
   "bg-[image:repeating-linear-gradient(315deg,var(--pattern-fg)_0,var(--pattern-fg)_0.5px,transparent_0,transparent_50%)] bg-[size:7px_7px]";
 
 /**

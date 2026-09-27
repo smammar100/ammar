@@ -1,0 +1,154 @@
+// Layout and types for the Lab's infinite canvas.
+//
+// Every item sits at a hand-placed spot on one TILE_W × TILE_H tile. The canvas
+// repeats that tile endlessly in both directions (see LabCanvas), so the layout
+// has to read well across its own seams: the leftmost and rightmost items, and
+// the top and bottom rows, leave room for the neighbouring repeat.
+//
+// The layout is four columns. Each row of repeats is shifted half a tile (two
+// columns) sideways, so the same piece never sits directly under itself; for
+// that seam to stay even, columns two apart start at the same height.
+
+export const TILE_W = 2032;
+export const TILE_H = 1016;
+/**
+ * How far past an edge an item travels before it wraps. At least the widest
+ * item (and the tallest item plus its caption), so a wrap never happens with
+ * any part of the item on screen.
+ */
+export const SEAM_X = 480;
+export const SEAM_Y = 380;
+
+interface Placed {
+  id: string;
+  title: string;
+  /** Short category line in the caption, e.g. "Web design". */
+  label: string;
+  x: number;
+  y: number;
+  /** Width on the tile; height follows the artwork's aspect ratio. */
+  w: number;
+}
+
+/** A static shot: opens in the lightbox. */
+export interface CanvasShot extends Placed {
+  kind: "shot";
+  src: string;
+  width: number;
+  height: number;
+}
+
+/** A design-engineering build: reveals a description, links to the build. */
+export interface CanvasBuild extends Placed {
+  kind: "build";
+  description: string;
+  href: string;
+  /** A live Lab preview (see LabPreview), or else a still image. */
+  preview?: string;
+  image?: { src: string; width: number; height: number };
+}
+
+/** The Lab's own note, placed on the canvas like any other item. */
+export interface CanvasNote extends Placed {
+  kind: "note";
+}
+
+export type CanvasItem = CanvasShot | CanvasBuild | CanvasNote;
+
+/** Height of an item's artwork on the tile (captions sit below it). */
+export function itemHeight(item: CanvasItem): number {
+  if (item.kind === "shot") return (item.w * item.height) / item.width;
+  if (item.kind === "build") {
+    if (item.image) return (item.w * item.image.height) / item.image.width;
+    return (item.w * 630) / 1200; // LabPreview's frame
+  }
+  return 250;
+}
+
+export const SHOTS: Omit<CanvasShot, "kind">[] = [
+  {
+    id: "hr-payroll-landing",
+    title: "HR & Payroll Landing",
+    label: "Web design",
+    src: "/images/lab/shots/hr-payroll-landing.webp",
+    width: 1504,
+    height: 846,
+    x: 1534,
+    y: 547,
+    w: 440,
+  },
+  {
+    id: "archealth-dashboard",
+    title: "Archealth Body Analysis",
+    label: "Dashboard design",
+    src: "/images/lab/shots/archealth-dashboard.webp",
+    width: 1200,
+    height: 900,
+    x: 1574,
+    y: 180,
+    w: 360,
+  },
+  {
+    id: "wallet-onboarding",
+    title: "Web3 Wallet Onboarding",
+    label: "Mobile app",
+    src: "/images/lab/shots/wallet-onboarding.webp",
+    width: 1200,
+    height: 900,
+    x: 1086,
+    y: 682,
+    w: 320,
+  },
+  {
+    id: "alpha-ledger-dashboard",
+    title: "Alpha Ledger",
+    label: "Fintech dashboard",
+    src: "/images/lab/shots/alpha-ledger-dashboard.webp",
+    width: 1504,
+    height: 1003,
+    x: 508,
+    y: 180,
+    w: 460,
+  },
+  {
+    id: "cubetalk-landing",
+    title: "CubeTalk Podcast",
+    label: "Landing page",
+    src: "/images/lab/shots/cubetalk-landing.webp",
+    width: 1504,
+    height: 1128,
+    x: 1056,
+    y: 0,
+    w: 380,
+  },
+  {
+    id: "eclipse-nft-marketplace",
+    title: "Eclipse NFT Marketplace",
+    label: "Web app",
+    src: "/images/lab/shots/eclipse-nft-marketplace.webp",
+    width: 1504,
+    height: 1128,
+    x: 20,
+    y: 0,
+    w: 420,
+  },
+];
+
+/** Where each build sits, keyed by Lab slug (plus "iconimate"). */
+export const BUILD_SPOTS: Record<string, { x: number; y: number; w: number }> = {
+  "pixel-wave": { x: 40, y: 723, w: 380 },
+  "pattern-engine": { x: 20, y: 408, w: 420 },
+  iconimate: { x: 548, y: 588, w: 380 },
+  "pixel-mark": { x: 578, y: 927, w: 320 },
+  "pixel-scatter": { x: 1046, y: 379, w: 400 },
+};
+
+export const NOTE: CanvasNote = {
+  kind: "note",
+  id: "lab-note",
+  title: "The Lab",
+  label: "Index",
+  x: 1534,
+  y: 893,
+  w: 440,
+};

@@ -66,7 +66,7 @@ export interface ProjectData {
   liveUrl?: string;
   /** One-line subtitle under the title. Presence switches on the structured header. */
   tagline?: string;
-  /** Small chips beside the title, e.g. ["Design", "Dev"]. */
+  /** Chips on the home page card's artwork, e.g. ["App Design", "Web Development"]. Falls back to `skills`. */
   tags?: string[];
   /** Flat pills next to the CTA, e.g. ["186 icons", "MIT"]. */
   pills?: string[];

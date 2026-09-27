@@ -11,6 +11,8 @@ interface PixelWaveTextProps {
   wave?: string;
   style?: React.CSSProperties;
   ariaLabel?: string;
+  /** Entrance stagger: letter by letter (default) or word by word. */
+  by?: "char" | "word";
 }
 
 // Renders text as per-character layers (spacer + pixel + sans) so the
@@ -24,6 +26,7 @@ export default function PixelWaveText({
   wave,
   style,
   ariaLabel,
+  by = "char",
 }: PixelWaveTextProps) {
   const ref = useRef<HTMLElement>(null);
   const cls = className ?? classProp;
@@ -66,12 +69,12 @@ export default function PixelWaveText({
     // Default / "demo": entrance flip then enable hover interaction.
     const delay = wave === "demo" ? 250 : 0;
     resetWave(container);
-    pixelWave(container, delay);
+    pixelWave(container, delay, by);
     const timer = window.setTimeout(() => {
       enablePixelHover(container);
     }, delay + 5000);
     return () => window.clearTimeout(timer);
-  }, [wave, text]);
+  }, [wave, text, by]);
 
   return (
     <Component
@@ -85,6 +88,7 @@ export default function PixelWaveText({
         <span
           key={wi}
           aria-hidden="true"
+          data-pw-word
           className="inline-block whitespace-nowrap"
           style={wi < words.length - 1 ? { marginRight: "0.25em" } : undefined}
         >
