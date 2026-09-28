@@ -7,6 +7,17 @@ import { WebMcpTools } from "@/components/agent/WebMcpTools";
 import { agentProfile } from "@/lib/agent-profile";
 import { siteUrl } from "@/lib/site-url";
 
+// The link preview: a scrapbook of Ammar's portfolio on the site's paper
+// (headline, a checklist note, his polaroid with the A mark as a sticker, an
+// Iconimate print, the leaf garden). Rendered once from a 1200x630 design;
+// see agent-os/learnings/link-preview.md to change it.
+const OG_IMAGE = {
+  url: "/images/brand/og.jpg",
+  width: 1200,
+  height: 630,
+  alt: "Syed Mohammad Ammar, product designer who builds what he designs.",
+};
+
 export const metadata: Metadata = {
   // The real public origin (see lib/site-url.ts), so social previews and
   // canonical URLs resolve on the live domain.
@@ -31,14 +42,13 @@ export const metadata: Metadata = {
     url: siteUrl(),
     title: siteConfig.title,
     description: siteConfig.description,
-    // TODO: replace with a photo of Ammar — current file is the scaffold's placeholder (also used by the twitter card below).
-    images: ["/images/brand/profile-picture.jpg"],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: ["/images/brand/profile-picture.jpg"],
+    images: [OG_IMAGE],
   },
 };
 
