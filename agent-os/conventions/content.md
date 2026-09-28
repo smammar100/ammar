@@ -53,8 +53,7 @@ draft: false
 ```
 
 Writing entries are authored directly in `src/content/writing/` as short
-site-native summaries, with `canonicalUrl` pointing at the Medium original. Do
-not run the legacy `pnpm sync-writing` Obsidian pipeline (see `AGENTS.md`).
+site-native summaries, with `canonicalUrl` pointing at the Medium original.
 The website owns `theme`, `visual`, and `image` frontmatter for writing.
 
 Use `theme` for broad reader-facing grouping, such as `AI`, `Design`, `Systems

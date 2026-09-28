@@ -78,16 +78,6 @@ export default function Page() {
         </div>
 
         {/* TODO: add an Infrastructure section once hosting and deployment for smammar.com are confirmed. */}
-
-        <div className="border-t border-border pt-12">
-          <p className="mb-6 font-mono text-xs uppercase tracking-widest text-muted-foreground">Provenance</p>
-          {/* TODO: confirm before launch that this scaffold was publicly released and that a public
-              credit (and any link to its author) is wanted here — adjust or remove accordingly. */}
-          <p className="text-sm leading-relaxed">
-            The architecture of this site began as Patrick Morgan&apos;s portfolio scaffold. Credit
-            where it&apos;s due: the bones were his. Everything built on them since is mine.
-          </p>
-        </div>
       </div>
     </section>
   );

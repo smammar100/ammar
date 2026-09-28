@@ -6,7 +6,7 @@ The Pattern Engine route previously hit Vite `504 (Outdated Optimize Dep)` error
 
 ## Approach
 
-Keep `/lab/pattern-engine` as the interactive React app and keep generated Pattern Engine surfaces on the Lab thumbnail and home newsletter card. Remove the tiny React footer local-time island and implement it as plain DOM scripting, matching the sidebar time implementation. This removes unnecessary site-wide React hydration while preserving the designed generated pattern visuals.
+Keep `/lab/pattern-engine` as the interactive React app and keep generated Pattern Engine surfaces on the Lab thumbnail and home page card. Remove the tiny React footer local-time island and implement it as plain DOM scripting, matching the sidebar time implementation. This removes unnecessary site-wide React hydration while preserving the designed generated pattern visuals.
 
 ## Files to Modify
 

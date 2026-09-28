@@ -12,9 +12,9 @@ export const communityStory = {
 // home page reads entries [0] and [3] directly — do not drop below 4 entries.
 export const communityPhotos = [
   {
-    // TODO: swap placeholder image for a real photo of Ammar.
-    src: "/images/community/patio-selfie.jpg",
-    alt: "Placeholder photo, to be replaced with a photo of Ammar.",
+    // TODO: swap for a build-in-public photo; the About portrait stands in.
+    src: "/images/brand/profile-living-room.jpg",
+    alt: "Syed Mohammad Ammar.",
     className: "rotate-[-2deg] lg:absolute lg:left-0 lg:top-8 lg:w-[43%]",
     position: "object-[8%_50%]",
   },

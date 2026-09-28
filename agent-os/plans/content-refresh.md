@@ -1,4 +1,4 @@
-# Content Refresh — Patrick Morgan → Syed Mohammad Ammar
+# Content Refresh — Scaffold → Syed Mohammad Ammar
 
 ## Status
 
@@ -8,12 +8,11 @@ done.
 
 ## Context
 
-This codebase began as Patrick Morgan's portfolio (itspatmorgan.github.io) and
-was adopted as the foundation for Syed Mohammad Ammar's site. A partial rename
+This codebase began as another designer's portfolio scaffold and was adopted as the foundation for Syed Mohammad Ammar's site. A partial rename
 had already landed (root title template, TopNav brand, Karachi local time, lab
 page titles), but the rest of the site — hero, About biography, Work case
-studies, the 26 Unknown Arts articles, testimonials, community photos, resume,
-social links, and docs — still described Patrick.
+studies, the 26 newsletter articles, testimonials, community photos, resume,
+social links, and docs — still described the previous owner.
 
 Ammar's positioning is "Design Engineer": a Senior Product Designer at Mahaana
 (YC W22) with a CS degree, publicly shipping 100 built projects
@@ -44,7 +43,7 @@ are empty-string placeholders the UI must skip.
 
 ## Desired Outcome
 
-- Every page, metadata block, data file, and doc describes Ammar, not Patrick.
+- Every page, metadata block, data file, and doc describes Ammar, not the previous owner.
 - Hero: "Ammar designs it, builds it, ships it." with the Mahaana receipt line;
   About tells the CS → designer → design-engineer arc in nine paragraphs;
   closing CTA is "Let's build something worth shipping." with email/LinkedIn.
@@ -71,18 +70,18 @@ Surface-by-surface, against a locked fact sheet and locked copy direction:
   line, Writing section (the old newsletter card removed), About biography,
   Work, Resume, Community, Colophon, Style Guide, and per-page metadata
   (including the `(tool)` lab pages) rebranded; newsletter clauses removed
-  everywhere. The Colophon keeps one intentional provenance credit linking the
-  original author of the scaffold.
-- Components (`src/components/`, `src/lab/`): Substack social entry removed
+  everywhere. (The Colophon's provenance credit to the scaffold's author was
+  later removed at the owner's request.)
+- Components (`src/components/`, `src/lab/`): Newsletter social entry removed
   from TopNav and MobileChrome, empty social hrefs skipped, mobile logo mark
   and aria-label corrected, WritingIndexClient subscribe line replaced,
   exported-art credit changed from the previous owner's handle to
   `smammar.com` (domain still has a confirm-TODO).
-- Content (`src/content/`): Patrick's five project case studies replaced by
-  the four canonical Ammar slugs; the 26 Unknown Arts article reproductions
+- Content (`src/content/`): the previous owner's five case studies replaced by
+  the four canonical Ammar slugs; the 26 newsletter article reproductions
   replaced by the two Medium-canonical summaries; lab entries untouched.
 - Docs: `README.md` rewritten (owner, Next.js 15, smammar.com TODO);
-  `AGENTS.md` Patrick references removed (overview, tracking, `.reference/`
+  `AGENTS.md` references to the previous owner removed (overview, tracking, `.reference/`
   warning) and stale Astro-era guidance corrected (tech stack, commands,
   repository map, content-query conventions, legacy sync scripts);
   `agent-os/strategy.md` purpose/audience/tracks updated for Ammar
@@ -130,23 +129,12 @@ Out:
 
 ## Owner TODOs (launch checklist)
 
-### 1. Photos to replace (paths and slots kept; files still show Patrick)
+### 1. Photos (done, 2026-09-28)
 
-Swap files in place at the same paths and dimensions; alt text is already
-updated/flagged in code.
-
-| Path | Dimensions | Used on |
-| --- | --- | --- |
-| `/images/brand/profile-living-room.jpg` | 2400×2400 | Home desktop hero polaroid (`BuilderPhoto`), About photo grid |
-| `/images/brand/profile-living-room-avatar.jpg` | 600×600 | Home mobile hero avatar |
-| `/images/brand/personal-dinner.jpg` | 1800×1201 | About photo grid |
-| `/images/brand/personal-hollywood.jpg` | 1800×1200 | About photo grid |
-| `/images/brand/personal-airport.jpg` | 1800×1350 | About photo grid |
-| `/images/brand/profile-picture.jpg` | 400×400 | Root layout OG/Twitter card image |
-| `/images/community/patio-selfie.jpg` | 1600×1067 | Home Community slot [0], `/community` |
-| `/images/community/backyard-host.jpg` | 1600×1067 | `/community` |
-| `/images/community/night-gathering.jpg` | 1600×1200 | `/community` |
-| `/images/community/park-group-selfie.jpg` | 1600×1200 | Home Community slot [3], `/community` |
+Every photo of the previous owner is gone. The About, home and community
+photos are Ammar's; unused ones were deleted; the link-preview image is
+`/images/brand/og.jpg` (see `agent-os/learnings/link-preview.md`). Community
+slot [0] borrows the About portrait until a build-in-public photo exists.
 
 ### 2. Handles and URLs to confirm
 
@@ -156,8 +144,7 @@ updated/flagged in code.
   confirmed.
 - ThumbGen URL — live tool and/or open-source repo link.
 - Domain — confirm `https://www.smammar.com` (`siteConfig.url`,
-  `metadataBase`). `public/CNAME` still contains `itspatmorgan.com` and must be
-  replaced or deleted before any Pages deploy.
+  `metadataBase`).
 - Mahaana URL — confirm `https://mahaana.com` (`siteConfig.links.mahaana`).
 
 ### 3. Project thumbnail images per new slug
@@ -178,18 +165,10 @@ for short quotes, then populate the data file. Never fabricate.
 
 ### 5. Cleanup decisions
 
-- Consider deleting `.reference/` — Patrick's planning material (briefs,
-  testimonial quotes, his URLs). AGENTS.md no longer endorses it as a source.
-- `/images/brand/patrick-signature.png` (764×376) is now unused — the About
-  sign-off is plain text ("— Ammar"). Delete the file, or replace it with an
-  Ammar signature mark if a drawn sign-off is wanted later.
-- Consider deleting stale assets: `public/images/writing/*` (Patrick's article
-  images), `public/images/projects/{characters,expansion,gpts,query,vision}/`,
-  `public/images/profiles/*` (testimonial avatars),
-  `public/images/unknown-arts/`, and `public/images/logos/career-*.svg`
-  (Patrick's employers).
-- Favicon set (`public/favicon.svg` + PNGs + apple-touch-icon) is still the
-  old braille-P mark; regenerate from the A mark (`DitherAMark`).
+- Done (2026-09-28): the previous owner's legacy material and assets are
+  deleted — `.reference/`, the signature image, article and testimonial
+  images, old project folders, former-employer logos, and plans that only
+  described his own setup. The favicon set is the A mark.
 - `.github/workflows/deploy.yml` builds with `withastro/action` against a
   Next.js repo — fix or remove before relying on CI.
 

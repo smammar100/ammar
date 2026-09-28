@@ -10,7 +10,7 @@ The site sidebar is now driven by the pixel mark and should default to the colla
 - Remove the mobile "Elsewhere" label and slightly reduce the social section spacing.
 - Default the desktop sidebar to collapsed only when no saved preference exists.
 - Add a custom, faster sidebar tooltip that works for collapsed icon controls.
-- Update the homepage headline and intro copy so Patrick's name appears even when the sidebar is collapsed.
+- Update the homepage headline and intro copy so the owner's name appears even when the sidebar is collapsed.
 - Remove the career arc nodes from the homepage hero and rebalance the mobile/desktop hero spacing.
 - Add a subtle dot-grid texture that anchors the portrait on desktop and becomes a top fade on mobile.
 - Coordinate the desktop hero and first Work-card entrance animation.

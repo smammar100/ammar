@@ -4,7 +4,7 @@
 
 The live Lab tool currently ships publicly as "Editorial Art Tool" at `/lab/editorial-art`. That name is cumbersome and undersells the broader pattern-generation system now used across writing, homepage visuals, and publishing assets.
 
-The public surface needs to become "Pattern Engine" quickly so it can be linked from the newsletter, while avoiding unnecessary conflicts with the active `sidebar-layout-shell` branch.
+The public surface needs to become "Pattern Engine" quickly so it can be linked publicly, while avoiding unnecessary conflicts with the active `sidebar-layout-shell` branch.
 
 ## Approach
 

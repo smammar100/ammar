@@ -6,7 +6,7 @@
 
 The site uses Geist Sans (body) and Geist Mono (labels). Vercel released Geist Pixel in Feb 2026 — a bitmap-inspired typeface with 5 variants (Square, Grid, Circle, Triangle, Line). It's free/open-source and shares DNA with Geist Sans.
 
-The goal: use Geist Pixel in two strategic spots — the hero name and the closing CTA — to create a "pixel wave" transition that conveys Patrick's hybrid coder/designer identity. The pixel font represents the code self; the sans-serif represents the designer self.
+The goal: use Geist Pixel in two strategic spots — the hero name and the closing CTA — to create a "pixel wave" transition that conveys the owner's hybrid coder/designer identity. The pixel font represents the code self; the sans-serif represents the designer self.
 
 **Key constraint:** Geist Pixel is NOT a variable font with animation axes. Smooth transitions require per-character dual-layer cross-dissolves (overlapping pixel + sans spans with opacity animation).
 
@@ -42,7 +42,7 @@ All hero elements are individually timed for a cohesive sequence:
 
 | Location | Trigger | Interaction |
 |---|---|---|
-| Hero h1 "Patrick Morgan" | Page load (300ms delay) | Split-flap only |
+| Hero h1 (the name) | Page load (300ms delay) | Split-flap only |
 | CTA "Let's craft a better future, together." | Scroll into view | Split-flap + hover |
 
 ## Script architecture

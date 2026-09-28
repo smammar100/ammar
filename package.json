@@ -8,7 +8,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync-writing": "node scripts/sync-writing.mjs",
     "generate:writing-art": "node scripts/generate-writing-art.mjs",
     "images:optimize": "node scripts/optimize-images.mjs"
   },

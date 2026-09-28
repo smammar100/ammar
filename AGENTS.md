@@ -48,9 +48,8 @@ pnpm lint
 `pnpm dev` starts Next.js at `localhost:4321`. `pnpm build` writes production
 output to `.next/`.
 
-`pnpm sync-writing` and `pnpm generate:writing-art` are legacy scripts from the
-previous owner's Obsidian-to-newsletter pipeline. Do not run them. Writing
-entries are authored directly in `src/content/writing/` with `canonicalUrl`
+`pnpm generate:writing-art` is a legacy feature-image generator for writing
+entries. Don't run it unless you're deliberately reviving it. Writing entries are authored directly in `src/content/writing/` with `canonicalUrl`
 pointing at the Medium original.
 
 ## Workflow
@@ -87,7 +86,6 @@ document the links and label conventions here.
 | Path | Purpose |
 | --- | --- |
 | `agent-os/` | Shared strategy, system map, plans, conventions, learnings, and skills |
-| `.reference/` | Legacy briefs and research from the previous site owner (Patrick Morgan). Do not treat as a source of facts for Ammar's site. TODO(owner): review and delete. |
 | `.github/workflows/deploy.yml` | Legacy GitHub Pages workflow (broken for this Next.js repo; see Tech Stack) |
 | `public/images/` | Static image assets |
 | `scripts/` | Legacy publishing, sync, and generation scripts from the previous pipeline |

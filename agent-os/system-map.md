@@ -51,10 +51,8 @@ pnpm lint
 - `pnpm start`: serves the production build locally.
 - `pnpm lint`: runs Next.js linting.
 
-`pnpm sync-writing` and `pnpm generate:writing-art` are legacy scripts from the
-previous owner's Obsidian-to-newsletter pipeline (along with
-`scripts/normalize-obsidian-newsletters.mjs`). Do not run them; see
-`AGENTS.md`.
+`pnpm generate:writing-art` is a legacy feature-image generator for writing
+entries. Don't run it unless you're deliberately reviving it; see `AGENTS.md`.
 
 ## Content Model
 
@@ -74,8 +72,7 @@ filtered before public rendering.
 
 Writing entries are authored directly in `src/content/writing/` as short
 site-native summaries with `canonicalUrl` frontmatter pointing at the Medium
-original. There is no sync pipeline; the legacy Obsidian newsletter scripts in
-`scripts/` must not be run.
+original. There is no sync pipeline.
 
 ### Editorial Art
 
@@ -96,8 +93,7 @@ Use these files for adjacent context:
 - `agent-os/conventions/styling.md`: visual design, Tailwind, prose, and
   interaction conventions
 - `agent-os/conventions/assets.md`: image and embed conventions
-- `agent-os/learnings/`: reusable lessons from completed work (some notes
-  describe the legacy sync/art pipeline and are historical context only)
+- `agent-os/learnings/`: reusable lessons from completed work 
 
 ## Verification
 

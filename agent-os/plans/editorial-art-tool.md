@@ -4,17 +4,16 @@
 
 Feature images for Writing section articles are currently Midjourney-generated collages. They're warm and editorial but manual, inconsistent in naming, and not reproducible. This tool starts replacing that workflow with a browser-based design tool that generates deterministic, on-brand PNGs.
 
-The output serves two surfaces: the personal website (`/writing/[slug]`, OG tags) and Unknown Arts Substack article headers. Both use the same 1200×630 format.
+The output serves two surfaces: the personal website (`/writing/[slug]`, OG tags) and newsletter article headers. Both use the same 1200×630 format.
 
 The tool itself is a portfolio artifact — it ships as a live page on the site (`/tools/editorial-art`) and will be documented as a project case study.
 
-Related issue: [#40](https://github.com/itspatmorgan/itspatmorgan.github.io/issues/40)
 
 ---
 
 ## Brand foundation
 
-Grounded in the exact Unknown Arts brand colors, with supporting neutrals drawn from the reference collage imagery:
+Grounded in a fixed brand palette, with supporting neutrals drawn from the reference collage imagery:
 
 **Color tokens:**
 | Token | Value | Role |
@@ -178,7 +177,7 @@ src/
 ## Future phases (out of scope for now)
 
 - OG image variant (same tool, different crop/composition)
-- Substack-specific size variant (if needed)
+- Newsletter-specific size variant (if needed)
 - Content/frontmatter integration for generated writing images
 - More generative foundations: isolines, strange attractors, Voronoi
 - Layerable options: masks, line overlays, annotation marks, metadata labels

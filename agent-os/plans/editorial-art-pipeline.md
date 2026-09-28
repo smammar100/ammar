@@ -2,7 +2,7 @@
 
 ## Context
 
-Follow-up work for [#44](https://github.com/itspatmorgan/itspatmorgan.github.io/issues/44). The editorial art tool can create strong generative images, but writing articles need a repeatable website-owned workflow that keeps Obsidian uncluttered, preserves generated metadata during sync, and avoids committing multi-megabyte PNG exports.
+The editorial art tool can create strong generative images, but writing articles need a repeatable website-owned workflow that keeps Obsidian uncluttered, preserves generated metadata during sync, and avoids committing multi-megabyte PNG exports.
 
 ## Approach
 
@@ -18,7 +18,6 @@ Follow-up work for [#44](https://github.com/itspatmorgan/itspatmorgan.github.io/
 | File | Change |
 |---|---|
 | `src/content.config.ts` | Add optional writing `visual` schema |
-| `scripts/sync-writing.mjs` | Preserve website-owned fields and use real YAML parsing |
 | `scripts/generate-writing-art.mjs` | Generate visual config and optimized feature images |
 | `src/layouts/WritingLayout.astro` | Use article images for OG metadata and generator metadata captions |
 | `package.json` | Add generation command and image/YAML tooling |
@@ -26,7 +25,6 @@ Follow-up work for [#44](https://github.com/itspatmorgan/itspatmorgan.github.io/
 ## Verification
 
 - `pnpm generate:writing-art -- --dry-run`
-- `pnpm sync-writing -- --dry-run`
 - `pnpm build`
 - Confirm generated feature images are 1200x630 JPEGs in the tens of KB, not MB.
 - Confirm article themes map to distinct generator types.
