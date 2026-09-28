@@ -94,7 +94,7 @@ export default function HomePage() {
 
       {/* ── Work ── */}
       <section className={`${frameSection} py-10 sm:py-12`} aria-label="Selected work">
-        <div className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2">
+        <div className="flex flex-col gap-14 lg:gap-20">
           {featuredProjects.slice(0, 4).map((project, i) => (
             <FeaturedWorkCard
               key={project.slug}

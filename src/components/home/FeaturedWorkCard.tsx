@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-// Featured work as a card in the home page's two-column grid: the artwork with
-// the product and its disciplines chipped over the bottom-left corner, then
-// the statement, supporting line and KPIs, then the buttons: "Visit project"
-// (only when the project sets `liveUrl`) and "Read case study". The title's link is stretched over the whole card, so
+// Featured work, one project per row on the home page: the 16:9 artwork with
+// the disciplines chipped over its bottom-left corner, beside (from lg; above,
+// below that) the product, statement, supporting line and KPIs, then the
+// buttons: "Visit project" (only when the project sets `liveUrl`) and "Read
+// case study". The title's link is stretched over the whole card, so
 // anywhere outside the buttons still opens the case study. It lives on the
 // title rather than the "Read case study" button because that button sinks
 // when pressed (scale), which would shrink the stretched area mid-click.
@@ -45,20 +46,28 @@ export function FeaturedWorkCard({
 }: FeaturedWorkCardProps) {
   const href = `/work/${slug}`;
   return (
-    <article className="group relative flex flex-col">
-      {/* Artwork. A fixed 4:3 frame so cards with differently shaped
-          thumbnails still line up across the row. */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-sm">
-        <div className="relative h-full w-full overflow-hidden rounded-[0.8rem]">
+    // Side by side only from xl, where the copy fits the image's height; the
+    // copy column stretches to that height so the logo lines up with the
+    // image's top edge and the buttons with its bottom.
+    <article className="group relative flex flex-col xl:grid xl:grid-cols-[minmax(0,57fr)_minmax(0,43fr)] xl:items-stretch xl:gap-10">
+      {/* Artwork, at the thumbnail's own aspect ratio so nothing is cropped
+          (16:9 when its size isn't known); the frame's mat wraps it. */}
+      <div className="relative w-full self-start overflow-hidden rounded-2xl border border-border bg-card p-1.5 shadow-sm">
+        <div
+          className="relative w-full overflow-hidden rounded-[0.8rem]"
+          style={{ aspectRatio: thumbnailSize ? `${thumbnailSize[0]} / ${thumbnailSize[1]}` : "16 / 9" }}
+        >
           {thumbnail && (
             <img
               src={thumbnail}
-              // WebP thumbnails ship -w640 and -w960 copies (the card is at
-              // most ~430px wide), so phones don't fetch the full file.
+              // WebP thumbnails ship -w640 and -w960 copies, so phones don't
+              // fetch the full file. The artwork is about 660px wide beside
+              // the copy from xl, and the full column width (up to ~1100px)
+              // below it, so the original is in the set too.
               {...(thumbnail.endsWith(".webp")
                 ? {
-                    srcSet: `${thumbnail.replace(/\.webp$/, "-w640.webp")} 640w, ${thumbnail.replace(/\.webp$/, "-w960.webp")} 960w`,
-                    sizes: "(min-width: 640px) 430px, calc(100vw - 72px)",
+                    srcSet: `${thumbnail.replace(/\.webp$/, "-w640.webp")} 640w, ${thumbnail.replace(/\.webp$/, "-w960.webp")} 960w, ${thumbnail} ${thumbnailSize?.[0] ?? 1600}w`,
+                    sizes: "(min-width: 1280px) 660px, calc(100vw - 72px)",
                   }
                 : {})}
               alt=""
@@ -102,12 +111,12 @@ export function FeaturedWorkCard({
       </div>
 
       {/* Copy */}
-      <div className="flex flex-1 flex-col px-1 pt-6">
+      <div className="flex flex-1 flex-col px-1 pt-6 xl:pt-0">
         {/* Each logo at its own display size, sat on the bottom of one
-            fixed-height slot, so logos can be sized to look alike and the
-            titles still line up across the row. */}
+            fixed-height slot, so logos can be sized to look alike and every
+            title starts the same distance down. */}
         {client && clientLogo && (
-          <span className="mb-3 flex h-9 items-end">
+          <span className="mb-3 flex h-9 items-end xl:mb-2">
             <img
               src={clientLogo[0]}
               alt=""
@@ -132,35 +141,28 @@ export function FeaturedWorkCard({
           <span className="mb-2 block text-sm font-medium text-muted-foreground">{client}</span>
         )}
 
-        {/* One sentence per line, so a two-sentence statement breaks between
-            them rather than wherever the width runs out. The link's ::after
-            covers the card, and carries the focus ring around all of it. */}
-        <h3 className="text-balance text-xl font-semibold leading-snug tracking-tight sm:text-2xl">
+        {/* The link's ::after covers the card, and carries the focus ring
+            around all of it. */}
+        <h3 className="text-balance text-xl font-semibold leading-snug tracking-tight sm:text-2xl xl:text-[22px] xl:leading-[1.2]">
           <Link
             href={href}
             className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring focus-visible:after:ring-offset-4 focus-visible:after:ring-offset-background"
           >
             {client && <span className="sr-only">{client}: </span>}
-            {/* The space keeps the sentences apart in the link's name. */}
-            {title.split(/(?<=\.)\s+/).map((sentence, i) => (
-              <span key={sentence} className="block">
-                {i > 0 && " "}
-                {sentence}
-              </span>
-            ))}
+            {title}
           </Link>
         </h3>
 
         {/* Never clamped: keep `subtext` to about 180 characters so it sits in
             three lines at card width. */}
-        {subtext && <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{subtext}</p>}
+        {subtext && <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground xl:mt-2 xl:text-[14.5px] xl:leading-normal">{subtext}</p>}
 
         {kpis && kpis.length > 0 && (
-          <ul className="mt-5 flex flex-wrap gap-1.5">
+          <ul className="mt-5 flex flex-wrap gap-1.5 xl:mt-2.5">
             {kpis.map((kpi) => (
               <li
                 key={kpi}
-                className="rounded-md border border-border px-2 py-1 font-mono text-[10.5px] uppercase tracking-widest text-muted-foreground"
+                className="rounded-md border border-border px-2 py-1 font-mono text-[10.5px] uppercase tracking-widest text-muted-foreground xl:py-0.5"
               >
                 {kpi}
               </li>
@@ -168,12 +170,12 @@ export function FeaturedWorkCard({
           </ul>
         )}
 
-        {/* Pushed to the bottom so both cards' buttons sit on one line, and
-            raised above the stretched title link so the buttons take their
+        {/* Raised above the stretched title link so the buttons take their
             own clicks (the gaps between them still open the case study).
             On phones a pair shares the row, or stacks full width if it's too
             narrow for both; a lone button keeps its own width. */}
-        <div className="pointer-events-none relative z-10 mt-auto flex flex-wrap gap-2 pt-7 sm:gap-2.5">
+        <div className="pointer-events-none relative z-10 mt-auto flex flex-wrap gap-2 pt-7 sm:gap-2.5 xl:pt-3 xl:[&>a]:h-10 xl:[&>a]:px-4">
+
           {liveUrl && (
             <a
               href={liveUrl}
