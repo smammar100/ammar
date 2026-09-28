@@ -143,12 +143,11 @@ export function MobileChrome() {
 
   return (
     <header
-      // Raised while the menu shows, as the old full-screen overlay was, so
-      // it clears anything a page adds at z-50 (Pattern Engine's controls).
-      className={cn(
-        "md:hidden sticky top-0 border-b border-border bg-background/80 backdrop-blur-sm",
-        visible ? "z-[100]" : "z-50",
-      )}
+      // Solid paper, the same as the menu's panels, so bar and menu read as
+      // one sheet. While the menu shows, the bar is raised, as the old
+      // full-screen overlay was, so it clears anything a page adds at z-50
+      // (Pattern Engine's controls).
+      className={cn("md:hidden sticky top-0 border-b border-border bg-background", visible ? "z-[100]" : "z-50")}
       onBlur={onBlur}
     >
       <div className="flex h-14 items-center justify-between px-4">
