@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { LabCanvas } from "@/components/lab/canvas/LabCanvas";
 import { getCanvasItems } from "@/components/lab/canvas/getCanvasItems";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Lab",
   description: "Design-engineering experiments and static shots, on one endless canvas.",
-  robots: { index: false, follow: false },
-};
+  path: "/lab",
+});
 
 export default function Page() {
   return (

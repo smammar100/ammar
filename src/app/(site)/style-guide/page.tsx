@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Style Guide | Syed Mohammad Ammar",
+export const metadata = pageMetadata({
+  title: "Style Guide",
   description: "Markdown element reference for styling",
-};
+  path: "/style-guide",
+  noindex: true,
+});
 
 const codeBlock = `// Code block example
 const theme = localStorage.getItem("theme");

@@ -13,6 +13,7 @@ for related details. This file owns system orientation, not editing rules.
 | Area | What it does | Source of truth |
 | --- | --- | --- |
 | Public site shell | Shared layout, navigation, footer, theme, metadata | `src/app/layout.tsx`, `src/components/layout/`, `src/data/site-config.ts` |
+| SEO and agent files | Page metadata, canonical URLs, structured data, sitemap, robots.txt, llms.txt and the agent catalog, all on `https://www.smammar.com` | `src/lib/metadata.ts`, `src/lib/structured-data.ts`, `src/lib/agent-profile.ts`; see `agent-os/learnings/seo.md` and `agent-os/learnings/agentic-browsing.md` |
 | Work | Public portfolio/case-study section at `/work` | `src/content/projects/`, rendered through `/work` routes |
 | Writing | Site-native summaries of Ammar's Medium articles, linking out via `canonicalUrl` | Authored directly in `src/content/writing/`; canonical originals live on Medium |
 | Lab | Hosted experiments, tools, and interaction demos | `src/content/lab/`, `src/app/(site)/lab/`, `src/app/(tool)/lab/`, `src/lab/` |

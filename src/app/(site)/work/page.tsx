@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { ProjectCard } from "@/components/ProjectCard";
 import { roles } from "@/data/experience";
 import { getProjects } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { WorkReveal } from "./WorkReveal";
 
-export const metadata: Metadata = {
-  title: "Work | Syed Mohammad Ammar",
+export const metadata = pageMetadata({
+  title: "Work",
   description: "Product designer since 2020. Now building what I design.",
-};
+  path: "/work",
+});
 
 const skillGroups = [
   { label: "Design", skills: ["Product design", "Design systems", "User research", "Usability testing", "Brand design", "Figma", "Webflow"] },

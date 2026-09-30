@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLabEntry } from "@/lib/content";
@@ -7,11 +7,11 @@ import { PixelWaveDemo } from "@/components/lab/PixelWaveDemo";
 
 const entry = getLabEntry("pixel-wave");
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: entry?.data.title ?? "Pixel Wave",
   description: entry?.data.description,
-  robots: { index: false, follow: false },
-};
+  path: "/lab/pixel-wave",
+});
 
 export default function Page() {
   const entry = getLabEntry("pixel-wave");

@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 import { getProjects, getWriting } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 
-// Pages worth finding. The component demo pages under /lab/[slug] are
-// noindex, so they're left out.
+// Pages worth finding, all of them indexable. The component demo pages under
+// /lab/[slug] and the style guide are noindex, so they're left out.
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteUrl();
   const pages = ["", "/about", "/resume", "/work", "/lab", "/lab/pixel-wave", "/lab/pixel-mark", "/lab/pixel-scatter", "/lab/pattern-engine", "/writing", "/colophon"];

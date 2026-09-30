@@ -224,7 +224,6 @@ export const ArtCanvas = forwardRef<HTMLDivElement, CanvasProps>(function ArtCan
               opacity: 0.5,
               lineHeight: 1,
             }}>
-              {/* TODO: confirm smammar.com is the final domain (matches siteConfig.url) */}
               {caption.params} · smammar.com
             </div>
           </div>

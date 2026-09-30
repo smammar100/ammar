@@ -11,7 +11,7 @@ tags:
   - AI
   - 3D Icons
   - JSON Prompting
-canonicalUrl: "https://medium.com/@mrammarbest110" # TODO: replace with the exact Part 1 article URL once confirmed
+# TODO: set canonicalUrl to the exact Part 1 article URL once confirmed (profile: https://medium.com/@mrammarbest110)
 draft: false
 ---
 Airbnb's new 3D icons have a trick to them. Put any two side by side and they read as family: same light, same materials, same little world. That's not luck. That's structure.

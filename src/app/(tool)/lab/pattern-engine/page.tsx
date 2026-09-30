@@ -1,16 +1,16 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { getLabEntry } from "@/lib/content";
 import { PatternEngineClient } from "@/components/lab/PatternEngineClient";
 
 const entry = getLabEntry("pattern-engine");
 
-export const metadata: Metadata = {
-  title: `${entry?.data.title ?? "Pattern Engine"} | Syed Mohammad Ammar`,
+export const metadata = pageMetadata({
+  title: entry?.data.title ?? "Pattern Engine",
   description:
     entry?.data.description ??
     "A deterministic pattern generator for writing, publishing, and site visuals.",
-  robots: { index: false, follow: false },
-};
+  path: "/lab/pattern-engine",
+});
 
 // The (tool) group layout already provides the TopNav and full-bleed shell.
 // This page renders only the tool's inner content.

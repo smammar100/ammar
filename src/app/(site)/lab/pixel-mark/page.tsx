@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLabEntry } from "@/lib/content";
@@ -13,11 +13,11 @@ import {
 
 const entry = getLabEntry("pixel-mark");
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: entry?.data.title ?? "Pixel Mark",
   description: entry?.data.description,
-  robots: { index: false, follow: false },
-};
+  path: "/lab/pixel-mark",
+});
 
 export default function Page() {
   const entry = getLabEntry("pixel-mark");

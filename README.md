@@ -2,7 +2,7 @@
 
 Personal portfolio site for Syed Mohammad Ammar, built with [Next.js 15](https://nextjs.org) (App Router), Tailwind CSS, and shadcn/ui.
 
-This repository contains the source for [smammar.com](https://www.smammar.com) (TODO: confirm domain before launch): a warm, minimal, editorial portfolio for design-engineering work, writing, and lab experiments.
+This repository contains the source for [smammar.com](https://www.smammar.com): a warm, minimal, editorial portfolio for design-engineering work, writing, and lab experiments.
 
 ## Start here
 

@@ -2,22 +2,16 @@ import type { Metadata } from "next";
 import { preload } from "react-dom";
 import "@/styles/global.css";
 import { siteConfig } from "@/data/site-config";
-import { SOCIAL_LINKS } from "@/data/social";
+import { JsonLd } from "@/components/JsonLd";
 import { WebMcpTools } from "@/components/agent/WebMcpTools";
 import { agentProfile } from "@/lib/agent-profile";
+import { OG_IMAGE } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site-url";
+import { siteGraph } from "@/lib/structured-data";
 
-// The link preview: a scrapbook of Ammar's portfolio on the site's paper
-// (headline, a checklist note, his polaroid with the A mark as a sticker, an
-// Iconimate print, the leaf garden). Rendered once from a 1200x630 design;
-// see agent-os/learnings/link-preview.md to change it.
-const OG_IMAGE = {
-  url: "/images/brand/og.jpg",
-  width: 1200,
-  height: 630,
-  alt: "Syed Mohammad Ammar, product designer who builds what he designs.",
-};
-
+// Site-wide defaults. Each page sets its own title, description, canonical URL
+// and link preview through pageMetadata() (lib/metadata.ts); what's here
+// covers anything that doesn't, such as the 404 page.
 export const metadata: Metadata = {
   // The real public origin (see lib/site-url.ts), so social previews and
   // canonical URLs resolve on the live domain.
@@ -27,6 +21,16 @@ export const metadata: Metadata = {
     template: "%s | Syed Mohammad Ammar",
   },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteUrl() }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  // Indexable, with full-size image previews and no snippet limit in Google.
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
   // All icons carry the DitherAMark "A". The PNG fallbacks are rasterized from
   // favicon.svg; apple-touch-icon is flattened opaque because iOS applies its own mask.
   icons: {
@@ -39,7 +43,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: siteUrl(),
+    siteName: siteConfig.name,
+    locale: "en_US",
     title: siteConfig.title,
     description: siteConfig.description,
     images: [OG_IMAGE],
@@ -60,57 +65,6 @@ const themeScript = `
   }
 `;
 
-/**
- * Structured data for search engines and AI agents: Ammar as a Person, his
- * practice as a ProfessionalService offering the two services, and the site.
- * Only facts the site states.
- */
-function structuredData() {
-  const p = agentProfile();
-  const base = p.links.site;
-  const person = `${base}/#person`;
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Person",
-        "@id": person,
-        name: p.name,
-        url: base,
-        email: `mailto:${p.contact.email}`,
-        jobTitle: "Product Designer",
-        description: p.summary,
-        address: { "@type": "PostalAddress", addressLocality: p.location.city, addressCountry: "PK" },
-        worksFor: { "@type": "Organization", name: "Mahaana" },
-        alumniOf: p.education.map((e) => ({ "@type": "CollegeOrUniversity", name: e.school })),
-        knowsAbout: [...p.skills.design, ...p.skills.build, ...p.skills.domains],
-        sameAs: SOCIAL_LINKS.map((s) => s.href),
-      },
-      {
-        "@type": "ProfessionalService",
-        "@id": `${base}/#service`,
-        name: `${p.name}: product design and web development`,
-        url: base,
-        email: p.contact.email,
-        founder: { "@id": person },
-        address: { "@type": "PostalAddress", addressLocality: p.location.city, addressCountry: "PK" },
-        areaServed: "Worldwide",
-        makesOffer: p.services.map((s) => ({
-          "@type": "Offer",
-          itemOffered: { "@type": "Service", name: s.name, description: s.description, provider: { "@id": person } },
-        })),
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${base}/#website`,
-        url: base,
-        name: p.name,
-        publisher: { "@id": person },
-      },
-    ],
-  };
-}
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const caseStudies = agentProfile().projects.map((w) => w.slug);
   // WebMCP needs Chrome's origin trial for now: set the token from
@@ -127,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* For AI agents: the llms.txt map of the site, and the agent catalog. */}
         <link rel="describedby" type="text/markdown" href="/llms.txt" />
         <link rel="ai-catalog ard" type="application/json" href="/.well-known/ai-catalog.json" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData()).replace(/</g, "\\u003c") }} />
+        <JsonLd data={siteGraph()} />
       </head>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

@@ -6,7 +6,10 @@ import { Mdx } from "@/components/Mdx";
 import { CaseStudyHeader } from "@/components/case-study/CaseStudyHeader";
 import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc";
 import { Intersection } from "@/components/layout/Intersection";
-import { getProject, getProjects } from "@/lib/content";
+import { JsonLd } from "@/components/JsonLd";
+import { getProject, getProjects, projectLabel } from "@/lib/content";
+import { pageMetadata } from "@/lib/metadata";
+import { caseStudyLd } from "@/lib/structured-data";
 
 export async function generateStaticParams() {
   // Mirror the Astro getStaticPaths, which included all projects (drafts too).
@@ -17,10 +20,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
-  return {
-    title: project.data.title,
+  return pageMetadata({
+    // With the client's name in front: a title like "Small icons. A lot of
+    // decisions." says nothing in a search result on its own.
+    title: projectLabel(project.data),
     description: project.data.description,
-  };
+    path: `/work/${slug}`,
+    type: "article",
+    noindex: project.data.draft,
+  });
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
@@ -90,6 +98,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <>
+      <JsonLd data={caseStudyLd(project)} />
       {isStructured ? <Intersection>{article}</Intersection> : article}
 
       <DynamicIslandTOC selector=".prose h2, .prose h3, .prose h4" />

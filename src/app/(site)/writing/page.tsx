@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { getWriting } from "@/lib/content";
 import {
   WritingIndexClient,
   type WritingIndexPost,
 } from "@/components/writing/WritingIndexClient";
 
-export const metadata: Metadata = {
-  title: "Writing | Syed Mohammad Ammar",
+export const metadata = pageMetadata({
+  title: "Writing",
   description:
     "Notes from Ammar's design-engineering run: AI-assisted design workflows, written up on Medium and summarized here.",
-};
+  path: "/writing",
+});
 
 const FILTER_THEMES = ["AI", "Design", "Systems Thinking", "Creative Practice", "Career"];
 

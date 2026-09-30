@@ -2,7 +2,8 @@ import { siteConfig } from "@/data/site-config";
 import { SOCIAL_LINKS } from "@/data/social";
 import { roles } from "@/data/experience";
 import { SERVICES } from "@/data/services";
-import { getLab, getProjects } from "@/lib/content";
+import { TECH_STACK } from "@/data/tech-stack";
+import { getLab, getProjects, projectLabel } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 
 // One description of Ammar for AI agents and LLMs, built from the site's own
@@ -28,8 +29,7 @@ export function agentProfile() {
     .map((p) => ({
       slug: p.slug,
       title: p.data.title,
-      // "Client: title", unless the title already is the client's name.
-      label: p.data.client && p.data.client !== p.data.title ? `${p.data.client}: ${p.data.title}` : p.data.title,
+      label: projectLabel(p.data),
       client: p.data.client ?? null,
       role: p.data.role ?? null,
       summary: p.data.description,
@@ -64,6 +64,7 @@ export function agentProfile() {
       site: base,
       about: `${base}/about`,
       resume: `${base}/resume`,
+      resumePdf: `${base}${siteConfig.resumePdf}`,
       work: `${base}/work`,
       lab: `${base}/lab`,
       llms: `${base}/llms.txt`,
@@ -71,6 +72,8 @@ export function agentProfile() {
     },
     services: SERVICES.map((s) => ({ name: s.title, description: s.body })),
     skills: SKILLS,
+    // The about page's "My tech stack" row.
+    tools: [...TECH_STACK],
     experience: roles.map((r) => ({
       company: r.company,
       role: r.role,

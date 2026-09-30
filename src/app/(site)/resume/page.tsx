@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { roles } from "@/data/experience";
 import { cn } from "@/lib/utils";
 import { ResumeReveal } from "./ResumeReveal";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Resumé",
   description:
     "Product designer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, shipping 100 built projects in public.",
-};
+  path: "/resume",
+});
 
 const arcNodes = ["Engineer", "Co-Founder", "Designer", "Product Designer"];
 
@@ -38,7 +39,7 @@ export default function Page() {
       <ResumeReveal />
 
       {/* Hero + Career Arc */}
-      {/* TODO: add a downloadable resume PDF for Ammar once one exists — no link until then. */}
+      {/* TODO: link the resume PDF here (siteConfig.resumePdf). The about page already does. */}
       <section className="mx-auto max-w-3xl px-6 pt-12 pb-12 sm:pt-24" data-resume-hero style={{ opacity: 0 }}>
         <h1 className="mb-3 text-4xl font-medium tracking-tight sm:text-5xl">Resumé</h1>
         <p className="mb-8 text-lg text-muted-foreground">Product design across fintech and early-stage startups since 2020, now shipping the code too.</p>

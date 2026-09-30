@@ -1,18 +1,17 @@
 import { siteConfig } from "@/data/site-config";
 
 /**
- * The site's public origin, for absolute URLs (metadata, llms.txt, the agent
- * catalog, structured data, the sitemap).
+ * The site's public origin, for absolute URLs (canonical links, Open Graph,
+ * llms.txt, the agent catalog, structured data, the sitemap).
  *
- * NEXT_PUBLIC_SITE_URL wins when set. On Vercel it falls back to the
- * production domain Vercel reports at build time, which is the custom domain
- * once one is added (smammar.com is planned), so a redeploy after adding it
- * switches every absolute URL over. siteConfig.url is the last resort.
+ * It's siteConfig.url: https://www.smammar.com, the host Vercel serves (the
+ * bare smammar.com redirects to it). NEXT_PUBLIC_SITE_URL overrides it, for
+ * checking a production build locally.
+ *
+ * Vercel's VERCEL_PROJECT_PRODUCTION_URL is deliberately not used: it reports
+ * the shortest production domain, which is the bare smammar.com, so every
+ * canonical URL would point at a redirect.
  */
 export function siteUrl(): string {
-  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return explicit.replace(/\/$/, "");
-  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  if (vercel) return `https://${vercel}`;
-  return siteConfig.url.replace(/\/$/, "");
+  return (process.env.NEXT_PUBLIC_SITE_URL || siteConfig.url).replace(/\/$/, "");
 }

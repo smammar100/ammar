@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getLabEntry } from "@/lib/content";
 import { Mdx } from "@/components/Mdx";
 import { LAB_DEMOS } from "@/components/lab/demos/registry";
+import { pageMetadata } from "@/lib/metadata";
 
 // One page for every component experiment in the Lab: the live demo, then the
 // write-up from its content entry. Experiments with their own route
@@ -19,12 +20,13 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const entry = getLabEntry(slug);
-  return {
+  return pageMetadata({
     // The root layout's title template adds the site name.
     title: entry?.data.title ?? "Lab",
     description: entry?.data.description,
-    robots: { index: false, follow: false },
-  };
+    path: `/lab/${slug}`,
+    noindex: true,
+  });
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {

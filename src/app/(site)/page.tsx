@@ -9,6 +9,9 @@ import PixelWaveText from "@/components/PixelWaveText";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
 import { siteConfig } from "@/data/site-config";
 import { getProjects, getWriting } from "@/lib/content";
+import { pageMetadata } from "@/lib/metadata";
+
+export const metadata = pageMetadata({ title: siteConfig.title, absoluteTitle: true, path: "/" });
 
 // Home sections switched off for now. Flip to true to bring them back; the
 // routes they link to (/writing, /work/design-engineering-100) are untouched.

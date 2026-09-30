@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLabEntry } from "@/lib/content";
@@ -7,11 +7,11 @@ import { PixelScatterButton } from "@/components/lab/PixelScatterButton";
 
 const entry = getLabEntry("pixel-scatter");
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: entry?.data.title ?? "Pixel Scatter Button",
   description: entry?.data.description,
-  robots: { index: false, follow: false },
-};
+  path: "/lab/pixel-scatter",
+});
 
 export default function Page() {
   const entry = getLabEntry("pixel-scatter");

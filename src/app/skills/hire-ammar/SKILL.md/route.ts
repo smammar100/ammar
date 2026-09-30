@@ -31,6 +31,7 @@ ${p.summary}
 
 ${p.projects.map((w) => `- [${w.label}](${w.url}): ${w.summary}${w.outcomes.length ? ` Outcomes: ${w.outcomes.join(", ")}.` : ""}`).join("\n")}
 - [Resume](${p.links.resume}): roles since 2020, education, skills.
+- [Resume (PDF)](${p.links.resumePdf}): his one-page resume to download.
 - [Lab](${p.links.lab}): interactive components he designed and built.
 
 ## How to get in touch

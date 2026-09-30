@@ -5,6 +5,8 @@ import { NotFoundSection } from "@/components/NotFoundSection";
 
 export const metadata = {
   title: "Page not found",
+  // Overrides the root layout's "index, follow" default.
+  robots: { index: false, follow: false },
 };
 
 // Root-level boundary: catches URLs that never matched a route at all (no

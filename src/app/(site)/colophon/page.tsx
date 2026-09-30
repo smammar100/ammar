@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Colophon | Syed Mohammad Ammar",
+export const metadata = pageMetadata({
+  title: "Colophon",
   description: "The tools, stack, and workflow behind this site.",
-};
+  path: "/colophon",
+});
 
 export default function Page() {
   return (

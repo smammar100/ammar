@@ -159,6 +159,15 @@ export function getProject(slug: string): Entry<ProjectData> | undefined {
   return getProjects(true).find((e) => e.slug === slug);
 }
 
+/**
+ * A project's name for places that show it without its page around it (the
+ * browser tab, search results, the agent files): "Client: title", unless the
+ * title already is the client's name.
+ */
+export function projectLabel(data: ProjectData): string {
+  return data.client && data.client !== data.title ? `${data.client}: ${data.title}` : data.title;
+}
+
 export function getWriting(includeDrafts = false): Entry<WritingData>[] {
   return readCollection("writing")
     .map((e) => {

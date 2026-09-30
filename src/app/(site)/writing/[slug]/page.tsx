@@ -6,6 +6,9 @@ import { Mdx } from "@/components/Mdx";
 import { Badge } from "@/components/ui/badge";
 import { DynamicIslandTOC } from "@/components/ui/dynamic-island-toc";
 import { EditorialVisual } from "@/components/writing/EditorialVisual";
+import { JsonLd } from "@/components/JsonLd";
+import { pageMetadata } from "@/lib/metadata";
+import { writingLd } from "@/lib/structured-data";
 
 export function generateStaticParams() {
   return getWriting(true).map((post) => ({ slug: post.slug }));
@@ -19,10 +22,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const entry = getWritingEntry(slug);
   if (!entry) return {};
-  return {
+  // The canonical URL is this page, not the Medium original in `canonicalUrl`:
+  // the entry is the site's own summary, not a copy of the article.
+  return pageMetadata({
     title: entry.data.title,
     description: entry.data.description,
-  };
+    path: `/writing/${slug}`,
+    type: "article",
+    publishedTime: entry.data.publishedDate.toISOString(),
+    noindex: entry.data.draft,
+  });
 }
 
 // ── Visual caption / tool-link helpers (folded in from WritingLayout.astro) ──
@@ -119,6 +128,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <>
+    <JsonLd data={writingLd(entry)} />
     <article className="mx-auto max-w-3xl px-6 py-16">
       {/* Back link */}
       <Link

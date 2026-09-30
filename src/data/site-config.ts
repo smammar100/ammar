@@ -3,7 +3,8 @@ export const siteConfig = {
   title: "Syed Mohammad Ammar | Product Designer",
   description:
     "Product designer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, publicly shipping 100 built projects, design to deploy.",
-  // TODO: confirm domain before launch.
+  // The live domain. The bare smammar.com redirects here, so every canonical
+  // and absolute URL uses the www host (see lib/site-url.ts).
   url: "https://www.smammar.com",
   nav: [
     { label: "Home", href: "/" },
@@ -17,6 +18,9 @@ export const siteConfig = {
     // yet. The /community route still resolves. TODO: re-add once Kind Words and
     // community content are real.
   ],
+  // The resume as a PDF, in public/. The about page's "Download resume" link
+  // and the agent-facing files point at it.
+  resumePdf: "/Syed-Mohammad-Ammar-Resume.pdf",
   links: {
     // TODO: confirm Mahaana URL before launch — likely https://mahaana.com.
     mahaana: "https://mahaana.com",

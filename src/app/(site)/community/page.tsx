@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { notFound } from "next/navigation";
 import { commendations } from "@/data/commendations";
 import { communityPhotos, communityStory } from "@/data/community";
 import { cn } from "@/lib/utils";
 import { CommunityReveal } from "./CommunityReveal";
 
-export const metadata: Metadata = {
-  title: "Community | Syed Mohammad Ammar",
+export const metadata = pageMetadata({
+  title: "Community",
   description: "Building in public by shipping components, open-source tools, and experiments where everyone can see them.",
-};
+  path: "/community",
+});
 
 const communityPagePhotos = communityPhotos.slice(1).map((photo, index) => ({
   ...photo,
