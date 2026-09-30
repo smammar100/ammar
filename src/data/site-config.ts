@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Syed Mohammad Ammar",
   title: "Syed Mohammad Ammar | Product Designer",
   description:
-    "Product designer in Karachi. Senior Product Designer at Mahaana (YC W22), #1 Top Author on 21st.dev, publicly shipping 100 built projects, design to deploy.",
+    "Product designer in Karachi who makes complex products easy to use, and builds them too. Product design, design systems and front-end in React and Next.js. Previously Senior Product Designer at Mahaana (YC W22).",
   // The live domain. The bare smammar.com redirects here, so every canonical
   // and absolute URL uses the www host (see lib/site-url.ts).
   url: "https://www.smammar.com",

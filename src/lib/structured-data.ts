@@ -41,7 +41,6 @@ export function siteGraph() {
         jobTitle: "Product Designer",
         description: p.summary,
         address,
-        worksFor: { "@type": "Organization", name: "Mahaana" },
         alumniOf: p.education.map((e) => ({ "@type": "CollegeOrUniversity", name: e.school })),
         knowsAbout: [...p.skills.design, ...p.skills.build, ...p.skills.domains],
         sameAs: SOCIAL_LINKS.map((s) => s.href),

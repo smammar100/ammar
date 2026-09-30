@@ -95,10 +95,13 @@ export default function PixelWaveText({
     <Component
       ref={ref}
       className={cls}
-      aria-label={ariaLabel ?? text}
       data-pixel-wave={wave}
       style={style}
     >
+      {/* The real sentence, as text, for screen readers and crawlers. Every
+          letter below is drawn three times (spacer, pixel, sans), so those
+          layers are hidden from assistive tech. */}
+      <span className="sr-only">{ariaLabel ?? text}</span>
       {words.map((word, wi) => (
         <span
           key={wi}

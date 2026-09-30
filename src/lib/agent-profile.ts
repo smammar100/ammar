@@ -48,7 +48,7 @@ export function agentProfile() {
     name: siteConfig.name,
     headline: "Product designer who makes complex products easy to use, and builds them too.",
     summary:
-      "Product designer and design engineer in Karachi, Pakistan. Senior Product Designer at Mahaana (YC W22), leading design for its iOS and Android investing apps. Designs from research and flows to design systems, then builds the front end in React and Next.js. #1 Top Author on 21st.dev, and publicly shipping 100 built projects.",
+      "Product designer and design engineer in Karachi, Pakistan. Until May 2026, Senior Product Designer at Mahaana (YC W22), where he led design for its iOS and Android investing apps. Designs from research and flows to design systems, then builds the front end in React and Next.js. #1 Top Author on 21st.dev, and publicly shipping 100 built projects.",
     availability: "Currently open to new projects: product design, web development, or both end to end.",
     location: { city: "Karachi", country: "Pakistan", timezone: "Asia/Karachi, UTC+5", remote: true },
     contact: {

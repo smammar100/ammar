@@ -19,9 +19,9 @@ export const roles: Role[] = [
     // TODO: confirm URL before linking — likely https://mahaana.com (see siteConfig.links.mahaana).
     // TODO: add /images/logos/career-mahaana.svg, then set `logo`.
     role: "Product Designer → Senior Product Designer",
-    dateRange: "2023–Now",
+    dateRange: "2023–2026",
     summary:
-      "Leading product design for the iOS and Android apps at Pakistan's first digital-only asset management company, licensed by the SECP and founded by the team behind Sweden's Tundra Fonder. 50K+ registered users and 10K+ app downloads, working directly with engineers and founders to ship it.",
+      "Led product design for the iOS and Android apps at Pakistan's first digital-only asset management company, licensed by the SECP and founded by the team behind Sweden's Tundra Fonder. 50K+ registered users and 10K+ app downloads, working directly with engineers and founders to ship it. Left in May 2026.",
     projects: ["mahaana-wealth"],
     descriptions: [
       "Led design for Mahaana's investment platform across mobile and web: 10,000+ downloads.",
