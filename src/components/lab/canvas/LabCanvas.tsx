@@ -797,8 +797,8 @@ export function LabCanvas({
           }`}
         >
           <div
-            className={`flex items-center gap-2.5 rounded-full border border-border bg-background/90 py-1 pr-4 shadow-sm backdrop-blur ${
-              embedded ? "pl-4" : "pointer-events-auto pl-1"
+            className={`flex items-center gap-2.5 rounded-full border border-border bg-background/90 py-1 shadow-sm backdrop-blur ${
+              embedded ? "px-4" : "pointer-events-auto px-1"
             }`}
             onPointerDown={(e) => e.stopPropagation()}
           >
@@ -839,13 +839,16 @@ export function LabCanvas({
                 ))}
               </div>
             )}
-            <span
-              aria-hidden="true"
-              className={`items-center gap-2 py-1 font-mono ${embedded ? "flex" : "hidden border-l border-border pl-2.5 md:flex"} text-[11px] tracking-widest text-muted-foreground uppercase`}
-            >
-              <Move className="size-3.5" />
-              {!isWall ? "Scroll to browse" : embedded ? "Drag to explore" : "Drag or scroll to explore"}
-            </span>
+            {/* On the Lab page the hint lives on the Lab's note instead. */}
+            {embedded && (
+              <span
+                aria-hidden="true"
+                className="flex items-center gap-2 py-1 font-mono text-[11px] tracking-widest text-muted-foreground uppercase"
+              >
+                <Move className="size-3.5" />
+                Drag to explore
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -962,10 +965,9 @@ function HeadingNote({ content, primary }: { content: NoteContent; primary: bool
 function Note() {
   return (
     <div className="rounded-xl border border-dashed border-(--pattern-fg) bg-card/70 p-6">
-      <p className="font-mono text-[10px] tracking-widest text-muted-foreground uppercase">Index</p>
-      <p className="mt-2 text-3xl font-medium tracking-tight">The Lab</p>
+      <p className="text-3xl font-medium tracking-tight">The Lab</p>
       <p className="mt-2 font-hand text-xl leading-snug text-muted-foreground">
-        Things I&apos;ve built and screens I&apos;ve drawn, all on one table. Drag anywhere to look around.
+        Things I&apos;ve built and screens I&apos;ve drawn, all on one table.
       </p>
       <ul className="mt-5 space-y-1.5 font-mono text-[10px] tracking-widest text-muted-foreground uppercase">
         <li className="flex items-center gap-2">
@@ -973,6 +975,9 @@ function Note() {
         </li>
         <li className="flex items-center gap-2">
           <span className="size-1.5 rounded-[1px] bg-foreground/40" /> Static: click for a closer look
+        </li>
+        <li className="flex items-center gap-2">
+          <Move className="-mx-[3px] size-3" /> Drag or scroll to explore
         </li>
       </ul>
     </div>

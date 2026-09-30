@@ -8,7 +8,9 @@
 // The layout is six columns, 508 wide, of three or four pieces. Each row of
 // repeats is shifted half a tile (three columns) sideways, so the same piece
 // never sits directly under itself; for that seam to stay even, columns three
-// apart start at the same height (0, 180, 0, 0, 180, 0).
+// apart start at the same height (0, 180, 0, 0, 180, 0). The Lab opens centred
+// on the note in the fifth column, so the columns either side of it carry a mix
+// of builds and shots; the columns that are all shots sit further out.
 
 export const TILE_W = 3048;
 export const TILE_H = 1272;
@@ -96,7 +98,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/wallet-onboarding.webp",
     width: 1200,
     height: 900,
-    x: 80,
+    x: 2620,
     y: 681,
     w: 300,
   },
@@ -118,7 +120,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/cubetalk-landing.webp",
     width: 1504,
     height: 1128,
-    x: 1046,
+    x: 1554,
     y: 0,
     w: 400,
   },
@@ -129,11 +131,11 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/eclipse-nft-marketplace.webp",
     width: 1504,
     height: 1128,
-    x: 20,
+    x: 2560,
     y: 0,
     w: 420,
   },
-  // Fourth column.
+  // Third column.
   {
     id: "edusphere-courses",
     title: "EduSphere Courses",
@@ -141,7 +143,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/edusphere-courses.webp",
     width: 1024,
     height: 768,
-    x: 1558,
+    x: 1050,
     y: 0,
     w: 440,
   },
@@ -152,7 +154,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/compact-disc.webp",
     width: 512,
     height: 512,
-    x: 1608,
+    x: 1100,
     y: 408,
     w: 340,
   },
@@ -163,11 +165,11 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/skill-tags.webp",
     width: 512,
     height: 448,
-    x: 1568,
+    x: 1060,
     y: 826,
     w: 420,
   },
-  // Sixth column.
+  // First column.
   {
     id: "tie-fighter",
     title: "TIE Fighter",
@@ -175,7 +177,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/tie-fighter.webp",
     width: 512,
     height: 442,
-    x: 2584,
+    x: 44,
     y: 0,
     w: 420,
   },
@@ -186,7 +188,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/pendant.webp",
     width: 512,
     height: 512,
-    x: 2624,
+    x: 84,
     y: 441,
     w: 340,
   },
@@ -197,7 +199,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/letter.webp",
     width: 400,
     height: 400,
-    x: 2626,
+    x: 86,
     y: 859,
     w: 336,
   },
@@ -206,14 +208,14 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
 /** Where each build sits, keyed by Lab slug (plus "iconimate"). */
 export const BUILD_SPOTS: Record<string, { x: number; y: number; w: number }> = {
   "pixel-wave": { x: 2042, y: 1145, w: 440 },
-  "pattern-engine": { x: 30, y: 393, w: 400 },
+  "pattern-engine": { x: 2570, y: 393, w: 400 },
   iconimate: { x: 548, y: 1135, w: 380 },
   "pixel-mark": { x: 548, y: 856, w: 380 },
-  "pixel-scatter": { x: 1036, y: 692, w: 420 },
-  "scroll-reel-testimonials": { x: 1026, y: 380, w: 440 },
-  "anti-metal-button": { x: 1056, y: 992, w: 380 },
+  "pixel-scatter": { x: 1544, y: 692, w: 420 },
+  "scroll-reel-testimonials": { x: 1534, y: 380, w: 440 },
+  "anti-metal-button": { x: 1564, y: 992, w: 380 },
   "music-player": { x: 538, y: 566, w: 400 },
-  "perspective-highlight": { x: 30, y: 984, w: 400 },
+  "perspective-highlight": { x: 2570, y: 984, w: 400 },
 };
 
 export const NOTE: CanvasNote = {
