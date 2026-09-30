@@ -5,11 +5,12 @@
 // has to read well across its own seams: the leftmost and rightmost items, and
 // the top and bottom rows, leave room for the neighbouring repeat.
 //
-// The layout is four columns of four pieces. Each row of repeats is shifted half a tile (two
-// columns) sideways, so the same piece never sits directly under itself; for
-// that seam to stay even, columns two apart start at the same height.
+// The layout is six columns, 508 wide, of three or four pieces. Each row of
+// repeats is shifted half a tile (three columns) sideways, so the same piece
+// never sits directly under itself; for that seam to stay even, columns three
+// apart start at the same height (0, 180, 0, 0, 180, 0).
 
-export const TILE_W = 2032;
+export const TILE_W = 3048;
 export const TILE_H = 1272;
 /**
  * How far past an edge an item travels before it wraps. At least the widest
@@ -73,7 +74,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/hr-payroll-landing.webp",
     width: 1504,
     height: 846,
-    x: 1534,
+    x: 2042,
     y: 821,
     w: 440,
   },
@@ -84,7 +85,7 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     src: "/images/lab/shots/archealth-dashboard.webp",
     width: 1200,
     height: 900,
-    x: 1564,
+    x: 2072,
     y: 180,
     w: 380,
   },
@@ -132,11 +133,79 @@ export const SHOTS: Omit<CanvasShot, "kind">[] = [
     y: 0,
     w: 420,
   },
+  // Fourth column.
+  {
+    id: "edusphere-courses",
+    title: "EduSphere Courses",
+    label: "Dashboard design",
+    src: "/images/lab/shots/edusphere-courses.webp",
+    width: 1024,
+    height: 768,
+    x: 1558,
+    y: 0,
+    w: 440,
+  },
+  {
+    id: "compact-disc",
+    title: "Compact Disc",
+    label: "Icon design",
+    src: "/images/lab/shots/compact-disc.webp",
+    width: 512,
+    height: 512,
+    x: 1608,
+    y: 408,
+    w: 340,
+  },
+  {
+    id: "skill-tags",
+    title: "Skill Tags",
+    label: "Illustration",
+    src: "/images/lab/shots/skill-tags.webp",
+    width: 512,
+    height: 448,
+    x: 1568,
+    y: 826,
+    w: 420,
+  },
+  // Sixth column.
+  {
+    id: "tie-fighter",
+    title: "TIE Fighter",
+    label: "3D illustration",
+    src: "/images/lab/shots/tie-fighter.webp",
+    width: 512,
+    height: 442,
+    x: 2584,
+    y: 0,
+    w: 420,
+  },
+  {
+    id: "pendant",
+    title: "Pendant",
+    label: "Icon design",
+    src: "/images/lab/shots/pendant.webp",
+    width: 512,
+    height: 512,
+    x: 2624,
+    y: 441,
+    w: 340,
+  },
+  {
+    id: "letter",
+    title: "Letter",
+    label: "Icon design",
+    src: "/images/lab/shots/letter.webp",
+    width: 400,
+    height: 400,
+    x: 2626,
+    y: 859,
+    w: 336,
+  },
 ];
 
 /** Where each build sits, keyed by Lab slug (plus "iconimate"). */
 export const BUILD_SPOTS: Record<string, { x: number; y: number; w: number }> = {
-  "pixel-wave": { x: 1534, y: 1145, w: 440 },
+  "pixel-wave": { x: 2042, y: 1145, w: 440 },
   "pattern-engine": { x: 30, y: 393, w: 400 },
   iconimate: { x: 548, y: 1135, w: 380 },
   "pixel-mark": { x: 548, y: 856, w: 380 },
@@ -152,7 +221,7 @@ export const NOTE: CanvasNote = {
   id: "lab-note",
   title: "The Lab",
   label: "Index",
-  x: 1534,
+  x: 2042,
   y: 541,
   w: 440,
 };

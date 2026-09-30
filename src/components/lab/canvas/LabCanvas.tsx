@@ -70,6 +70,17 @@ interface Placed {
   primary: boolean;
 }
 type View = "wall" | "grid";
+// The tabs: static shots (images) or coded builds. The note belongs to both.
+type Filter = "all" | "static" | "code";
+const FILTERS: [Filter, string][] = [
+  ["all", "All"],
+  ["static", "Static"],
+  ["code", "Code"],
+];
+function matches(item: CanvasItem, filter: Filter) {
+  if (filter === "all" || item.kind === "note") return true;
+  return filter === "static" ? item.kind === "shot" : item.kind === "build";
+}
 const VIEW_KEY = "lab-view";
 
 // What the server renders: a desktop-sized block with the camera on the note,
@@ -205,6 +216,7 @@ export function LabCanvas({
   const [view, setView] = useState<View>("wall");
   const viewRef = useRef(view);
   viewRef.current = view;
+  const [filter, setFilter] = useState<Filter>("all");
 
   const placed = useMemo(() => {
     const out: Placed[] = [];
@@ -650,8 +662,11 @@ export function LabCanvas({
 
   // Grid order: the note first, then the pieces as they read on the wall.
   const gridItems = useMemo(
-    () => [...items].sort((a, b) => (a.kind === "note" ? -1 : b.kind === "note" ? 1 : a.y - b.y || a.x - b.x)),
-    [items],
+    () =>
+      items
+        .filter((item) => matches(item, filter))
+        .sort((a, b) => (a.kind === "note" ? -1 : b.kind === "note" ? 1 : a.y - b.y || a.x - b.x)),
+    [items, filter],
   );
 
   const isWall = view === "wall";
@@ -741,7 +756,14 @@ export function LabCanvas({
                     visibility: p.item.kind === "note" ? "visible" : undefined,
                   }}
                 >
-                  <Piece item={p.item} focusable={p.primary} note={note} onOpenShot={openShot} eager={eager.has(p.key)} />
+                  {/* Every piece has a fixed spot on the wall, so a tab fades
+                      the other kind back instead of leaving holes. */}
+                  <div
+                    inert={!matches(p.item, filter)}
+                    className={`transition-opacity duration-200 ease-out ${matches(p.item, filter) ? "" : "opacity-10"}`}
+                  >
+                    <Piece item={p.item} focusable={p.primary} note={note} onOpenShot={openShot} eager={eager.has(p.key)} />
+                  </div>
                 </div>
               ))}
             </div>
@@ -802,9 +824,24 @@ export function LabCanvas({
                 ))}
               </div>
             )}
+            {!embedded && (
+              <div role="group" aria-label="Show" className="flex items-center gap-0.5 border-l border-border pl-2.5">
+                {FILTERS.map(([key, label]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    aria-pressed={filter === key}
+                    onClick={() => setFilter(key)}
+                    className="h-9 rounded-full px-2.5 font-mono text-[11px] tracking-widest text-muted-foreground uppercase outline-none transition-colors duration-150 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring aria-pressed:bg-muted aria-pressed:text-foreground sm:h-7"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
             <span
               aria-hidden="true"
-              className="flex items-center gap-2 py-1 font-mono text-[11px] tracking-widest text-muted-foreground uppercase"
+              className={`items-center gap-2 py-1 font-mono ${embedded ? "flex" : "hidden border-l border-border pl-2.5 md:flex"} text-[11px] tracking-widest text-muted-foreground uppercase`}
             >
               <Move className="size-3.5" />
               {!isWall ? "Scroll to browse" : embedded ? "Drag to explore" : "Drag or scroll to explore"}
