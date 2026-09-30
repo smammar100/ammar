@@ -1,16 +1,21 @@
-import type { Metadata } from "next";
-import Link from "next/link";
 import LissajousAmmar from "@/components/LissajousAmmar";
+import { JsonLd } from "@/components/JsonLd";
+import { TechStack } from "@/components/about/TechStack";
+import { siteConfig } from "@/data/site-config";
+import { pageMetadata } from "@/lib/metadata";
+import { profilePageLd } from "@/lib/structured-data";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "About",
   description:
-    "How Syed Mohammad Ammar went from a computer-science degree in Karachi to leading design at Mahaana (YC W22), and why he's publicly shipping 100 built projects to earn the title of design engineer.",
-};
+    "Syed Mohammad Ammar is a product designer from Karachi with a computer science background, getting deeper into design engineering one side project at a time.",
+  path: "/about",
+});
 
 export default function Page() {
   return (
     <>
+      <JsonLd data={profilePageLd()} />
       <style>{`
         .about-load {
           animation: about-page-load 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -54,12 +59,8 @@ export default function Page() {
 
       <section className="about-load about-load-hero mx-auto max-w-3xl px-6 pt-12 pb-16 sm:pt-24">
         <h1 className="text-balance text-4xl font-medium tracking-tight sm:text-5xl">
-          <span className="block text-balance">Nobody was going to give me the title.</span>
-          <span className="block">So I&apos;m earning it.</span>
+          Hey, I&rsquo;m Ammar. I like figuring things out by making them.
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          I&apos;m Ammar, a product designer in Karachi with a computer-science degree and a public pledge: build and ship 100 real projects until &lsquo;design engineer&rsquo; isn&apos;t a claim, it&apos;s a record. This site is one of the receipts.
-        </p>
       </section>
 
       <section className="about-load about-load-photos pb-16">
@@ -174,91 +175,31 @@ export default function Page() {
       <section className="about-load about-load-body mx-auto max-w-3xl px-6 pb-24">
         <div className="space-y-5 text-base leading-relaxed text-muted-foreground">
           <p>
-            I live in Karachi. I trained as an engineer, a BS in Computer Science at FAST-NUCES, before I ever opened a design tool, then crossed into design and felt the seam every time work passed from one side of that wall to the other.
+            I&rsquo;m a product designer from Karachi. I studied computer science at FAST before finding my way into design. Later, I moved to Bangkok on a full scholarship to study Interaction Design at Harbour.Space. Both experiences still shape how I work. I&rsquo;m interested in how things are built, but just as much in how they feel to use.
           </p>
           <p>
-            <Link
-              href="/work/peerdrop"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              PeerDrop
-            </Link>{" "}
-            made it a job: from 2020 to 2022 I designed the mobile experience for a London grocery delivery startup, remote from Karachi: 1,000+ beta users, a £40,000 seed raise, a 34% lift in order acceptance. Then an MA in Interaction Design at Harbour.Space in Bangkok, on a 100% scholarship, made it official.
+            I tend to get caught up in the details. Sometimes it&rsquo;s a flow that takes too many steps, sometimes it&rsquo;s an animation that doesn&rsquo;t feel quite right. I like trying different approaches until I understand what&rsquo;s causing the problem. Side projects give me space to follow that curiosity and try things I haven&rsquo;t done before.
           </p>
           <p>
-            Since December 2023 I&apos;ve been at{" "}
-            <Link
-              href="/work/mahaana-wealth"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              Mahaana (YC W22)
-            </Link>
-            , Pakistan&apos;s first SECP-licensed digital wealth manager, as Senior Product Designer since April 2025, leading design across mobile and web, with 10,000+ downloads. On the side, a full{" "}
-            <Link
-              href="/work/truewind-rebrand"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              Truewind (YC W23) rebrand
-            </Link>
-            , logo to landing page, in under two weeks.
+            Right now, I&rsquo;m working on getting better at design engineering. I&rsquo;m also figuring out how AI fits into the way I design and build, using it to explore ideas, write code and get projects out into the world. There&rsquo;s plenty I&rsquo;m still learning, and having something real to work on helps it stick.
           </p>
           <p>
-            Even at my most senior, the work still ended at a handover. So I made{" "}
-            <Link
-              href="/work/design-engineering-100"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              a pledge in public
-            </Link>
-            : become a design engineer by building and shipping 100 real projects. The proof so far:{" "}
-            <a
-              href="https://trackandtread.netlify.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              Track &amp; Tread
-            </a>
-            , the #1 Top Author spot on 21st.dev, ThumbGen (open source), and a{" "}
-            <a
-              href="https://medium.com/design-bootcamp/how-i-built-a-consistent-airbnb-style-3d-icon-system-with-json-part-2-7ad582c915fc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              Medium series
-            </a>{" "}
-            on a 3D icon system. 1 down, 99 to go.
-          </p>
-          <p>
-            What I want next: high-impact teams where the designer who writes the code is an asset, not a category error. If you&apos;re building something worth shipping, email me at{" "}
-            <a
-              href="mailto:syed.m.ammar@hotmail.com"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              syed.m.ammar@hotmail.com
-            </a>
-            , or find me on{" "}
-            <a
-              href="https://www.linkedin.com/in/syedmammar/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              LinkedIn
-            </a>{" "}
-            and{" "}
-            <a
-              href="https://github.com/smammar100"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground underline underline-offset-4 transition-colors hover:text-accent"
-            >
-              GitHub
-            </a>
-            .
+            Outside of work, I enjoy running, going to the gym and watching Chelsea. I also spend time playing around with motion and 3D. Those experiments have a habit of becoming another side project.
           </p>
         </div>
+
+        <a
+          href={siteConfig.resumePdf}
+          download
+          className="group mt-8 inline-flex items-center gap-1.5 font-medium text-foreground transition-colors hover:text-accent"
+        >
+          Download resume
+          <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5">
+            ↓
+          </span>
+        </a>
+
+        <TechStack className="mt-16" />
 
         <div className="mt-16 -mx-6">
           <div className="aspect-[79/20] w-full">

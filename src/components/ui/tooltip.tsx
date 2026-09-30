@@ -54,4 +54,22 @@ function TooltipContent({
   )
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+/**
+ * Optional caret, placed inside <TooltipContent>. It takes the popup's
+ * background, so it suits a filled tooltip rather than the default bordered one.
+ */
+function TooltipArrow({ className, ...props }: React.ComponentProps<typeof TooltipPrimitive.Arrow>) {
+  return (
+    <TooltipPrimitive.Arrow
+      data-slot="tooltip-arrow"
+      className={cn(
+        "size-2 rotate-45 rounded-[2px] bg-inherit",
+        "data-[side=top]:-bottom-1 data-[side=bottom]:-top-1 data-[side=left]:-right-1 data-[side=right]:-left-1",
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipArrow, TooltipProvider }
