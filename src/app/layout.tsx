@@ -8,6 +8,7 @@ import { agentProfile } from "@/lib/agent-profile";
 import { OG_IMAGE } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site-url";
 import { siteGraph } from "@/lib/structured-data";
+import { Analytics } from "@vercel/analytics/next";
 
 // Site-wide defaults. Each page sets its own title, description, canonical URL
 // and link preview through pageMetadata() (lib/metadata.ts); what's here
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {children}
         <WebMcpTools caseStudies={caseStudies} />
+        <Analytics />
       </body>
     </html>
   );
