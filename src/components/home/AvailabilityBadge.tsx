@@ -9,7 +9,7 @@ export function AvailabilityBadge({ className }: { className?: string }) {
   return (
     <p className={`skeu inline-flex h-8 items-center gap-2.5 rounded-full pr-3.5 pl-3 text-[13px] font-medium ${className ?? ""}`}>
       <StatusDot className="shadow-[0_0_0_3px_oklch(0.72_0.17_150/0.18)]" />
-      Open to new projects
+      Open to new opportunities
     </p>
   );
 }

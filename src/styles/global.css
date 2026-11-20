@@ -814,14 +814,18 @@
 [data-build] .b-pop,
 [data-build] .b-grow,
 [data-build] .b-draw,
-[data-build] .b-fly {
+[data-build] .b-fly,
+[data-build] .b-in,
+[data-build] .b-note,
+[data-build] .b-drop,
+[data-build] .b-track {
   animation-duration: 520ms;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   animation-fill-mode: both;
   animation-delay: var(--d, 0ms);
   animation-play-state: paused;
 }
-[data-build="play"] :is(.b-rise, .b-slide, .b-pop, .b-grow, .b-draw, .b-fly) {
+[data-build="play"] :is(.b-rise, .b-slide, .b-pop, .b-grow, .b-draw, .b-fly, .b-in, .b-note, .b-drop, .b-track) {
   animation-play-state: running;
 }
 [data-build] .b-rise { animation-name: b-rise; }
@@ -872,6 +876,76 @@
   65% { opacity: 1; transform: none; }
   78% { transform: scale(0.82); }
   100% { opacity: 1; transform: none; }
+}
+
+/* The home hero (components/home/AnnotatedHero.tsx) plays the same system on
+   load: it is served with data-build="play", so the pieces start at first
+   paint with no script. Its moves are all transform, opacity and a 2px blur,
+   so the whole intro can run off the main thread while the page hydrates. */
+
+/* Content (the pill, each word of the headline, the button): a fade up out of
+   a light blur, 8px of travel. Short travel and a soft blur read as arriving;
+   more of either reads as a performance. */
+[data-build] .b-in {
+  animation-name: b-in;
+  animation-duration: 400ms;
+}
+@keyframes b-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(2px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+/* A spec note: fades in and scales up from 0.95, like a tooltip. Set
+   transform-origin on the note to the end of its leader, so it grows out of
+   the thing it points at rather than from its own centre. */
+[data-build] .b-note {
+  animation-name: b-note;
+  animation-duration: 260ms;
+}
+@keyframes b-note {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: none; }
+}
+
+/* A measure growing down from the thing above it. From nothing, like the
+   guides' b-grow: these are lines being ruled, not objects popping in. */
+[data-build] .b-drop {
+  animation-name: b-drop;
+  animation-duration: 320ms;
+  transform-origin: center top;
+}
+@keyframes b-drop {
+  from { transform: scaleY(0); }
+  to { transform: none; }
+}
+
+/* The hero's selection, dragged out from its top-left corner. Nothing is
+   resized. The box and its near edges are full-size pieces that slide in
+   behind a clip, and the far handles and the size note ride on unclipped
+   copies of the same slide, so the drag is all translates and the handles
+   stay square. --tx / --ty are how far a piece starts back on each axis
+   (-100% is its own width or height; 0% pins that axis). Every piece shares
+   one delay, duration and curve, or the corners drift apart. The curve is an
+   ease-in-out: this is something already on screen being moved by a hand,
+   not something arriving. Pieces are hidden until the drag starts, because
+   before it they all sit stacked on the top-left corner. */
+[data-build] .b-track {
+  animation-name: b-track;
+  animation-duration: 600ms;
+  animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+@keyframes b-track {
+  from { opacity: 0; transform: translate(var(--tx, -100%), var(--ty, -100%)); }
+  6% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+
+/* The hero's data-build is in the HTML, not set by BuildIn (which checks this
+   itself), so reduced motion has to switch the whole system off here. */
+@media (prefers-reduced-motion: reduce) {
+  [data-build] :is(.b-rise, .b-slide, .b-pop, .b-grow, .b-draw, .b-fly, .b-in, .b-note, .b-drop, .b-track) {
+    animation: none;
+  }
 }
 
 .prose code {
