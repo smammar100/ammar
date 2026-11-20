@@ -20,7 +20,7 @@ function DevLogo({ className = "h-9 w-auto sm:h-10", label = "DEV.to" }: { class
  */
 const STATS: { value: string; label: string; Icon: LucideIcon; tint: string; logo?: typeof DevLogo }[] = [
   { value: "216", label: "Animated icons", Icon: Shapes, tint: "text-violet-500/30 dark:text-violet-400/30" },
-  { value: "45", label: "GitHub stars", Icon: Star, tint: "text-amber-500/35 dark:text-amber-400/30" },
+  { value: "57", label: "GitHub stars", Icon: Star, tint: "text-amber-500/35 dark:text-amber-400/30" },
   { value: "MIT", label: "Open-source licence", Icon: Scale, tint: "text-sky-500/30 dark:text-sky-400/30" },
   { value: "DEV.to", label: "Featured on its social media", Icon: Megaphone, tint: "text-emerald-500/30 dark:text-emerald-400/30", logo: DevLogo },
 ];
