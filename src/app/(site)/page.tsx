@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { FeaturedWorkCard } from "@/components/home/FeaturedWorkCard";
 import { Curiosity } from "@/components/home/Curiosity";
-import { AnnotatedHero } from "@/components/home/AnnotatedHero";
+import { AvailabilityBadge } from "@/components/home/AvailabilityBadge";
 import { getCanvasItems } from "@/components/lab/canvas/getCanvasItems";
 import { Services } from "@/components/home/Services";
 import { HATCH, Intersection, IntersectionRule } from "@/components/layout/Intersection";
+import PixelWaveText from "@/components/PixelWaveText";
 import { PatternSurfaceClient } from "@/components/lab/PatternSurfaceClient";
 import { siteConfig } from "@/data/site-config";
 import { getProjects, getWriting } from "@/lib/content";
@@ -17,7 +18,10 @@ export const metadata = pageMetadata({ title: siteConfig.title, absoluteTitle: t
 const showNowShippingCard = false;
 const showWritingSection = false;
 
+// The no-break space keeps "Product Designer" together when the line wraps.
+const heroHeadline = "Syed Mohammad Ammar Product Designer who Builds";
 const heroSupport = "From building complex B2B apps to small indie apps. I work at the intersection of designing frames in Figma and translating them to code.";
+const heroCta = "Start a project with me";
 
 const nowShippingPattern = {
   type: "isoline", seed: 211, levels: 9, scale: 340, strokeWidth: 0.9, opacity: 66, color: "copper",
@@ -34,6 +38,25 @@ const nowShippingMotion = { mode: "ambient", speed: 20, intensity: 28 } as const
 const frameSection = "px-6 sm:px-10";
 const homeSection = `${frameSection} py-12 sm:py-14`;
 const homeSectionHeader = "mb-7 flex items-center justify-between";
+
+/**
+ * The hero's call to action, in the site's skeuomorphic button material
+ * (styles/global.css, "Skeuomorphic buttons"). There is no contact page, so it
+ * opens an email with the subject filled in.
+ */
+function HeroCta({ className }: { className?: string }) {
+  return (
+    <a
+      href={`mailto:${siteConfig.social.email}?subject=${encodeURIComponent("New project")}`}
+      className={`group skeu skeu-press skeu-button ${className ?? ""}`}
+    >
+      {heroCta}
+      <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+        ↗
+      </span>
+    </a>
+  );
+}
 
 export default function HomePage() {
   const allProjects = getProjects();
@@ -52,7 +75,19 @@ export default function HomePage() {
   return (
     <Intersection>
       {/* ── Hero ── */}
-      <AnnotatedHero className={frameSection} />
+      <section className={`${frameSection} pt-14 pb-12 md:pt-20 md:pb-16`}>
+        <AvailabilityBadge className="mb-6 md:mb-7" />
+        {/* One headline for every width; it wraps to fit rather than
+            switching layouts. */}
+        <PixelWaveText
+          text={heroHeadline}
+          by="word"
+          as="h1"
+          wave="headline"
+          className="mb-8 max-w-3xl text-[1.85rem] font-medium leading-[1.12] tracking-tight md:mb-9 md:text-[2.4rem] md:leading-[1.15] lg:text-[2.75rem]"
+        />
+        <HeroCta />
+      </section>
 
       {/* ── Caption band ── */}
       <IntersectionRule />
