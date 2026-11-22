@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { preload } from "react-dom";
+import { Analytics } from "@vercel/analytics/next";
 import "@/styles/global.css";
 import { siteConfig } from "@/data/site-config";
 import { JsonLd } from "@/components/JsonLd";
@@ -87,6 +88,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {children}
         <WebMcpTools caseStudies={caseStudies} />
+        {/* Vercel Web Analytics: page views, sent only from Vercel deployments. */}
+        <Analytics />
       </body>
     </html>
   );
