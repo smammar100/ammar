@@ -18,8 +18,8 @@ export const metadata = pageMetadata({ title: siteConfig.title, absoluteTitle: t
 const showNowShippingCard = false;
 const showWritingSection = false;
 
-// The no-break space keeps "Product Designer" together when the line wraps.
-const heroHeadline = "Syed Mohammad Ammar Product Designer who Builds";
+// The no-break space keeps "via code." together, so "code." never wraps onto a line alone.
+const heroHeadline = "Hey, I'm Ammar, a designer who brings your vision to life via\u00a0code.";
 const heroSupport = "From building complex B2B apps to small indie apps. I work at the intersection of designing frames in Figma and translating them to code.";
 const heroCta = "Start a project with me";
 
